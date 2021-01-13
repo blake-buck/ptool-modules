@@ -1,0 +1,8 @@
+Cognito Module Post-Install Instructions
+1. Run "npm install"
+2. In cognito-cloudformation.json, rename UserPoolName, UserPoolId, ClientName to match your application name
+3. Upload cognito-cloudformation.json to AWS cloudformation
+4. Fill in the environment variables added to the .env file
+5. Visit the following url "https://cognito-idp.us-east-2.amazonaws.com/${your_cognito_pool_id}/.well-known/jwks.json and save the json file to the root of your app as "jwks.json"
+6. Call the initializeCognito function in index.js
+7. Run "npm test" to ensure that everything is working properly

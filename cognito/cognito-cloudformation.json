@@ -1,0 +1,64 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description":"express-boilerplate-cognito setup => email-based login flow",
+    "Resources":{
+        "expressboilerplatecognito": {
+            "Type" : "AWS::Cognito::UserPool",
+            "Properties":{
+                "UserPoolName":"expressboilerplatecognito",
+                "AdminCreateUserConfig":{
+                    "AllowAdminCreateUserOnly" : false
+                },
+                "AccountRecoverySetting":{
+                    "RecoveryMechanisms":[
+                        {
+                            "Name": "verified_email",
+                            "Priority": 1
+                        }
+                    ]
+                },
+                "Policies":{
+                    "PasswordPolicy":{
+                        "MinimumLength" : 10,
+                        "RequireLowercase" : true,
+                        "RequireNumbers" : true,
+                        "RequireSymbols" : true,
+                        "RequireUppercase" : true
+                    }
+                },
+                "UsernameAttributes":["email"],
+                "AutoVerifiedAttributes":["email"],
+                "VerificationMessageTemplate":{
+                    "DefaultEmailOption":"CONFIRM_WITH_LINK"
+                },
+                "EmailConfiguration":{
+                    "EmailSendingAccount":"COGNITO_DEFAULT"
+                },
+                "MfaConfiguration": "OFF"
+            }
+        },
+        "expressboilerplatecognitoclient":{
+            "Type" : "AWS::Cognito::UserPoolClient",
+            "Properties":{
+                "UserPoolId":{
+                    "Ref": "expressboilerplatecognito"
+                },
+                "ClientName":"expressboilerplatecognitoclient",
+                "GenerateSecret":true,
+                "ExplicitAuthFlows":[
+                    "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+                    "ALLOW_USER_PASSWORD_AUTH",
+                    "ALLOW_REFRESH_TOKEN_AUTH"
+                ],
+                "PreventUserExistenceErrors":"ENABLED"
+            }
+        },
+        "expressboilerplatecognitoclientdomain": {
+            "Type" : "AWS::Cognito::UserPoolDomain",
+            "Properties" : {
+                "Domain" : "expressboilerplatecognitoclientpool",
+                "UserPoolId" : "expressboilerplatecognito"
+              }
+          }
+    }
+}
