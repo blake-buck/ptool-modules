@@ -47,7 +47,8 @@ async function isAuthenticated(req, res, next){
     }
     catch(e){
         // if json web token is invalid, send a response
-        res.status(403).json(e)
+        e.httpStatus = 403;
+        next(e);
     }
 
 }

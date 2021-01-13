@@ -47,152 +47,108 @@ function formatHeaders(headers){
 
 
 async function register(username, password){
-    try{
-        const params = {
-            ClientId: AWS_CLIENT_ID,
-            Username: username,
-            Password: password,
-            SecretHash: createSecretHash(username)
-        };
-        
-        
-        return {status:200, body: await aws.cognito.signUp(params).promise()};
-    }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e}
-    }
+    const params = {
+        ClientId: AWS_CLIENT_ID,
+        Username: username,
+        Password: password,
+        SecretHash: createSecretHash(username)
+    };
+    
+    return {status:200, body: await aws.cognito.signUp(params).promise()};
 }
 async function login(username, password, {ip, headers}){
-    try{
-        const params = {
-            AuthFlow:   'ADMIN_USER_PASSWORD_AUTH',
-            UserPoolId: AWS_USER_POOL_ID,
-            ClientId:   AWS_CLIENT_ID,
-            
-            AuthParameters:{
-                USERNAME: username,
-                PASSWORD: password,
-                SECRET_HASH: createSecretHash(username)
-            },
-    
-            ContextData:{
-                IpAddress:   ip,
-                ServerName:  AWS_COGNITO_SERVER_NAME,
-                ServerPath:  '/api/login',
-                HttpHeaders: formatHeaders(headers)
-            }
+    const params = {
+        AuthFlow:   'ADMIN_USER_PASSWORD_AUTH',
+        UserPoolId: AWS_USER_POOL_ID,
+        ClientId:   AWS_CLIENT_ID,
+        
+        AuthParameters:{
+            USERNAME: username,
+            PASSWORD: password,
+            SECRET_HASH: createSecretHash(username)
+        },
+
+        ContextData:{
+            IpAddress:   ip,
+            ServerName:  AWS_COGNITO_SERVER_NAME,
+            ServerPath:  '/api/login',
+            HttpHeaders: formatHeaders(headers)
         }
-    
-        return {status: 200, body: await aws.cognito.adminInitiateAuth(params).promise()};
     }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e};
-    }
+
+    return {status: 200, body: await aws.cognito.adminInitiateAuth(params).promise()};
 }
 
 async function refreshToken({refresh, headers, ip}){
-    try{
-        const params = {
-            UserPoolId: AWS_USER_POOL_ID,
-            ClientId: AWS_CLIENT_ID,
-            AuthFlow:'REFRESH_TOKEN_AUTH',
-            
-            AuthParameters:{
-                REFRESH_TOKEN:refresh,
-                SECRET_HASH: createSecretHash(getUserIdFromToken(headers.jwt)),
-            },
-    
-            ContextData:{
-                IpAddress:   ip,
-                ServerName:  AWS_COGNITO_SERVER_NAME,
-                ServerPath:  '/api/refresh',
-                HttpHeaders: formatHeaders(headers)
-            }
-        };
-    
-        return {status:200, body: await aws.cognito.adminInitiateAuth(params).promise()};
-    }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e};
-    }
+    const params = {
+        UserPoolId: AWS_USER_POOL_ID,
+        ClientId: AWS_CLIENT_ID,
+        AuthFlow:'REFRESH_TOKEN_AUTH',
+        
+        AuthParameters:{
+            REFRESH_TOKEN:refresh,
+            SECRET_HASH: createSecretHash(getUserIdFromToken(headers.jwt)),
+        },
+
+        ContextData:{
+            IpAddress:   ip,
+            ServerName:  AWS_COGNITO_SERVER_NAME,
+            ServerPath:  '/api/refresh',
+            HttpHeaders: formatHeaders(headers)
+        }
+    };
+
+    return {status:200, body: await aws.cognito.adminInitiateAuth(params).promise()};
 }
 async function changePassword({previousPassword, proposedPassword}, jwt){
-    try{
-        const signOutParams = {
-            AccessToken: jwt
-        }
-        const changePasswordParams = {
-            AccessToken: jwt,
-            PreviousPassword: previousPassword,
-            ProposedPassword: proposedPassword
-        }
-
-        await aws.cognito.changePassword(changePasswordParams).promise();
-        await aws.cognito.globalSignOut(signOutParams).promise();
-
-        // the above functions return nothing if they succeed, hence the need for an empty body here
-        return {status: 200, body: {}};
+    const signOutParams = {
+        AccessToken: jwt
     }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e};
+    const changePasswordParams = {
+        AccessToken: jwt,
+        PreviousPassword: previousPassword,
+        ProposedPassword: proposedPassword
     }
+
+    await aws.cognito.changePassword(changePasswordParams).promise();
+    await aws.cognito.globalSignOut(signOutParams).promise();
+
+    // the above functions return nothing if they succeed, hence the need for an empty body here
+    return {status: 200, body: {}};
     
 }
 async function forgotPassword(username){
-    try{
-        const params = {
-            ClientId: AWS_CLIENT_ID,
-            Username: username,
-            SecretHash: createSecretHash(username)
-        }
-    
-        return {status:200, body: await aws.cognito.forgotPassword(params).promise()};
+    const params = {
+        ClientId: AWS_CLIENT_ID,
+        Username: username,
+        SecretHash: createSecretHash(username)
     }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e};
-    }
-    
+
+    return {status:200, body: await aws.cognito.forgotPassword(params).promise()};
 }
 async function confirmForgotPassword({confirmationCode, username, password}){
-    try{
-        const params = {
-            ClientId: AWS_CLIENT_ID,
-            ConfirmationCode: confirmationCode,
-            Username:username,
-            Password:password,
-            SecretHash: createSecretHash(username)
-        }
-
-        await aws.cognito.confirmForgotPassword(params).promise();
-
-        // the above function returns nothing if it succeeds, hence the need for an empty body here
-        return {status:200, body: {}};
+    const params = {
+        ClientId: AWS_CLIENT_ID,
+        ConfirmationCode: confirmationCode,
+        Username:username,
+        Password:password,
+        SecretHash: createSecretHash(username)
     }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e};
-    }
+
+    await aws.cognito.confirmForgotPassword(params).promise();
+
+    // the above function returns nothing if it succeeds, hence the need for an empty body here
+    return {status:200, body: {}};
     
 }
 async function deleteAccount(jwt){
-    try{
-        const params = {
-            AccessToken:jwt
-        }
-        await aws.cognito.deleteUser(params).promise();
+    const params = {
+        AccessToken:jwt
+    }
+    await aws.cognito.deleteUser(params).promise();
 
-        // the above function returns nothing if it succeeds, hence the need for an empty body here
-        return {status:200, body: {}};
-    }
-    catch(e){
-        logger.error(e);
-        return {status: e.statusCode ? e.statusCode : 500, body: e};
-    }
+    // the above function returns nothing if it succeeds, hence the need for an empty body here
+    return {status:200, body: {}};
 }
 
 module.exports = {
