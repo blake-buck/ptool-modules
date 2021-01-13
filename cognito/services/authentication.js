@@ -158,5 +158,7 @@ module.exports = {
     changePassword,
     forgotPassword,
     confirmForgotPassword,
-    deleteAccount
+    deleteAccount,
+    createSecretHash,
+    formatHeaders,
 }
