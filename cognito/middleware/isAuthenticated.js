@@ -39,7 +39,7 @@ async function isAuthenticated(req, res, next){
             throw new Error('Client Id on token does not match User pool Id')
         }
 
-        if(Date.now() > decodedToken.exp){
+        if(Date.now() / 1000 > decodedToken.exp){
             throw new Error('Token is expired.');
         }
         // if json web token is valid, continue

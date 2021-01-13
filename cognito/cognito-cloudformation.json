@@ -56,8 +56,10 @@
         "expressboilerplatecognitoclientdomain": {
             "Type" : "AWS::Cognito::UserPoolDomain",
             "Properties" : {
-                "Domain" : "expressboilerplatecognitoclientpool",
-                "UserPoolId" : "expressboilerplatecognito"
+                "Domain" : "expressboilerplateclientpool",
+                "UserPoolId" : {
+                    "Ref": "expressboilerplatecognito"
+                }
               }
           }
     }
