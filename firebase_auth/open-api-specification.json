@@ -2,7 +2,7 @@
     "paths":{
         "/register":{
             "summary":"Sends an email verification link to the username provided.",
-            "description":"Creates an unverfied user in the user pool. Sends a link to the email address provided that when clicked verifies the user. A user must be verified in order to use the other authentication routes.",
+            "description":"Creates an unverified user.",
             
             "post":{
                 "requestBody":{
@@ -32,24 +32,76 @@
                                 "schema":{
                                     "type":"object",
                                     "properties":{
-                                        "CodeDeliveryDetails": { 
-                                            "type":"object",
-                                            "properties":{
-                                                "AttributeName": {
-                                                    "type":"string"
-                                                },
-                                                "DeliveryMedium": {
-                                                    "type":"string"
-                                                },
-                                                "Destination": {
-                                                    "type":"string"
-                                                }
-                                            }
-                                        },
-                                        "UserConfirmed": {
-                                            "type":"boolean"
-                                        },
-                                        "UserSub": {
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad request - user is at fault",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/definitions/Error"
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Bad request - user is unauthenticated",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/definitions/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Bad request - server is at fault",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/definitions/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+        },
+        "/register/confirm":{
+            "summary":"Verifies a user using the code they received via email.",
+            "description":"Verifies an unverified user.",
+            
+            "post":{
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "code":{
+                                        "type":"string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
                                             "type":"string"
                                         }
                                      }

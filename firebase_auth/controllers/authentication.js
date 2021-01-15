@@ -43,9 +43,22 @@ async function register(request, response){
         throw new Error(validationResult.error);
     }
     const {username, password} = validationResult.value;
-    const {result, status} = await authenticationService.register(username, password);
+    const {body, status} = await authenticationService.register(username, password);
 
-    return result.status(status).json(result);
+    return response.status(status).json(body);
+}
+
+const registerConfirmSchema = Joi.object({
+    code: Joi.string()
+})
+async function registerConfirm(request, response){
+    const validationResult = registerConfirmSchema.validate(request.body);
+    if(validationResult.error){
+        throw new Error(validationResult.error);
+    }
+    const {code} = validationResult.value;
+    const {body, status} = await authenticationService.registerConfirm(code);
+    return response.status(status).json(body);
 }
 
 const loginSchema = Joi.object({
@@ -58,9 +71,9 @@ async function login(request, response){
         throw new Error(validationResult.error);
     }
     const {username, password} = validationResult.value;
-    const {result, status} = await authenticationService.login(username, password);
+    const {body, status} = await authenticationService.login(username, password);
 
-    return result.status(status).json(result);
+    return response.status(status).json(body);
 }
 
 const changePasswordSchema = Joi.object({
@@ -74,9 +87,9 @@ async function changePassword(request, response){
         throw new Error(validationResult.error)
     }
     const {username, previousPassword, proposedPassword} = validationResult.value;
-    const {result, status} = await authenticationService.changePassword(username, previousPassword, proposedPassword);
+    const {body, status} = await authenticationService.changePassword(username, previousPassword, proposedPassword);
 
-    return result.status(status).json(result);
+    return response.status(status).json(body);
 }
 
 const forgotPasswordSchema = Joi.object({
@@ -88,9 +101,9 @@ async function forgotPassword(request, response){
         throw new Error(validationResult.error)
     }
     const {email} = validationResult.value;
-    const {result, status} = await authenticationService.forgotPassword(email);
+    const {body, status} = await authenticationService.forgotPassword(email);
 
-    return result.status(status).json(result);
+    return response.status(status).json(body);
 }
 
 const forgotPasswordConfirmSchema = Joi.object({
@@ -103,9 +116,9 @@ async function forgotPasswordConfirm(request, response){
         throw new Error(validationResult.error)
     }
     const {confirmationCode, newPassword} = validationResult.value;
-    const {result, status} = await authenticationService.forgotPasswordConfirm(confirmationCode, newPassword);
+    const {body, status} = await authenticationService.forgotPasswordConfirm(confirmationCode, newPassword);
 
-    return result.status(status).json(result);
+    return response.status(status).json(body);
 }
 
 const deleteAccountSchema = Joi.object({
@@ -117,12 +130,13 @@ async function deleteAccount(request, response){
         throw new Error(validationResult.error)
     }
     const {email} = validationResult.value;
-    const {result, status} = await authenticationService.register(email);
-    return result.status(status).json(result);
+    const {body, status} = await authenticationService.register(email);
+    return response.status(status).json(body);
 }
 
 module.exports = {
     register: controllerWrapper(register),
+    registerConfirm: controllerWrapper(registerConfirm),
     login: controllerWrapper(login),
     changePassword: controllerWrapper(changePassword),
     forgotPassword: controllerWrapper(forgotPassword),

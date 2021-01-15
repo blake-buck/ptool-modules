@@ -1,6 +1,6 @@
 const {firebase} = require('../initialization');
 
-function isAuthenticated(request, response, next){
+async function isAuthenticated(request, response, next){
     try{
         const {jwt} = request.headers;
         await firebase.admin.verifyIdToken(jwt, true);

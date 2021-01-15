@@ -15,6 +15,7 @@ const {
 } = require('../controllers/authentication');
 
 router.post('/register', register);
+router.post('/register/confirm');
 router.post('/login', login);
 router.post('/change-password', isAuthenticated, changePassword);
 router.post('/forgot-password', forgotPassword);

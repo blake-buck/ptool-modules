@@ -2,16 +2,27 @@ const {firebase} = require('../initialization.js');
 
 
 async function register(email, password){
+    const {user} = await firebase.client.createUserWithEmailAndPassword(email, password);
+    await user.sendEmailVerification();
     return {
         status: 200,
-        body: await firebase.client.createUserWithEmailAndPassword(email, password)
+        body: {message:'A verification message has been sent to the email you provided.'}
+    }
+}
+
+async function registerConfirm(code){
+    await firebase.client.applyActionCode(code);
+    return {
+        status: 200,
+        body: {message: 'Registration confirmed - you can now sign in with your username and password.'}
     }
 }
 
 async function login(email, password){
+    const {user} = await firebase.client.signInWithEmailAndPassword(email, password)
     return {
         status: 200,
-        body: await firebase.client.signInWithEmailAndPassword(email, password)
+        body: user.stsTokenManager
     }
 }
 
@@ -53,6 +64,7 @@ async function deleteAccount(email){
 
 module.exports = {
     register,
+    registerConfirm,
     login,
     changePassword,
     forgotPassword,
