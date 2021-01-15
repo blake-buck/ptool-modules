@@ -48,19 +48,6 @@ async function register(request, response){
     return response.status(status).json(body);
 }
 
-const registerConfirmSchema = Joi.object({
-    code: Joi.string().required()
-})
-async function registerConfirm(request, response){
-    const validationResult = registerConfirmSchema.validate(request.body);
-    if(validationResult.error){
-        throw new Error(validationResult.error);
-    }
-    const {code} = validationResult.value;
-    const {body, status} = await authenticationService.registerConfirm(code);
-    return response.status(status).json(body);
-}
-
 const loginSchema = Joi.object({
     username: usernameSchema,
     password: passwordSchema
@@ -111,22 +98,6 @@ async function forgotPassword(request, response){
     return response.status(status).json(body);
 }
 
-const forgotPasswordConfirmSchema = Joi.object({
-    confirmationCode: Joi.string().required(),
-    newPassword: passwordSchema
-});
-async function forgotPasswordConfirm(request, response){
-    const validationResult = forgotPasswordConfirmSchema.validate(request.body);
-    if(validationResult.error){
-        throw new Error(validationResult.error)
-    }
-    const {confirmationCode, newPassword} = validationResult.value;
-    const {body, status} = await authenticationService.forgotPasswordConfirm(confirmationCode, newPassword);
-
-    return response.status(status).json(body);
-}
-
-
 async function deleteAccount(request, response){
     const validationResult = requestHeadersWithJwtSchema.validate(request.headers);
     if(validationResult.error){
@@ -139,10 +110,8 @@ async function deleteAccount(request, response){
 
 module.exports = {
     register: controllerWrapper(register),
-    registerConfirm: controllerWrapper(registerConfirm),
     login: controllerWrapper(login),
     changePassword: controllerWrapper(changePassword),
     forgotPassword: controllerWrapper(forgotPassword),
-    forgotPasswordConfirm: controllerWrapper(forgotPasswordConfirm),
     deleteAccount: controllerWrapper(deleteAccount),
 }

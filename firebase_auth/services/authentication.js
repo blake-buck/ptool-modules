@@ -10,14 +10,6 @@ async function register(email, password){
     }
 }
 
-async function registerConfirm(code){
-    await firebase.client.applyActionCode(code);
-    return {
-        status: 200,
-        body: {message: 'Registration confirmed - you can now sign in with your username and password.'}
-    }
-}
-
 async function login(email, password){
     const {user} = await firebase.client.signInWithEmailAndPassword(email, password)
     return {
@@ -51,14 +43,6 @@ async function forgotPassword(email){
     }
 }
 
-async function forgotPasswordConfirm(confirmationCode, newPassword){
-    await firebase.client.confirmPasswordReset(confirmationCode, newPassword)
-    return {
-        status: 200,
-        body: {message:'The password has been successfully reset.'}
-    }
-}
-
 async function deleteAccount(jwt){
     const {email} = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString());
     const {uid} = await firebase.admin.getUserByEmail(email);
@@ -71,10 +55,8 @@ async function deleteAccount(jwt){
 
 module.exports = {
     register,
-    registerConfirm,
     login,
     changePassword,
     forgotPassword,
-    forgotPasswordConfirm,
     deleteAccount,
 }
