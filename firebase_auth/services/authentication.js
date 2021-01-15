@@ -22,43 +22,50 @@ async function login(email, password){
     const {user} = await firebase.client.signInWithEmailAndPassword(email, password)
     return {
         status: 200,
-        body: user.stsTokenManager
+        body: {jwt: await user.getIdToken()}
     }
 }
 
-async function changePassword(email, previousPassword, proposedPassword){
+async function changePassword(previousPassword, proposedPassword, jwt){
+    const {email} = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString());
+
     // verify that previous password is valid
     await firebase.client.signInWithEmailAndPassword(email, previousPassword);
 
     const {uid} = await firebase.admin.getUserByEmail(email);
     await firebase.admin.updateUser(uid, {password: proposedPassword});
 
-    // sign users out globally
+    // sign user out globally
+    await firebase.admin.revokeRefreshTokens(uid)
     return {
         status: 200,
-        body: await firebase.admin.revokeRefreshTokens(uid)
+        body: {message: 'Password has been changed.'}
     }
 }
 
 async function forgotPassword(email){
+    await firebase.client.sendPasswordResetEmail(email);
     return {
         status: 200,
-        body: await firebase.client.sendPasswordResetEmail(email)
+        body: {message: 'A password-reset message has been sent to the email provided'}
     }
 }
 
 async function forgotPasswordConfirm(confirmationCode, newPassword){
+    await firebase.client.confirmPasswordReset(confirmationCode, newPassword)
     return {
         status: 200,
-        body: await firebase.client.confirmPasswordReset(confirmationCode, newPassword)
+        body: {message:'The password has been successfully reset.'}
     }
 }
 
-async function deleteAccount(email){
+async function deleteAccount(jwt){
+    const {email} = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64').toString());
     const {uid} = await firebase.admin.getUserByEmail(email);
+    await firebase.admin.deleteUser(uid)
     return {
         status: 200,
-        body: await firebase.admin.deleteUser(uid)
+        body: {message:'The account has been successfully deleted'}
     }
 }
 

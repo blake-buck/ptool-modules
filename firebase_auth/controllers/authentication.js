@@ -49,7 +49,7 @@ async function register(request, response){
 }
 
 const registerConfirmSchema = Joi.object({
-    code: Joi.string()
+    code: Joi.string().required()
 })
 async function registerConfirm(request, response){
     const validationResult = registerConfirmSchema.validate(request.body);
@@ -77,17 +77,22 @@ async function login(request, response){
 }
 
 const changePasswordSchema = Joi.object({
-    username: usernameSchema,
     previousPassword: passwordSchema,
     proposedPassword: passwordSchema
 });
 async function changePassword(request, response){
+    const headerValidation = requestHeadersWithJwtSchema.validate(request.headers);
+    if(headerValidation.error){
+        throw new Error(validationResult.error);
+    }
+    const {jwt} = headerValidation.value;
+
     const validationResult = changePasswordSchema.validate(request.body);
     if(validationResult.error){
         throw new Error(validationResult.error)
     }
-    const {username, previousPassword, proposedPassword} = validationResult.value;
-    const {body, status} = await authenticationService.changePassword(username, previousPassword, proposedPassword);
+    const {previousPassword, proposedPassword} = validationResult.value;
+    const {body, status} = await authenticationService.changePassword(previousPassword, proposedPassword, jwt);
 
     return response.status(status).json(body);
 }
@@ -107,7 +112,7 @@ async function forgotPassword(request, response){
 }
 
 const forgotPasswordConfirmSchema = Joi.object({
-    confirmationCode: Joi.string(),
+    confirmationCode: Joi.string().required(),
     newPassword: passwordSchema
 });
 async function forgotPasswordConfirm(request, response){
@@ -121,16 +126,14 @@ async function forgotPasswordConfirm(request, response){
     return response.status(status).json(body);
 }
 
-const deleteAccountSchema = Joi.object({
-    email: usernameSchema
-});
+
 async function deleteAccount(request, response){
-    const validationResult = deleteAccountSchema.validate(request.body);
+    const validationResult = requestHeadersWithJwtSchema.validate(request.headers);
     if(validationResult.error){
         throw new Error(validationResult.error)
     }
-    const {email} = validationResult.value;
-    const {body, status} = await authenticationService.register(email);
+    const {jwt} = validationResult.value;
+    const {body, status} = await authenticationService.deleteAccount(jwt);
     return response.status(status).json(body);
 }
 
