@@ -1,3 +1,98 @@
 {
-    
+    "paths":{
+        "/example":{
+            "summary":"",
+            "description":"",
+            "get":{
+                "tags":[],
+                "summary":"",
+                "description":"",
+                "externalDocs":{},
+                "operationId":"",
+                "parameters":[],
+                "requestBody":{},
+                "responses":{
+                    "200":{
+                        "description": "",
+                        "content":{
+                            "application/json":{}
+                        }
+                    },
+                    "400":{
+                        "description": "",
+                        "content":{
+                            "application/json":{}
+                        }
+                    },
+                    "500":{
+                        "description": "",
+                        "content":{
+                            "application/json":{}
+                        }
+                    }
+                },
+                "security":[]
+            },
+            "post":{
+                "200":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                },
+                "400":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                },
+                "500":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                }
+            },
+            "put":{
+                "200":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                },
+                "400":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                },
+                "500":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                }
+            },
+            "delete":{
+                "200":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                },
+                "400":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                },
+                "500":{
+                    "description": "",
+                    "content":{
+                        "application/json":{}
+                    }
+                }
+            }
+        }
+    }
 }

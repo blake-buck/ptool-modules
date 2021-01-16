@@ -1,0 +1,8 @@
+CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);
+INSERT INTO example(description, status) VALUES('Example 1', 0);
+INSERT INTO example(description, status) VALUES('Example 2', 0);
+INSERT INTO example(description, status) VALUES('Example 3', 2);
+INSERT INTO example(description, status) VALUES('Example 4', 2);
+INSERT INTO example(description, status) VALUES('Example 5', 1);
+.save dbs/development_database.db
+.quit
