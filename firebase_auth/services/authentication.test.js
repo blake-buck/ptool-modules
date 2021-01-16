@@ -5,6 +5,7 @@ describe('Firebase authentication tests', () => {
     const email = 'blake.buck@hey.com';
     const password = 'temporaryPassword@1';
     const newPassword = 'temporaryPassword@2';
+    let jwt='';
 
     initializeFirebaseAuth();
 
@@ -24,12 +25,13 @@ describe('Firebase authentication tests', () => {
         const {status, body} = await authenticationService.login(email, password);
         expect(status).toBe(200);
         expect(body.jwt).toBeTruthy();
+        jwt = body.jwt;
 
         done();
     });
 
     it('change password should work', async (done) => {
-        const {status, body} = await authenticationService.changePassword(password, newPassword);
+        const {status, body} = await authenticationService.changePassword(password, newPassword, jwt);
         expect(status).toBe(200);
         expect(body.message).toBeTruthy();
 
@@ -40,6 +42,9 @@ describe('Firebase authentication tests', () => {
         const {status, body} = await authenticationService.forgotPassword(email);
         expect(status).toBe(200);
         expect(body.message).toBeTruthy();
+        
+        const {uid} = await firebase.admin.getUserByEmail(email);
+        await firebase.admin.updateUser(uid, {password: newPassword});
 
         done();
     })
