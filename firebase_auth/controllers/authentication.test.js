@@ -14,6 +14,10 @@ const mockResponse = () => {
     return res;
 };
 
+const mockNext = (e) => {
+    expect(e).toBeTruthy();
+}
+
 const improperEmail = 'notAnEmail';
 const improperPassword = 'improperPassword';
 
@@ -21,84 +25,66 @@ const properEmail = 'temporaryUsername@notarealaddressihope.com';
 const properPassword = 'temporaryPassword1!';
 
 describe('authentication controller tests', () => {
-    it('improper email should fail register validation', async (done) => {
-        try{
-            await authenticationControllers.register(
+    it('improper email should fail register validation', () => {
+        authenticationControllers.register(
+            {
+                body: {
+                    username: improperEmail,
+                    password: properPassword
+                }
+            },
+            mockResponse(),
+            mockNext
+        )
+        
+    });
+
+    it('improper password should fail register validation',  () => {
+        authenticationControllers.register(
+            {
+                body: {
+                    username: properEmail,
+                    password: improperPassword
+                }
+            },
+            mockResponse(),
+            mockNext
+        )
+    });
+
+    it('improper email should fail login validation',  () => {
+            authenticationControllers.login(
                 {
                     body: {
-                        email: improperEmail,
+                        username: improperEmail,
                         password: properPassword
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
-    it('improper password should fail register validation', async (done) => {
-        try{
-            await authenticationControllers.register(
+    it('improper password should fail login validation',  () => {
+            authenticationControllers.login(
                 {
                     body: {
-                        email: properEmail,
+                        username: properEmail,
                         password: improperPassword
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
-    it('improper email should fail login validation', async (done) => {
-        try{
-            await authenticationControllers.login(
+    it('headers without JWT should fail changePassword validation',  () => {
+            authenticationControllers.changePassword(
                 {
                     body: {
-                        email: improperEmail,
-                        password: properPassword
-                    }
-                },
-                mockResponse()
-            )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
-    });
-
-    it('improper password should fail login validation', async (done) => {
-        try{
-            await authenticationControllers.login(
-                {
-                    body: {
-                        email: properEmail,
-                        password: improperPassword
-                    }
-                },
-                mockResponse()
-            )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
-    });
-
-    it('headers without JWT should fail changePassword validation', async (done) => {
-        try{
-            await authenticationControllers.changePassword(
-                {
-                    body: {
-                        email: properEmail,
+                        username: properEmail,
                         previousPassword: properPassword,
                         proposedPassword: properPassword
                     },
@@ -106,21 +92,17 @@ describe('authentication controller tests', () => {
                         
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     })
 
-    it('improper email should fail changePassword validation', async (done) => {
-        try{
-            await authenticationControllers.changePassword(
+    it('improper email should fail changePassword validation',  () => {
+            authenticationControllers.changePassword(
                 {
                     body: {
-                        email: improperEmail,
+                        username: improperEmail,
                         previousPassword: properPassword,
                         proposedPassword: properPassword
                     },
@@ -128,21 +110,17 @@ describe('authentication controller tests', () => {
                         jwt:'aaaaaa'
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
-    it('improper previousPassword should fail changePassword validation', async (done) => {
-        try{
-            await authenticationControllers.changePassword(
+    it('improper previousPassword should fail changePassword validation',  () => {
+            authenticationControllers.changePassword(
                 {
                     body: {
-                        email: properEmail,
+                        username: properEmail,
                         previousPassword: improperPassword,
                         proposedPassword: properPassword
                     },
@@ -150,21 +128,17 @@ describe('authentication controller tests', () => {
                         jwt:'aaaaaa'
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
-    it('improper proposedPassword should fail changePassword validation', async (done) => {
-        try{
-            await authenticationControllers.changePassword(
+    it('improper proposedPassword should fail changePassword validation',  () => {
+            authenticationControllers.changePassword(
                 {
                     body: {
-                        email: properEmail,
+                        username: properEmail,
                         previousPassword: properPassword,
                         proposedPassword: improperPassword
                     },
@@ -172,46 +146,35 @@ describe('authentication controller tests', () => {
                         jwt:'aaaaaa'
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
-    it('improper email should fail forgotPassword validation', async (done) => {
-        try{
-            await authenticationControllers.forgotPassword(
+    it('improper email should fail forgotPassword validation',  () => {
+            authenticationControllers.forgotPassword(
                 {
                     body: {
                         email: improperEmail
                     }
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
-    it('headers without jwt should fail deleteAccount validation', async (done) => {
-        try{
-            await authenticationControllers.deleteAccount(
+    it('headers without jwt should fail deleteAccount validation',  () => {
+            authenticationControllers.deleteAccount(
                 {
                     body:{},
                     headers:{}
                 },
-                mockResponse()
+                mockResponse(),
+                mockNext
             )
-        }
-        catch(e){
-            expect(true).toBe(true);
-            done();
-        }
+        
     });
 
 });
