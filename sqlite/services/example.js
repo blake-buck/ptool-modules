@@ -6,7 +6,11 @@ async function getExamples(paginationData, fieldData){
 }
 
 async function getSpecificExample(exampleId, fieldData){
-    return {status: 200, body: await models.getSpecificExample(exampleId, fieldData)}
+    const result = await models.getSpecificExample(exampleId, fieldData);
+    if(!result || !result.length){
+        throw new Error('Specific example record not found.')
+    }
+    return {status: 200, body: result[0]}
 }
 
 async function postExample(exampleData){
