@@ -86,7 +86,7 @@ function updateExamples(exampleDataArray){
     }))
 }
 
-function updateSpecificExample(exampleData){
+function updateSpecificExample({id, description, status}){
     return new Promise((resolve, reject) => {
         database.db.run(
             `UPDATE example SET description=$description, status=$status WHERE id=$id`,

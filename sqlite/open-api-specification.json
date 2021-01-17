@@ -117,6 +117,11 @@
                         "name":"id",
                         "in":"path",
                         "description":"The record id."
+                    },
+                    {
+                        "name":"fields",
+                        "in":"query",
+                        "description":"A comma seperated list of record fields to return"
                     }
                 ],
                 "responses":{
