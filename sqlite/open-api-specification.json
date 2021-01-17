@@ -1,96 +1,258 @@
 {
     "paths":{
         "/example":{
-            "summary":"",
-            "description":"",
             "get":{
-                "tags":[],
-                "summary":"",
-                "description":"",
-                "externalDocs":{},
-                "operationId":"",
-                "parameters":[],
-                "requestBody":{},
+                "summary":"Get a paginated list of example records.",
+                "parameters":[
+                    {
+                        "name":"limit",
+                        "in":"query",
+                        "description":"The number of records to return from the call."
+                    },
+                    {
+                        "name":"offset",
+                        "in":"query",
+                        "description":"The index position to start returning records from."
+                    },
+                    {
+                        "name":"fields",
+                        "in":"query",
+                        "description":"A comma seperated list of record fields to return"
+                    }
+                ],
                 "responses":{
                     "200":{
-                        "description": "",
+                        "description": "Returns an array of example objects.",
                         "content":{
-                            "application/json":{}
+                            "application/json":{
+                                "$ref":"#/components/schemas/exampleArray"
+                            }
                         }
                     },
                     "400":{
-                        "description": "",
-                        "content":{
-                            "application/json":{}
-                        }
+                        "$ref":"#/components/responses/ExampleError"
                     },
                     "500":{
-                        "description": "",
-                        "content":{
-                            "application/json":{}
-                        }
+                        "$ref":"#/components/responses/ExampleError"
                     }
                 },
                 "security":[]
             },
             "post":{
-                "200":{
-                    "description": "",
+                "requestBody":{
                     "content":{
-                        "application/json":{}
+                        "application/json":{
+                            "$ref":"#/components/schemas/exampleMinusId"
+                        }
                     }
                 },
-                "400":{
-                    "description": "",
-                    "content":{
-                        "application/json":{}
-                    }
-                },
-                "500":{
-                    "description": "",
-                    "content":{
-                        "application/json":{}
+                "responses":{
+                    "200":{
+                        "description": "Returns a created example object, complete with id",
+                        "content":{
+                            "application/json":{
+                                "$ref":"#/components/schemas/example"
+                            }
+                        }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/ExampleError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/ExampleError"
                     }
                 }
             },
             "put":{
-                "200":{
-                    "description": "",
+                "requestBody":{
                     "content":{
-                        "application/json":{}
+                        "application/json":{
+                            "$ref":"#/components/schemas/exampleArray"
+                        }
                     }
                 },
-                "400":{
-                    "description": "",
-                    "content":{
-                        "application/json":{}
-                    }
-                },
-                "500":{
-                    "description": "",
-                    "content":{
-                        "application/json":{}
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/ExampleOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/ExampleError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/ExampleError"
                     }
                 }
             },
             "delete":{
-                "200":{
-                    "description": "",
+                "requestBody":{
                     "content":{
-                        "application/json":{}
+                        "application/json":{
+                            "type":"array",
+                            "style":"simple",
+                            "items":{
+                                "type":"number"
+                            }
+                        }
                     }
                 },
-                "400":{
-                    "description": "",
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/ExampleOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/ExampleError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/ExampleError"
+                    }
+                }
+            }
+        },
+        "/example/:id":{
+
+            "get":{
+                "summary":"Returns a specific example",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"The record id."
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Returns an array of example objects.",
+                        "content":{
+                            "application/json":{
+                                "$ref":"#/components/schemas/exampleArray"
+                            }
+                        }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/ExampleError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/ExampleError"
+                    }
+                }
+            },
+            "put":{
+                "summary":"Updates a specific example",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"The record id."
+                    }
+                ],
+                "requestBody":{
                     "content":{
-                        "application/json":{}
+                        "application/json":{
+                            "$ref":"#/components/schemas/example"
+                        }
                     }
                 },
-                "500":{
-                    "description": "",
-                    "content":{
-                        "application/json":{}
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/ExampleOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/ExampleError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/ExampleError"
                     }
+                }
+            },
+            "delete":{
+                "summary":"Deletes a specific example",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"The record id."
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/ExampleOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/ExampleError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/ExampleError"
+                    }
+                }
+            }
+        }
+    },
+    "components":{
+        "responses":{
+            "ExampleOk":{
+                "description":"Standard OK response for the example routes",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "message":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ExampleError":{
+                "description":"Standard error for the example routes",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "name":{
+                                    "type":"string"
+                                },
+                                "message":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schemas":{
+            "example":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"number"
+                    },
+                    "description":{
+                        "type":"string"
+                    },
+                    "status":{
+                        "type":"number"
+                    }
+                }
+            },
+            "exampleMinusId":{
+                "type":"object",
+                "properties":{
+                    "description":{
+                        "type":"string"
+                    },
+                    "status":{
+                        "type":"number"
+                    }
+                }
+            },
+            "exampleArray":{
+                "type":"array",
+                "items":{
+                    "$ref":"#/components/schemas/example"
                 }
             }
         }
