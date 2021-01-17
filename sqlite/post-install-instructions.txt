@@ -1,2 +1,2 @@
 Run "sqlite3 create-dev-db.txt"
-Add initializeDb to index.js
+Add initializeSqlite to index.js

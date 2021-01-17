@@ -1,10 +1,10 @@
 const { describe } = require('joi');
 const exampleServices = require('./example');
 
-const {initializeDb, sqlite} = require('../initialization');
+const {initializeSqlite, sqlite} = require('../initialization');
 
 beforeEach(async () => {
-    initializeDb(':memory:');
+    initializeSqlite(':memory:');
     await new Promise((resolve, reject) => {
         sqlite.db.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
         if(err){

@@ -1,10 +1,10 @@
 const exampleModels = require('./example');
 
 const sqlite3 = require('sqlite3');
-const {initializeDb, sqlite} = require('../initialization');
+const {initializeSqlite, sqlite} = require('../initialization');
 
 beforeEach(async () => {
-    initializeDb(':memory:');
+    initializeSqlite(':memory:');
     await new Promise((resolve, reject) => {
         sqlite.db.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
         if(err){
@@ -32,7 +32,6 @@ beforeEach(async () => {
 })
 
 afterEach(async () => {
-    
     await new Promise((resolve, reject) => {
         sqlite.db.run('DROP TABLE example', (err) => {
             if(err){
