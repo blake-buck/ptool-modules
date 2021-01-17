@@ -3,10 +3,14 @@ const Joi = require('joi');
 
 const exampleService = require('../services/example');
 
+const idParametersSchema = Joi.object({
+    id: Joi.number()
+})
+
 const getExamplesSchema = Joi.object({
     limit: Joi.number().default(10),
     offset: Joi.number().default(0),
-    fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,description')
+    fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,description,status')
 });
 async function getExamples(request, response){
     const validationResult = getExamplesSchema.validate(request.query);
@@ -22,12 +26,17 @@ async function getExamples(request, response){
 }
 
 const getSpecificExampleSchema = Joi.object({
-    fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,description')
+    fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,description,status')
 })
 async function getSpecificExample(request, response){
     const validationResult = getSpecificExampleSchema.validate(request.query);
     if(validationResult.error){
         throw new Error(validationResult.error);
+    }
+
+    const validateParams = idParametersSchema.validate(request.params);
+    if(validateParams.error){
+        throw new Error(validateParams.error);
     }
 
     const fieldData = validationResult.value.fields;
@@ -74,6 +83,11 @@ async function updateSpecificExample(request, response){
     const validationResult = updateSpecificExampleSchema.validate(request.body);
     if(validationResult.error){
         throw new Error(validationResult.error);
+    }
+
+    const validateParams = idParametersSchema.validate(request.params);
+    if(validateParams.error){
+        throw new Error(validateParams.error);
     }
 
     const result = await exampleService.updateSpecificExample(request.body);
