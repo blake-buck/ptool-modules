@@ -73,7 +73,10 @@ describe('example route tests', () => {
         request(app)
             .post('/example')
             .set('Accept', 'application/json')
-            .send({})
+            .send({
+                description: 'description',
+                status: 1
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {
@@ -92,7 +95,11 @@ describe('example route tests', () => {
         request(app)
             .put('/example')
             .set('Accept', 'application/json')
-            .send({})
+            .send([{
+                id: 1,
+                description: 'updated description',
+                status: 3
+            }])
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {
@@ -111,7 +118,7 @@ describe('example route tests', () => {
         request(app)
             .delete('/example')
             .set('Accept', 'application/json')
-            .send({})
+            .send([1,2])
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {

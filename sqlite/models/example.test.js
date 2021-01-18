@@ -1,6 +1,5 @@
 const exampleModels = require('./example');
 
-const sqlite3 = require('sqlite3');
 const {initializeSqlite, sqlite} = require('../initialization');
 
 beforeEach(async () => {
@@ -44,7 +43,6 @@ afterEach(async () => {
     })
 })
 
-const exampleModels = require('./example');
 
 describe('example model tests', () => {
     it('getExamples should return two records', async (done) => {
@@ -55,8 +53,10 @@ describe('example model tests', () => {
     });
 
     it('getSpecificExample should return an array containing a singular record', async (done) => {
-        let records = await exampleModels.getSpecificExample(1, 'id,description,status');
-        expect(records.length).toBe(1);
+        let record = await exampleModels.getSpecificExample(1, 'id,description,status');
+        expect(record).toBeTruthy();
+        expect(record.id).toBeTruthy();
+        expect(record.description).toBeTruthy();
 
         done();
     });
