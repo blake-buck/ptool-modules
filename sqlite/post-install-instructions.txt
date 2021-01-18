@@ -1,2 +1,4 @@
-Run "sqlite3 create-dev-db.txt"
+Run "npm i"
+create a directory called dbs, and a file inside that directory called development_database.db
+Run `sqlite3 dbs/development_database.db ".read create-dev-db.txt"`
 Add initializeSqlite to index.js

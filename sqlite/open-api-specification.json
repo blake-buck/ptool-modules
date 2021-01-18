@@ -1,226 +1,242 @@
 {
-    "paths":{
-        "/example":{
-            "get":{
-                "summary":"Get a paginated list of example records.",
-                "parameters":[
+    "paths": {
+        "/example": {
+            "get": {
+                "summary": "Get a paginated list of example records.",
+                "parameters": [
                     {
-                        "name":"limit",
-                        "in":"query",
-                        "description":"The number of records to return from the call."
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
                     },
                     {
-                        "name":"offset",
-                        "in":"query",
-                        "description":"The index position to start returning records from."
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
                     },
                     {
-                        "name":"fields",
-                        "in":"query",
-                        "description":"A comma seperated list of record fields to return"
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
                     }
                 ],
-                "responses":{
-                    "200":{
+                "responses": {
+                    "200": {
                         "description": "Returns an array of example objects.",
-                        "content":{
-                            "application/json":{
-                                "$ref":"#/components/schemas/exampleArray"
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/components/schemas/exampleArray"
+                                }
                             }
                         }
                     },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
                     },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
                     }
                 },
-                "security":[]
+                "security": []
             },
-            "post":{
-                "requestBody":{
-                    "content":{
-                        "application/json":{
-                            "$ref":"#/components/schemas/exampleMinusId"
+            "post": {
+                "summary":"Create an entry in the example table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref": "#/components/schemas/exampleMinusId"
+                            }
                         }
                     }
                 },
-                "responses":{
-                    "200":{
+                "responses": {
+                    "200": {
                         "description": "Returns a created example object, complete with id",
-                        "content":{
-                            "application/json":{
-                                "$ref":"#/components/schemas/example"
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/components/schemas/example"
+                                }
                             }
                         }
                     },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
                     },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
                     }
                 }
             },
-            "put":{
-                "requestBody":{
-                    "content":{
-                        "application/json":{
-                            "$ref":"#/components/schemas/exampleArray"
-                        }
-                    }
-                },
-                "responses":{
-                    "200":{
-                        "$ref":"#/components/responses/ExampleOk"
-                    },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
-                    },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
-                    }
-                }
-            },
-            "delete":{
-                "requestBody":{
-                    "content":{
-                        "application/json":{
-                            "type":"array",
-                            "style":"simple",
-                            "items":{
-                                "type":"number"
+            "put": {
+                "summary":"Bulk update entries in the example table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref": "#/components/schemas/exampleArray"
                             }
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "$ref":"#/components/responses/ExampleOk"
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ExampleOk"
                     },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
                     },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
+                    }
+                }
+            },
+            "delete": {
+                "summary":"Bulk delete entries in the example table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ExampleOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
                     }
                 }
             }
         },
-        "/example/:id":{
-
-            "get":{
-                "summary":"Returns a specific example",
-                "parameters":[
+        "/example/:id": {
+            "get": {
+                "summary": "Returns a specific entry in the example table",
+                "parameters": [
                     {
-                        "name":"id",
-                        "in":"path",
-                        "description":"The record id."
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
                     },
                     {
-                        "name":"fields",
-                        "in":"query",
-                        "description":"A comma seperated list of record fields to return"
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
                     }
                 ],
-                "responses":{
-                    "200":{
-                        "description": "Returns an array of example objects.",
-                        "content":{
-                            "application/json":{
-                                "$ref":"#/components/schemas/exampleArray"
+                "responses": {
+                    "200": {
+                        "description": "Returns a single entry in the example table.",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/components/schemas/example"
+                                }
                             }
                         }
                     },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
                     },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
                     }
                 }
             },
-            "put":{
-                "summary":"Updates a specific example",
-                "parameters":[
+            "put": {
+                "summary": "Updates a specific entry in the example table",
+                "parameters": [
                     {
-                        "name":"id",
-                        "in":"path",
-                        "description":"The record id."
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
                     }
                 ],
-                "requestBody":{
-                    "content":{
-                        "application/json":{
-                            "$ref":"#/components/schemas/example"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref": "#/components/schemas/example"
+                            }
                         }
                     }
                 },
-                "responses":{
-                    "200":{
-                        "$ref":"#/components/responses/ExampleOk"
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ExampleOk"
                     },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
                     },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
                     }
                 }
             },
-            "delete":{
-                "summary":"Deletes a specific example",
-                "parameters":[
+            "delete": {
+                "summary": "Deletes a specific entry in the example table",
+                "parameters": [
                     {
-                        "name":"id",
-                        "in":"path",
-                        "description":"The record id."
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
                     }
                 ],
-                "responses":{
-                    "200":{
-                        "$ref":"#/components/responses/ExampleOk"
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ExampleOk"
                     },
-                    "400":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
                     },
-                    "500":{
-                        "$ref":"#/components/responses/ExampleError"
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
                     }
                 }
             }
         }
     },
-    "components":{
-        "responses":{
-            "ExampleOk":{
-                "description":"Standard OK response for the example routes",
-                "content":{
-                    "application/json":{
-                        "schema":{
-                            "type":"object",
-                            "properties":{
-                                "message":{
-                                    "type":"string"
+    "components": {
+        "responses": {
+            "ExampleOk": {
+                "description": "Standard OK response for the example routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
                                 }
                             }
                         }
                     }
                 }
             },
-            "ExampleError":{
-                "description":"Standard error for the example routes",
-                "content":{
-                    "application/json":{
-                        "schema":{
-                            "type":"object",
-                            "properties":{
-                                "name":{
-                                    "type":"string"
+            "ExampleError": {
+                "description": "Standard error for the example routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
                                 },
-                                "message":{
-                                    "type":"string"
+                                "message": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -228,36 +244,36 @@
                 }
             }
         },
-        "schemas":{
-            "example":{
-                "type":"object",
-                "properties":{
-                    "id":{
-                        "type":"number"
+        "schemas": {
+            "example": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
                     },
-                    "description":{
-                        "type":"string"
+                    "description": {
+                        "type": "string"
                     },
-                    "status":{
-                        "type":"number"
+                    "status": {
+                        "type": "number"
                     }
                 }
             },
-            "exampleMinusId":{
-                "type":"object",
-                "properties":{
-                    "description":{
-                        "type":"string"
+            "exampleMinusId": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
                     },
-                    "status":{
-                        "type":"number"
+                    "status": {
+                        "type": "number"
                     }
                 }
             },
-            "exampleArray":{
-                "type":"array",
-                "items":{
-                    "$ref":"#/components/schemas/example"
+            "exampleArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/example"
                 }
             }
         }

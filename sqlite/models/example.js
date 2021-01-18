@@ -1,8 +1,8 @@
-let {database} = require('../initialization');
+let {sqlite} = require('../initialization');
 
 function getExamples({limit, offset}, fieldData){
     return new Promise((resolve, reject) => {
-        database.db.all(
+        sqlite.db.all(
             `SELECT ${fieldData} FROM example LIMIT $limit OFFSET $offset`, 
             {
                 $limit: limit, 
@@ -20,7 +20,7 @@ function getExamples({limit, offset}, fieldData){
 
 function getSpecificExample(exampleId, fieldData){
     return new Promise((resolve, reject) => {
-        database.db.get(
+        sqlite.db.get(
             `SELECT ${fieldData} FROM example WHERE id=$id`,
             {
                 $id: exampleId
@@ -37,7 +37,7 @@ function getSpecificExample(exampleId, fieldData){
 
 function postExample({description, status}){
     return new Promise((resolve, reject) => {
-        database.db.get(
+        sqlite.db.get(
             `INSERT INTO example(description, status) VALUES($description, $status);`,
             {
                 $description: description,
@@ -47,7 +47,7 @@ function postExample({description, status}){
                 if(err){
                     return reject(err);
                 }
-                database.db.get(
+                sqlite.db.get(
                     `SELECT MAX(id) FROM example`,
                     (err, idData) => {
                         if(err){
@@ -68,7 +68,7 @@ function postExample({description, status}){
 function updateExamples(exampleDataArray){
     return Promise.all(exampleDataArray.map(({id, description, status}) => {
         return new Promise((resolve, reject) => {
-            database.db.run(
+            sqlite.db.run(
                 `UPDATE example SET description=$description, status=$status WHERE id=$id`,
                 {
                     $id:id,
@@ -88,7 +88,7 @@ function updateExamples(exampleDataArray){
 
 function updateSpecificExample({id, description, status}){
     return new Promise((resolve, reject) => {
-        database.db.run(
+        sqlite.db.run(
             `UPDATE example SET description=$description, status=$status WHERE id=$id`,
             {
                 $id:id,
@@ -108,7 +108,7 @@ function updateSpecificExample({id, description, status}){
 function deleteExamples(exampleIdList){
     return Promise.all(exampleIdList.map(id=> {
         return new Promise((resolve, reject) => {
-            database.db.run(
+            sqlite.db.run(
                 `DELETE FROM example WHERE id=$id`,
                 {
                     $id:id
@@ -126,7 +126,7 @@ function deleteExamples(exampleIdList){
 
 function deleteSpecificExample(exampleId){
     return new Promise((resolve, reject) => {
-        database.db.run(
+        sqlite.db.run(
             `DELETE FROM example WHERE id=$id`,
             {
                 $id:exampleId

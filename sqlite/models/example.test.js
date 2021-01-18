@@ -16,7 +16,7 @@ beforeEach(async () => {
                     reject(err);
                 }
                 else{
-                    database.db.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
+                    sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
                         if(err){
                             reject(err);
                         }
