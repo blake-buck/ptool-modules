@@ -121,7 +121,7 @@
                 }
             }
         },
-        "/example/:id": {
+        "/example/{id}": {
             "get": {
                 "summary": "Returns a specific entry in the example table",
                 "parameters": [
