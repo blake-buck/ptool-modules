@@ -1,4 +1,3 @@
-const { describe } = require('joi');
 const exampleServices = require('./example');
 
 const {initializeSqlite, sqlite} = require('../initialization');
@@ -61,7 +60,6 @@ describe('example service tests', () => {
         expect(response.body).toBeTruthy();
         expect(response.body.id).toBeTruthy();
         expect(response.body.description).toBeTruthy();
-        expect(response.body.status).toBeTruthy();
 
         done();
     });
