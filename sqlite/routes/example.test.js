@@ -114,6 +114,29 @@ describe('example route tests', () => {
                 done();
             });
     });
+    it('PATCH - /example', async (done) => {
+        request(app)
+            .patch('/example')
+            .set('Accept', 'application/json')
+            .send([{
+                id: 1,
+                description: 'updated description',
+                status: 3
+            }])
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(async (err, res) => {
+                if(err){
+                    console.error(err);
+                    console.log(res.error)
+                    done();
+                }
+
+                expect(res.body).toBeTruthy();
+
+                done();
+            });
+    });
     it('DELETE - /example', async (done) => {
         request(app)
             .delete('/example')
@@ -157,6 +180,25 @@ describe('example route tests', () => {
     it('PUT - /example/:id', async (done) => {
         request(app)
             .put('/example/1')
+            .set('Accept', 'application/json')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(async (err, res) => {
+                if(err){
+                    console.error(err);
+                    console.log(res.error)
+                    done();
+                }
+
+                expect(res.body).toBeTruthy();
+
+                done();
+            });
+    });
+    it('PATCH - /example/:id', async (done) => {
+        request(app)
+            .patch('/example/1')
             .set('Accept', 'application/json')
             .send({})
             .expect('Content-Type', /json/)

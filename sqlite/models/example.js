@@ -105,6 +105,61 @@ function updateSpecificExample({id, description, status}){
     });
 }
 
+function patchExamples(exampleDataArray){
+    return Promise.all(exampleDataArray.map((exampleData) => {
+
+        let queryContents = 'SET';
+        let queryData = {};
+        queryData.$id = exampleData.id;
+        delete exampleData.id
+        for(let key in exampleData){
+            queryContents += ` ${key}=$${key},`
+            queryData['$' + key] = exampleData[key];
+        }
+        queryContents = queryContents.slice(0, queryContents.length - 1);
+        queryContents += ' WHERE id=$id';
+
+        return new Promise((resolve, reject) => {
+            sqlite.db.run(
+                `UPDATE example ${queryContents}`,
+                queryData,
+                (err) => {
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve(true);
+                }
+            )
+        });
+    }))
+}
+
+function patchSpecificExample(id, exampleData){
+    // description, status
+    let queryContents = 'SET';
+    let queryData = {};
+    queryData.$id = id;
+    for(let key in exampleData){
+        queryContents += ` ${key}=$${key},`
+        queryData['$' + key] = exampleData[key];
+    }
+    queryContents = queryContents.slice(0, queryContents.length - 1);
+    queryContents += ' WHERE id=$id';
+
+    return new Promise((resolve, reject) => {
+        sqlite.db.run(
+            `UPDATE example ${queryContents}`,
+            queryData,
+            (err) => {
+                if(err){
+                    return reject(err);
+                }
+                return resolve(true);
+            }
+        )
+    });
+}
+
 function deleteExamples(exampleIdList){
     return Promise.all(exampleIdList.map(id=> {
         return new Promise((resolve, reject) => {
@@ -147,6 +202,8 @@ module.exports = {
     postExample,
     updateExamples,
     updateSpecificExample,
+    patchExamples,
+    patchSpecificExample,
     deleteExamples,
     deleteSpecificExample
 }

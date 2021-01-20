@@ -254,6 +254,121 @@ describe('example controllers tests', () => {
         );
     })
 
+    it('patchExamples non-array request should fail validation', () => {
+        const result = exampleControllers.patchExamples(
+            {
+                query:{},
+                body:{},
+                params:{}
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+    it('patchExamples improper id should fail validation', () => {
+        const result = exampleControllers.patchExamples(
+            {
+                query:{},
+                body:[
+                    {
+                        id: improperId,
+                        description: properDescription,
+                        status: properStatus
+                    }
+                ],
+                params:{}
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+    it('patchExamples improper description should fail validation', () => {
+        const result = exampleControllers.patchExamples(
+            {
+                query:{},
+                body:[
+                    {
+                        id: properId,
+                        description: improperDescription,
+                        status: properStatus
+                    }
+                ],
+                params:{}
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+    it('patchExamples improper status should fail validation', () => {
+        const result = exampleControllers.patchExamples(
+            {
+                query:{},
+                body:[
+                    {
+                        id: properId,
+                        description: properDescription,
+                        status: improperStatus
+                    }
+                ],
+                params:{}
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+
+    it('patchSpecificExample improper id should fail validation', () => {
+        const result = exampleControllers.patchSpecificExample(
+            {
+                query:{},
+                body:{
+                    id: improperId,
+                    description: properDescription,
+                    status: properStatus
+                },
+                params:{
+                    id: improperId
+                }
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+    it('patchSpecificExample improper description should fail validation', () => {
+        const result = exampleControllers.patchSpecificExample(
+            {
+                query:{},
+                body:{
+                    id: properId,
+                    description: improperDescription,
+                    status: properStatus
+                },
+                params:{
+                    id: properId
+                }
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+    it('patchSpecificExample improper status should fail validation', () => {
+        const result = exampleControllers.patchSpecificExample(
+            {
+                query:{},
+                body:{
+                    id: properId,
+                    description: properDescription,
+                    status: improperStatus
+                },
+                params:{
+                    id: properId
+                }
+            },
+            mockResponse(),
+            mockNext
+        );
+    })
+
     it('deleteExamples non-array request should fail validation', () => {
         const result = exampleControllers.deleteExamples(
             {

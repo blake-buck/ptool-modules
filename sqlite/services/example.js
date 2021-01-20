@@ -27,6 +27,16 @@ async function updateSpecificExample(exampleData){
     return {status: 200, body: {message: 'Example updated successfully'}}
 }
 
+async function patchExamples(exampleData){
+    await models.patchExamples(exampleData);
+    return {status:200, body: {message: 'Examples patched successfully'}}
+}
+
+async function patchSpecificExample(exampleId, exampleData){
+    await models.patchSpecificExample(exampleId, exampleData);
+    return {status: 200, body: {message:'Example patched successfully'}}
+}
+
 async function deleteExamples(exampleIdList){
     await models.deleteExamples(exampleIdList)
     return {status: 200, body: {message: 'Examples deleted successfully'}}
@@ -43,6 +53,8 @@ module.exports = {
     postExample,
     updateExamples,
     updateSpecificExample,
+    patchExamples,
+    patchSpecificExample,
     deleteExamples,
     deleteSpecificExample
 }

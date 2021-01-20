@@ -112,6 +112,44 @@ describe('example service tests', () => {
         
     });
 
+    it('patchExamples should update records', async (done) => {
+        let response = await exampleServices.patchExamples([
+            {
+                id: 1,
+                description: 'updated example 1',
+                status:4413
+            },
+            {
+                id: 2,
+                description: 'updated example 2',
+                status: 87641
+            }
+        ])
+
+        expect(response).toBeTruthy()
+        expect(response.status).toBe(200);
+        expect(response.body).toBeTruthy();
+
+        done();
+    });
+
+    it('patchSpecificExample should update a specific record', async (done) => {
+        const response = await exampleServices.patchSpecificExample(
+            1,
+            {
+                description: 'test updated example 1',
+                status: 12345
+            }
+        );
+
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.body).toBeTruthy();
+
+        done();
+        
+    });
+
     it('deleteExamples should delete records', async (done) => {
         const response = await exampleServices.deleteExamples([1, 2]);
         

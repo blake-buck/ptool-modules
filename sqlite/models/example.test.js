@@ -118,6 +118,55 @@ describe('example model tests', () => {
         });
     });
 
+    it('patchExamples should update records', async (done) => {
+        let result = await exampleModels.patchExamples([
+            {
+                id: 1,
+                description: 'updated example 1',
+                status:4413
+            },
+            {
+                id: 2,
+                description: 'updated example 2',
+                status: 87641
+            }
+        ])
+
+        expect(result).toBeTruthy();
+
+        sqlite.db.all('SELECT * FROM example', (err, result) => {
+            const recordOne = result[0];
+            const recordTwo = result[1];
+
+            expect(recordOne.description).toBe('updated example 1');
+            expect(recordOne.status).toBe(4413);
+
+            expect(recordTwo.description).toBe('updated example 2');
+            expect(recordTwo.status).toBe(87641);
+
+            done();
+        })
+    });
+
+    it('patchSpecificExample should update a specific record', async (done) => {
+        const result = await exampleModels.patchSpecificExample(
+            1,
+            {
+                description: 'test updated example 1',
+                status: 12345
+            }
+        );
+
+        expect(result).toBeTruthy();
+
+        sqlite.db.all('SELECT * FROM example where id=1', (err, result) => {
+            expect(result[0]).description = 'test updated example 1';
+            expect(result[0]).status = 12345;
+
+            done();
+        });
+    });
+
     it('deleteExamples should delete records', async (done) => {
         const result = await exampleModels.deleteExamples([1, 2]);
         expect(result).toBeTruthy();

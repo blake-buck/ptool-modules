@@ -94,6 +94,41 @@ async function updateSpecificExample(request, response){
     return response.status(result.status).json(result.body);
 }
 
+const patchExamplesSchema = Joi.array().items({
+    id: Joi.number().required(),
+    description: Joi.string(),
+    status: Joi.number()
+});
+async function patchExamples(request, response){
+    const validationResult = patchExamplesSchema.validate(request.body);
+    if(validationResult.error){
+        throw new Error(validationResult.error);
+    }
+
+    const result = await exampleService.patchExamples(request.body);
+    return response.status(result.status).json(result.body);
+}
+
+const patchSpecificExampleSchema = Joi.object({
+    description: Joi.string(),
+    status: Joi.number()
+})
+async function patchSpecificExample(request, response){
+    const validateParams = idParametersSchema.validate(request.params);
+    if(validateParams.error){
+        throw new Error(validateParams.error);
+    }
+
+    const validationResult = patchSpecificExampleSchema.validate(request.body);
+    if(validationResult.error){
+        throw new Error(validationResult.error);
+    }
+
+
+    const result = await exampleService.patchSpecificExample(request.params.id, request.body);
+    return response.status(result.status).json(result.body);
+}
+
 const deleteExamplesSchema = Joi.array().items(Joi.number());
 async function deleteExamples(request, response){
     const validationResult = deleteExamplesSchema.validate(request.body);
@@ -124,6 +159,8 @@ module.exports = {
     postExample: controllerWrapper(postExample),
     updateExamples: controllerWrapper(updateExamples),
     updateSpecificExample: controllerWrapper(updateSpecificExample),
+    patchExamples: controllerWrapper(patchExamples),
+    patchSpecificExample: controllerWrapper(patchSpecificExample),
     deleteExamples: controllerWrapper(deleteExamples),
     deleteSpecificExample: controllerWrapper(deleteSpecificExample)
 }

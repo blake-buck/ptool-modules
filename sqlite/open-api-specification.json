@@ -2,6 +2,7 @@
     "paths": {
         "/example": {
             "get": {
+                "tags":["example operations"],
                 "summary": "Get a paginated list of example records.",
                 "parameters": [
                     {
@@ -41,6 +42,7 @@
                 "security": []
             },
             "post": {
+                "tags":["example operations"],
                 "summary":"Create an entry in the example table",
                 "requestBody": {
                     "content": {
@@ -71,6 +73,7 @@
                 }
             },
             "put": {
+                "tags":["example operations"],
                 "summary":"Bulk update entries in the example table",
                 "requestBody": {
                     "content": {
@@ -93,7 +96,32 @@
                     }
                 }
             },
+            "patch":{
+                "tags":["example operations"],
+                "summary": "Bulk partially-update entries in the example table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/exampleArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ExampleOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
+                    }
+                }
+            },
             "delete": {
+                "tags":["example operations"],
                 "summary":"Bulk delete entries in the example table",
                 "requestBody": {
                     "content": {
@@ -123,6 +151,7 @@
         },
         "/example/{id}": {
             "get": {
+                "tags":["example operations"],
                 "summary": "Returns a specific entry in the example table",
                 "parameters": [
                     {
@@ -156,6 +185,7 @@
                 }
             },
             "put": {
+                "tags":["example operations"],
                 "summary": "Updates a specific entry in the example table",
                 "parameters": [
                     {
@@ -185,7 +215,39 @@
                     }
                 }
             },
+            "patch":{
+                "tags":["example operations"],
+                "summary": "Partially update a specific entry in the example table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/exampleMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ExampleOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/ExampleError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ExampleError"
+                    }
+                }
+            },
             "delete": {
+                "tags":["example operations"],
                 "summary": "Deletes a specific entry in the example table",
                 "parameters": [
                     {
