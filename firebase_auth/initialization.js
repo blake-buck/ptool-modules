@@ -10,6 +10,7 @@ const {
 
 const firebase = {};
 function initializeFirebaseAuth(){
+    logger.info('Initializing Firebase Auth...');
     firebaseClient.initializeApp({
         apiKey: FIREBASE_API_KEY,
         authDomain: FIREBASE_AUTH_DOMAIN,
@@ -24,6 +25,7 @@ function initializeFirebaseAuth(){
         authDomain: FIREBASE_AUTH_DOMAIN
     });
     firebase.admin = firebaseAdmin.auth();
+    logger.info('Firebase Auth initialized.');
 }
 
 module.exports.initializeFirebaseAuth = initializeFirebaseAuth;
