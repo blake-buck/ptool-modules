@@ -47,14 +47,24 @@ function formatHeaders(headers){
 
 
 async function register(username, password){
-    const params = {
-        ClientId: AWS_CLIENT_ID,
-        Username: username,
-        Password: password,
-        SecretHash: createSecretHash(username)
-    };
+    try{
+        const params = {
+            ClientId: AWS_CLIENT_ID,
+            Username: username,
+            Password: password,
+            SecretHash: createSecretHash(username)
+        };
+        await aws.cognito.signUp(params).promise()
+    }
+    catch(e){
+        // we dont want potential attackers to know what emails already exist in the system; but if it isn't a UsernameExistsException we want the error to be handled
+        if(e.name !== 'UsernameExistsException'){
+            throw e;
+        }
+    }
+    return {status:200, body: {message:'Check your email for a registration message.'}};
+
     
-    return {status:200, body: await aws.cognito.signUp(params).promise()};
 }
 async function login(username, password, {ip, headers}){
     const params = {

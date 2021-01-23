@@ -2,8 +2,16 @@ const {firebase} = require('../initialization.js');
 
 
 async function register(email, password){
-    const {user} = await firebase.client.createUserWithEmailAndPassword(email, password);
-    await user.sendEmailVerification();
+    try{
+        const {user} = await firebase.client.createUserWithEmailAndPassword(email, password);
+        await user.sendEmailVerification();
+    }
+    catch(e){
+        if(e.code !== 'auth/email-already-in-use'){
+            throw e
+        }
+    }
+    
     return {
         status: 200,
         body: {message:'A verification message has been sent to the email you provided.'}
