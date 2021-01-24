@@ -1,5 +1,5 @@
 const {firebase} = require('../initialization.js');
-
+const logger = require('../logger');
 
 async function register(email, password){
     try{
@@ -7,6 +7,7 @@ async function register(email, password){
         await user.sendEmailVerification();
     }
     catch(e){
+        logger.error(e);
         if(e.code !== 'auth/email-already-in-use'){
             throw e
         }

@@ -3,8 +3,8 @@
         "/register":{
             "summary":"Sends an email verification link to the username provided.",
             "description":"Creates an unverified user.",
-            
             "post":{
+                "tags":["authentication operations"],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -41,34 +41,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     }
                 }
                 
@@ -78,6 +57,7 @@
             "summary":"Logs a user in via email and password",
 
             "post":{
+                "tags":["authentication operations"],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -112,34 +92,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     }
                 }
                 
@@ -149,6 +108,7 @@
             "summary":"Changes the users password",
             
             "post":{
+                "tags":["authentication operations"],
                 "parameters":[
                     {
                         "name": "jwt",
@@ -194,34 +154,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     }
                 }
                 
@@ -232,6 +171,7 @@
         "/forgot-password":{
             "summary":"Sends an email to the user's email address containing a confirmation code.",
             "post":{
+                "tags":["authentication operations"],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -261,34 +201,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     }
                 }
                 
@@ -299,6 +218,7 @@
         "/delete-account":{
             "summary":"Deletes the user from the Cognito Pool",
             "post":{
+                "tags":["authentication operations"],
                 "parameters":[
                     {
                         "name": "jwt",
@@ -328,38 +248,39 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/AuthError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
+                        "$ref":"#/components/responses/AuthError"
+                    }
+                }
+            }
+            
+        }
+    },
+    "components":{
+        "responses":{
+            "AuthError": {
+                "description": "Standard error for the authentication routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
                                 }
                             }
                         }
                     }
                 }
             }
-            
         }
     },
     "definitions":{

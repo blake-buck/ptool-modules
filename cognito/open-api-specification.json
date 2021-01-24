@@ -5,6 +5,7 @@
             "description":"Creates an unverfied user in the user pool. Sends a link to the email address provided that when clicked verifies the user. A user must be verified in order to use the other authentication routes.",
             
             "post":{
+                "tags":["authentication operations"],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -32,24 +33,7 @@
                                 "schema":{
                                     "type":"object",
                                     "properties":{
-                                        "CodeDeliveryDetails": { 
-                                            "type":"object",
-                                            "properties":{
-                                                "AttributeName": {
-                                                    "type":"string"
-                                                },
-                                                "DeliveryMedium": {
-                                                    "type":"string"
-                                                },
-                                                "Destination": {
-                                                    "type":"string"
-                                                }
-                                            }
-                                        },
-                                        "UserConfirmed": {
-                                            "type":"boolean"
-                                        },
-                                        "UserSub": {
+                                        "message":{
                                             "type":"string"
                                         }
                                      }
@@ -58,34 +42,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     }
                 }
                 
@@ -95,6 +58,7 @@
             "summary":"Sends a login request to Cognito.",
 
             "post":{
+                "tags":["authentication operations"],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -155,34 +119,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     }
                 }
                 
@@ -193,6 +136,7 @@
             "summary":"Returns a fresh Auth token",
             
             "post":{
+                "tags":["authentication operations"],
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -234,34 +178,13 @@
                         }
                     },
                     "400":{
-                        "description": "Bad request - user is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     },
                     "403":{
-                        "description": "Bad request - user is unauthenticated",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     },
                     "500":{
-                        "description": "Bad request - server is at fault",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "$ref": "#/definitions/Error"
-                                }
-                            }
-                        }
+                        "$ref":"#/components/responses/CognitoError"
                     }
                 }
                 
@@ -270,282 +193,214 @@
         },
         "/change-password":{
             "summary":"Changes the users password",
-            
-            
-            "requests":{
-                "post":{
-                    "parameters":[
-                        {
-                            "name": "jwt",
-                            "in": "header",
-                            "schema": {
-                                "type":"string"
-                            }
+            "post":{
+                "tags":["authentication operations"],
+                "parameters":[
+                    {
+                        "name": "jwt",
+                        "in": "header",
+                        "schema": {
+                            "type":"string"
                         }
-                    ],
-                    "requestBody":{
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "type":"object",
-                                    "properties":{
-                                        "previousPassword":{
-                                            "type":"string",
-                                            "description":"Must be a valid password - 10 character minimum, must contain at least one uppercase letter, one lowercase letter, one number, and one of the following characters: !@#$%^&*()"
-                                        },
-                                        "proposedPassword":{
-                                            "type":"string",
-                                            "description":"Must be a valid password - 10 character minimum, must contain at least one uppercase letter, one lowercase letter, one number, and one of the following characters: !@#$%^&*()"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "responses":{
-                        "200":{
-                            "description": "Successful request",
-                            "content":{
-                                "application/json":{}
-                            }
-                        },
-                        "400":{
-                            "description": "Bad request - user is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "403":{
-                            "description": "Bad request - user is unauthenticated",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "500":{
-                            "description": "Bad request - server is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "previousPassword":{
+                                        "type":"string",
+                                        "description":"Must be a valid password - 10 character minimum, must contain at least one uppercase letter, one lowercase letter, one number, and one of the following characters: !@#$%^&*()"
+                                    },
+                                    "proposedPassword":{
+                                        "type":"string",
+                                        "description":"Must be a valid password - 10 character minimum, must contain at least one uppercase letter, one lowercase letter, one number, and one of the following characters: !@#$%^&*()"
                                     }
                                 }
                             }
                         }
                     }
-                    
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{}
+                        }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "403":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/CognitoError"
+                    }
                 }
+                
             }
             
         },
         "/forgot-password":{
             "summary":"Sends an email to the user's email address containing a confirmation code.",
-            "requests":{
-                "post":{
-                    "requestBody":{
+            "post":{
+                "tags":["authentication operations"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "type":"object",
+                            "properties":{
+                                "username":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "",
                         "content":{
                             "application/json":{
                                 "type":"object",
                                 "properties":{
-                                    "username":{
-                                        "type":"string"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "responses":{
-                        "200":{
-                            "description": "",
-                            "content":{
-                                "application/json":{
-                                    "type":"object",
-                                    "properties":{
-                                        "CodeDeliveryDetails":{
-                                            "type":"object",
-                                            "properties":{
-                                                "AttributeName":{
-                                                    "type":"string"
-                                                },
-                                                "DeliveryMedium":{
-                                                    "type":"string"
-                                                },
-                                                "Destination":{
-                                                    "type":"string"
-                                                }
+                                    "CodeDeliveryDetails":{
+                                        "type":"object",
+                                        "properties":{
+                                            "AttributeName":{
+                                                "type":"string"
+                                            },
+                                            "DeliveryMedium":{
+                                                "type":"string"
+                                            },
+                                            "Destination":{
+                                                "type":"string"
                                             }
                                         }
                                     }
                                 }
                             }
-                        },
-                        "400":{
-                            "description": "Bad request - user is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "403":{
-                            "description": "Bad request - user is unauthenticated",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "500":{
-                            "description": "Bad request - server is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "403":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/CognitoError"
                     }
-                    
                 }
+                
             }
             
         },
         "/forgot-password/confirm":{
             "summary":"Resets the user's password to be one of their choosing.",
-            "requests":{
-                "post":{
-                    "requestBody":{
-                        "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "confirmationCode":{
-                                        "type":"string"
-                                    },
-                                    "username":{
-                                        "type":"string"
-                                    },
-                                    "password":{
-                                        "type":"string"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "responses":{
-                        "200":{
-                            "description": "Successful request",
-                            "content":{
-                                "application/json":{}
-                            }
-                        },
-                        "400":{
-                            "description": "Bad request - user is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "403":{
-                            "description": "Bad request - user is unauthenticated",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "500":{
-                            "description": "Bad request - server is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
+            "post":{
+                "tags":["authentication operations"],
+                "requestBody":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "confirmationCode":{
+                                    "type":"string"
+                                },
+                                "username":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string"
                                 }
                             }
                         }
                     }
-                    
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{}
+                        }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "403":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/CognitoError"
+                    }
                 }
+                
             }
             
         },
         "/delete-account":{
             "summary":"Deletes the user from the Cognito Pool",
-            "requests":{
-                "post":{
-                    "parameters":[
-                        {
-                            "name": "jwt",
-                            "in": "header",
-                            "schema": {
-                                "type":"string"
-                            }
+            "post":{
+                "tags":["authentication operations"],
+                "parameters":[
+                    {
+                        "name": "jwt",
+                        "in": "header",
+                        "schema": {
+                            "type":"string"
                         }
-                    ],
-                    "requestBody":{
-                        "application/json":{
-                            "schema":{}
+                    }
+                ],
+                "requestBody":{
+                    "application/json":{
+                        "schema":{}
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful response",
+                        "content":{
+                            "application/json":{}
                         }
                     },
-                    "responses":{
-                        "200":{
-                            "description": "Successful response",
-                            "content":{
-                                "application/json":{}
-                            }
-                        },
-                        "400":{
-                            "description": "Bad request - user is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "403":{
-                            "description": "Bad request - user is unauthenticated",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
-                                }
-                            }
-                        },
-                        "500":{
-                            "description": "Bad request - server is at fault",
-                            "content":{
-                                "application/json":{
-                                    "schema":{
-                                        "$ref": "#/definitions/Error"
-                                    }
+                    "400":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "403":{
+                        "$ref":"#/components/responses/CognitoError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/CognitoError"
+                    }
+                }
+            }
+            
+        }
+    },
+    "components":{
+        "responses": {
+            "CognitoError": {
+                "description": "Standard error for the authentication routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
                                 }
                             }
                         }
                     }
                 }
             }
-            
         }
     },
     "definitions":{

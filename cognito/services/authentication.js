@@ -61,6 +61,7 @@ async function register(username, password){
         if(e.name !== 'UsernameExistsException'){
             throw e;
         }
+        logger.error(e);
     }
     return {status:200, body: {message:'Check your email for a registration message.'}};
 

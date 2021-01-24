@@ -2,3 +2,4 @@ Create firebase app
 enable email based authentication
 Go to project settings, create a web app client; copy config values into .env file
 generate private key for admin-sdk integration, paste into credentials.json
+call initializeFirebaseAuth in index.js
