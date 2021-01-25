@@ -1,8 +1,9 @@
-let {sqlite} = require('../initialization');
+const dependencyInjector = require('../dependency-injector.js');
+let sqlite = dependencyInjector.inject('sqlite');
 
 function getExamples({limit, offset}, fieldData){
     return new Promise((resolve, reject) => {
-        sqlite.db.all(
+        sqlite.all(
             `SELECT ${fieldData} FROM example LIMIT $limit OFFSET $offset`, 
             {
                 $limit: limit, 
@@ -20,7 +21,7 @@ function getExamples({limit, offset}, fieldData){
 
 function getSpecificExample(exampleId, fieldData){
     return new Promise((resolve, reject) => {
-        sqlite.db.get(
+        sqlite.get(
             `SELECT ${fieldData} FROM example WHERE id=$id`,
             {
                 $id: exampleId
@@ -37,7 +38,7 @@ function getSpecificExample(exampleId, fieldData){
 
 function postExample({description, status}){
     return new Promise((resolve, reject) => {
-        sqlite.db.get(
+        sqlite.get(
             `INSERT INTO example(description, status) VALUES($description, $status);`,
             {
                 $description: description,
@@ -47,7 +48,7 @@ function postExample({description, status}){
                 if(err){
                     return reject(err);
                 }
-                sqlite.db.get(
+                sqlite.get(
                     `SELECT MAX(id) FROM example`,
                     (err, idData) => {
                         if(err){
@@ -68,7 +69,7 @@ function postExample({description, status}){
 function updateExamples(exampleDataArray){
     return Promise.all(exampleDataArray.map(({id, description, status}) => {
         return new Promise((resolve, reject) => {
-            sqlite.db.run(
+            sqlite.run(
                 `UPDATE example SET description=$description, status=$status WHERE id=$id`,
                 {
                     $id:id,
@@ -88,7 +89,7 @@ function updateExamples(exampleDataArray){
 
 function updateSpecificExample({id, description, status}){
     return new Promise((resolve, reject) => {
-        sqlite.db.run(
+        sqlite.run(
             `UPDATE example SET description=$description, status=$status WHERE id=$id`,
             {
                 $id:id,
@@ -120,7 +121,7 @@ function patchExamples(exampleDataArray){
         queryContents += ' WHERE id=$id';
 
         return new Promise((resolve, reject) => {
-            sqlite.db.run(
+            sqlite.run(
                 `UPDATE example ${queryContents}`,
                 queryData,
                 (err) => {
@@ -147,7 +148,7 @@ function patchSpecificExample(id, exampleData){
     queryContents += ' WHERE id=$id';
 
     return new Promise((resolve, reject) => {
-        sqlite.db.run(
+        sqlite.run(
             `UPDATE example ${queryContents}`,
             queryData,
             (err) => {
@@ -163,7 +164,7 @@ function patchSpecificExample(id, exampleData){
 function deleteExamples(exampleIdList){
     return Promise.all(exampleIdList.map(id=> {
         return new Promise((resolve, reject) => {
-            sqlite.db.run(
+            sqlite.run(
                 `DELETE FROM example WHERE id=$id`,
                 {
                     $id:id
@@ -181,7 +182,7 @@ function deleteExamples(exampleIdList){
 
 function deleteSpecificExample(exampleId){
     return new Promise((resolve, reject) => {
-        sqlite.db.run(
+        sqlite.run(
             `DELETE FROM example WHERE id=$id`,
             {
                 $id:exampleId

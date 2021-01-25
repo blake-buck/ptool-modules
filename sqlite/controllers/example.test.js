@@ -1,3 +1,16 @@
+const dependencyInjector = require('../dependency-injector.js');
+
+dependencyInjector.register('exampleService', {
+    getExamples: () => true,
+    getSpecificExample: () => true,
+    postExample: () => true,
+    putExamples:  () => true,
+    putSpecificExample:  () => true,
+    patchExamples:  () => true,
+    patchSpecificExample:  () => true,
+    deleteExamples:  () => true,
+    deleteSpecificExample:  () => true
+})
 const exampleControllers = require('./example');
 
 const mockResponse = () => {
@@ -19,6 +32,7 @@ const mockNext = (e) => {
 }
 
 describe('example controllers tests', () => {
+    
     const improperLimit = 'not a number';
     const improperOffset = 'not a number';
     const improperFields = 'id, --DROP TABLE example';

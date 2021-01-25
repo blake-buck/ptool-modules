@@ -1,22 +1,31 @@
 const express = require('express');
 const request = require('supertest');
+const dependencyInjector = require('../dependency-injector.js')
+const {initializeSqlite, initializeStandardMiddleware} = require('../initialization');
 
-const {initializeSqlite, sqlite, initializeStandardMiddleware} = require('../initialization');
+initializeSqlite(':memory:');
+
+dependencyInjector.register('exampleModel', require('../models/example'));
+
+dependencyInjector.register('exampleService', require('../services/example'));
+
+dependencyInjector.register('exampleController', require('../controllers/example'));
+
+const exampleRouter = require('./example');
 
 beforeEach(async () => {
-    initializeSqlite(':memory:');
     await new Promise((resolve, reject) => {
-        sqlite.db.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
+        dependencyInjector.dependencies.sqlite.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
         if(err){
             reject(err);
         }
         else{
-            sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 1', 0);`, (err) => {
+            dependencyInjector.dependencies.sqlite.run(`INSERT INTO example(description, status) VALUES('Example 1', 0);`, (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
+                    dependencyInjector.dependencies.sqlite.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
                         if(err){
                             reject(err);
                         }
@@ -33,7 +42,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await new Promise((resolve, reject) => {
-        sqlite.db.run('DROP TABLE example', (err) => {
+        dependencyInjector.dependencies.sqlite.run('DROP TABLE example', (err) => {
             if(err){
                 reject(err);
             }
@@ -43,11 +52,9 @@ afterEach(async () => {
         });
     })
 })
-const exampleRouter = require('./example');
 
 
 describe('example route tests', () => {
-    initializeSqlite(':memory:');
     const app = express();
     initializeStandardMiddleware(app);
     app.use(exampleRouter);
@@ -181,7 +188,11 @@ describe('example route tests', () => {
         request(app)
             .put('/example/1')
             .set('Accept', 'application/json')
-            .send({})
+            .send({
+                id:1,
+                description:'1234 jeff',
+                status:3
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {
@@ -200,7 +211,10 @@ describe('example route tests', () => {
         request(app)
             .patch('/example/1')
             .set('Accept', 'application/json')
-            .send({})
+            .send({
+                description:'1234 jeff',
+                status:3
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {

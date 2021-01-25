@@ -1,7 +1,8 @@
 const controllerWrapper = require('./controllerWrapper.js');
 const Joi = require('joi');
 
-const exampleService = require('../services/example');
+const dependencyInjector = require('../dependency-injector.js');
+const exampleService = dependencyInjector.inject('exampleService');
 
 const idParametersSchema = Joi.object({
     id: Joi.number()

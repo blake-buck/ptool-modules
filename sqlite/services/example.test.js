@@ -1,54 +1,43 @@
+const dependencyInjector = require('../dependency-injector.js');
+dependencyInjector.register('exampleModel', {
+    getExamples: () => [
+        {
+            id: 2,
+            description: 'descr',
+            status: 5
+        },
+        {
+            id: 3,
+            description: 'descr',
+            status: 5
+        }
+    ],
+    getSpecificExample: () => ({
+        id: 1,
+        description: 'descr',
+        status: 5
+    }),
+    postExample: () => ({
+        id: 1,
+        description: 'descr',
+        status: 5
+    }),
+    updateExamples: () => true,
+    updateSpecificExample: () => true,
+    patchExamples: () => true,
+    patchSpecificExample: () => true,
+    deleteExamples: () => true,
+    deleteSpecificExample: () => true
+});
 const exampleServices = require('./example');
 
-const {initializeSqlite, sqlite} = require('../initialization');
-
-beforeEach(async () => {
-    initializeSqlite(':memory:');
-    await new Promise((resolve, reject) => {
-        sqlite.db.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
-        if(err){
-            reject(err);
-        }
-        else{
-            sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 1', 0);`, (err) => {
-                if(err){
-                    reject(err);
-                }
-                else{
-                    sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
-                        if(err){
-                            reject(err);
-                        }
-                        else{
-                            resolve(true);
-                        }
-                    })
-                }
-            })
-        }
-    })
-    });
-})
-
-afterEach(async () => {
-    await new Promise((resolve, reject) => {
-        sqlite.db.run('DROP TABLE example', (err) => {
-            if(err){
-                reject(err);
-            }
-            else{
-                resolve(true);
-            }
-        });
-    })
-})
-
-
 describe('example service tests', () => {
+    
     it('getExamples should return two records', async (done) => {
         let response = await exampleServices.getExamples({limit:10, offset: 0}, 'id,description,status');
         expect(response.status).toBe(200);
         expect(response.body).toBeTruthy();
+        expect(response.body.length).toBe(2);
 
         done();
     });

@@ -1,30 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const dependencyInjector = require('../dependency-injector.js');
+const exampleController = dependencyInjector.inject('exampleController');
 
-const {
-    getExamples,
-    getSpecificExample,
-    postExample,
-    updateExamples,
-    updateSpecificExample,
-    patchExamples,
-    patchSpecificExample,
-    deleteExamples,
-    deleteSpecificExample
-} = require('../controllers/example');
+router.get('/example', exampleController.getExamples);
+router.get('/example/:id', exampleController.getSpecificExample);
 
-router.get('/example', getExamples);
-router.get('/example/:id', getSpecificExample);
+router.post('/example', exampleController.postExample);
 
-router.post('/example', postExample);
+router.put('/example', exampleController.updateExamples);
+router.put('/example/:id', exampleController.updateSpecificExample);
 
-router.put('/example', updateExamples);
-router.put('/example/:id', updateSpecificExample);
+router.patch('/example', exampleController.patchExamples);
+router.patch('/example/:id', exampleController.patchSpecificExample);
 
-router.patch('/example', patchExamples);
-router.patch('/example/:id', patchSpecificExample);
-
-router.delete('/example', deleteExamples);
-router.delete('/example/:id', deleteSpecificExample);
+router.delete('/example', exampleController.deleteExamples);
+router.delete('/example/:id', exampleController.deleteSpecificExample);
 
 module.exports = router;

@@ -1,21 +1,23 @@
+const dependencyInjector = require('../dependency-injector.js');
+
+const {initializeSqlite} = require('../initialization');
+initializeSqlite(':memory:');
+
 const exampleModels = require('./example');
 
-const {initializeSqlite, sqlite} = require('../initialization');
-
 beforeEach(async () => {
-    initializeSqlite(':memory:');
     await new Promise((resolve, reject) => {
-        sqlite.db.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
+        dependencyInjector.dependencies.sqlite.run(`CREATE TABLE example(id INTEGER PRIMARY KEY ASC, description TEXT, status INTEGER);`, (err) => {
         if(err){
             reject(err);
         }
         else{
-            sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 1', 0);`, (err) => {
+            dependencyInjector.dependencies.sqlite.run(`INSERT INTO example(description, status) VALUES('Example 1', 0);`, (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    sqlite.db.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
+                    dependencyInjector.dependencies.sqlite.run(`INSERT INTO example(description, status) VALUES('Example 2', 0);`, (err) => {
                         if(err){
                             reject(err);
                         }
@@ -32,7 +34,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await new Promise((resolve, reject) => {
-        sqlite.db.run('DROP TABLE example', (err) => {
+        dependencyInjector.dependencies.sqlite.run('DROP TABLE example', (err) => {
             if(err){
                 reject(err);
             }
@@ -87,7 +89,7 @@ describe('example model tests', () => {
 
         expect(result).toBeTruthy();
 
-        sqlite.db.all('SELECT * FROM example', (err, result) => {
+        dependencyInjector.dependencies.sqlite.all('SELECT * FROM example', (err, result) => {
             const recordOne = result[0];
             const recordTwo = result[1];
 
@@ -110,7 +112,7 @@ describe('example model tests', () => {
 
         expect(result).toBeTruthy();
 
-        sqlite.db.all('SELECT * FROM example where id=1', (err, result) => {
+        dependencyInjector.dependencies.sqlite.all('SELECT * FROM example where id=1', (err, result) => {
             expect(result[0]).description = 'test updated example 1';
             expect(result[0]).status = 12345;
 
@@ -134,7 +136,7 @@ describe('example model tests', () => {
 
         expect(result).toBeTruthy();
 
-        sqlite.db.all('SELECT * FROM example', (err, result) => {
+        dependencyInjector.dependencies.sqlite.all('SELECT * FROM example', (err, result) => {
             const recordOne = result[0];
             const recordTwo = result[1];
 
@@ -159,7 +161,7 @@ describe('example model tests', () => {
 
         expect(result).toBeTruthy();
 
-        sqlite.db.all('SELECT * FROM example where id=1', (err, result) => {
+        dependencyInjector.dependencies.sqlite.all('SELECT * FROM example where id=1', (err, result) => {
             expect(result[0]).description = 'test updated example 1';
             expect(result[0]).status = 12345;
 
@@ -171,7 +173,7 @@ describe('example model tests', () => {
         const result = await exampleModels.deleteExamples([1, 2]);
         expect(result).toBeTruthy();
 
-        sqlite.db.all('SELECT * FROM example', (err, result) => {
+        dependencyInjector.dependencies.sqlite.all('SELECT * FROM example', (err, result) => {
             expect(result.length).toBe(0);
             done();
         })
@@ -181,7 +183,7 @@ describe('example model tests', () => {
         const result = await exampleModels.deleteSpecificExample(1);
         expect(result).toBeTruthy();
 
-        sqlite.db.all('SELECT * FROM example', (err, result) => {
+        dependencyInjector.dependencies.sqlite.all('SELECT * FROM example', (err, result) => {
             expect(result.length).toBe(1);
             done();
         })
