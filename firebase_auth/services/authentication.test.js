@@ -1,4 +1,8 @@
-const {initializeFirebaseAuth, firebase} = require('../initialization');
+const dependencyInjector = require('../dependency-injector');
+
+const {initializeFirebaseAuth} = require('../initialization');
+initializeFirebaseAuth();
+
 const authenticationService = require('./authentication');
 
 describe('Firebase authentication tests', () => {
@@ -7,7 +11,6 @@ describe('Firebase authentication tests', () => {
     const newPassword = 'temporaryPassword@2';
     let jwt='';
 
-    initializeFirebaseAuth();
 
     it('register should work', async (done) => {
         const {status, body} = await authenticationService.register(email, password);
@@ -15,8 +18,8 @@ describe('Firebase authentication tests', () => {
         expect(body.message).toBeTruthy();
 
         // need to manually verify users while running unit tests
-        const {uid} = await firebase.admin.getUserByEmail(email);
-        await firebase.admin.updateUser(uid, {emailVerified: true});
+        const {uid} = await dependencyInjector.dependencies.firebaseAuth.admin.getUserByEmail(email);
+        await dependencyInjector.dependencies.firebaseAuth.admin.updateUser(uid, {emailVerified: true});
 
         done();
     });
@@ -43,8 +46,8 @@ describe('Firebase authentication tests', () => {
         expect(status).toBe(200);
         expect(body.message).toBeTruthy();
         
-        const {uid} = await firebase.admin.getUserByEmail(email);
-        await firebase.admin.updateUser(uid, {password: newPassword});
+        const {uid} = await dependencyInjector.dependencies.firebaseAuth.admin.getUserByEmail(email);
+        await dependencyInjector.dependencies.firebaseAuth.admin.updateUser(uid, {password: newPassword});
 
         done();
     })

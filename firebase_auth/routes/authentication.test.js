@@ -1,11 +1,16 @@
 const express = require('express');
 const request = require('supertest');
 
+const dependencyInjector = require('../dependency-injector.js');
+
+const {initializeFirebaseAuth, initializeStandardMiddleware} = require('../initialization');
+initializeFirebaseAuth();
+dependencyInjector.register('authenticationService', require('../services/authentication.js'));
+dependencyInjector.register('authenticationController', require('../controllers/authentication.js'));
+
 const authenticationRouter = require('./authentication');
-const {initializeFirebaseAuth, firebase, initializeStandardMiddleware} = require('../initialization');
 
 describe('Firebase authentication routes', () => {
-    initializeFirebaseAuth();
     const app = express();
     initializeStandardMiddleware(app);
     app.use(authenticationRouter);
@@ -13,7 +18,7 @@ describe('Firebase authentication routes', () => {
     const username='blake.buck@hey.com';
     const email = username
     const password='temporaryPassword@1';
-    const previousPassword =password
+    const previousPassword = password;
     const proposedPassword ='temporaryPassword@2';
 
     let jwt='';
@@ -35,8 +40,8 @@ describe('Firebase authentication routes', () => {
                 expect(res.body.message).toBeTruthy();
 
                 // for testing purposes, this user needs to be automatically confirmed
-                const {uid} = await firebase.admin.getUserByEmail(email);
-                await firebase.admin.updateUser(uid, {emailVerified: true});
+                const {uid} = await dependencyInjector.dependencies.firebaseAuth.admin.getUserByEmail(email);
+                await dependencyInjector.dependencies.firebaseAuth.admin.updateUser(uid, {emailVerified: true});
 
                 done();
             });
@@ -96,8 +101,8 @@ describe('Firebase authentication routes', () => {
                     done();
                 }
                 expect(res.body.message).toBeTruthy();
-                const {uid} = await firebase.admin.getUserByEmail(email);
-                await firebase.admin.updateUser(uid, {password: proposedPassword});
+                const {uid} = await dependencyInjector.dependencies.firebaseAuth.admin.getUserByEmail(email);
+                await dependencyInjector.dependencies.firebaseAuth.admin.updateUser(uid, {password: proposedPassword});
                 done();
             });
     });

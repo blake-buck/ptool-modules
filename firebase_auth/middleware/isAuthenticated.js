@@ -1,9 +1,10 @@
-const {firebase} = require('../initialization');
+const dependencyInjector = require('../dependency-injector');
+const firebaseAuth = dependencyInjector.inject('firebaseAuth');
 
 async function isAuthenticated(request, response, next){
     try{
         const {jwt} = request.headers;
-        await firebase.admin.verifyIdToken(jwt, true);
+        await firebaseAuth.admin.verifyIdToken(jwt, true);
         next();
     }
     catch(e){

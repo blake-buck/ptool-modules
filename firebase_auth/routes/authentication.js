@@ -5,18 +5,13 @@ const {
     isAuthenticated
 } = require('../middleware/middleware.js');
 
-const {
-    register,
-    login,
-    changePassword,
-    forgotPassword,
-    deleteAccount,
-} = require('../controllers/authentication');
+const dependencyInjector = require('../dependency-injector.js');
+const authenticationController = dependencyInjector.inject('authenticationController');
 
-router.post('/register', register);
-router.post('/login', login);
-router.post('/change-password', isAuthenticated, changePassword);
-router.post('/forgot-password', forgotPassword);
-router.post('/delete-account', isAuthenticated, deleteAccount);
+router.post('/register', authenticationController.register);
+router.post('/login', authenticationController.login);
+router.post('/change-password', isAuthenticated, authenticationController.changePassword);
+router.post('/forgot-password', authenticationController.forgotPassword);
+router.post('/delete-account', isAuthenticated, authenticationController.deleteAccount);
 
 module.exports = router;

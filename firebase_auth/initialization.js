@@ -8,8 +8,9 @@ const {
     FIREBASE_APP_ID
 } = require('./config.js');
 
-const firebase = {};
+
 function initializeFirebaseAuth(){
+    const firebaseAuth = {};
     logger.info('Initializing Firebase Auth...');
     firebaseClient.initializeApp({
         apiKey: FIREBASE_API_KEY,
@@ -18,15 +19,15 @@ function initializeFirebaseAuth(){
         messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
         appId: FIREBASE_APP_ID
     })
-    firebase.client = firebaseClient.auth();
+    firebaseAuth.client = firebaseClient.auth();
 
     firebaseAdmin.initializeApp({
         credential: firebaseAdmin.credential.cert(require('./credentials.json')),
         authDomain: FIREBASE_AUTH_DOMAIN
     });
-    firebase.admin = firebaseAdmin.auth();
+    firebaseAuth.admin = firebaseAdmin.auth();
+    dependencyInjector.register('firebaseAuth', firebaseAuth);
     logger.info('Firebase Auth initialized.');
 }
 
 module.exports.initializeFirebaseAuth = initializeFirebaseAuth;
-module.exports.firebase = firebase;
