@@ -4,8 +4,8 @@
 
     const standardLogger = require('../logger');
 
-    async function getGroups(paginationData, fieldData){
-        return {status: 200, body: await groupModel.getGroups(paginationData, fieldData)}
+    async function getGroups(paginationData, fieldData, remainingQueryData){
+        return {status: 200, body: await groupModel.getGroups(paginationData, fieldData, remainingQueryData)}
     }
 
     async function getSpecificGroup(groupId, fieldData){

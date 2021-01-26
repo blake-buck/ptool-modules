@@ -2,14 +2,27 @@
     const dependencyInjector = require('../dependency-injector.js');
     const sqlite = dependencyInjector.inject('sqlite');
 
-    function getPermissions({limit, offset}, fieldData){
+    function getPermissions({limit, offset}, fieldData, remainingQueryData){
+        const escapedValues = {};
+        escapedValues.$limit = limit;
+        escapedValues.$offset = offset;
+
+        // proceed with caution; query params _NEED_ to be validated at the controller otherwise you're looking at a potential SQL injection vulnerability
+        let whereQuery = '';
+        for(const key in remainingQueryData){
+            escapedValues[`$${key}Escaped`] = key;
+            escapedValues[`$${key}`] = remainingQueryData[key];
+            if(whereQuery === ''){
+                whereQuery += `WHERE $${key}Escaped=$${key}`
+            }
+            else{
+                whereQuery += `AND $${key}Escaped=$${key}`
+            }
+        }
         return new Promise((resolve, reject) => {
             sqlite.all(
-                `SELECT ${fieldData} FROM permission LIMIT $limit OFFSET $offset`, 
-                {
-                    $limit: limit, 
-                    $offset: offset
-                }, 
+                `SELECT ${fieldData} FROM permission ${whereQuery} LIMIT $limit OFFSET $offset`, 
+                escapedValues, 
                 (err, rows) => {
                     if(err){
                         return reject(err);

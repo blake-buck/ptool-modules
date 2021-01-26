@@ -5,15 +5,27 @@
     const dependencyInjector = require('../dependency-injector.js');
     const groupService = dependencyInjector.inject('groupService');
 
+    const validQueryKeys = 'id,name,description'.split(',');
+
     const specificParametersSchema = Joi.object({
         id: Joi.number().integer().required()
     })
 
-    const getGroupsSchema = Joi.object({
-        limit: Joi.number().default(10),
-        offset: Joi.number().default(0),
-        fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,name,description')
-    });
+
+    const getGroupsSchema = Joi
+        .object({
+            limit: Joi.number().default(10),
+            offset: Joi.number().default(0),
+            fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,name,description'),
+        })
+        .pattern(
+            Joi.alternatives().try(...validQueryKeys), 
+            Joi.alternatives().try(
+                Joi.string(), 
+                Joi.number(), 
+                Joi.boolean()
+            )
+        );
     async function getGroups(request, response){
         const validationResult = getGroupsSchema.validate(request.query);
         if(validationResult.error){
@@ -22,8 +34,12 @@
 
         const paginationData = {limit, offset} = validationResult.value;
         const fieldData = validationResult.value.fields;
+        delete validationResult.value.limit;
+        delete validationResult.value.offset;
+        delete validationResult.value.fields;
+        const remainingQueryData = validationResult.value;
 
-        const result = await groupService.getGroups(paginationData, fieldData);
+        const result = await groupService.getGroups(paginationData, fieldData, remainingQueryData);
         return response.status(result.status).json(result.body);
     }
 
