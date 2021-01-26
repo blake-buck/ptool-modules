@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS permission(name TEXT PRIMARY KEY, description TEXT) ;
+CREATE TABLE IF NOT EXISTS permission(id INTEGER PRIMARY KEY ASC, name TEXT UNIQUE, description TEXT) ;
 INSERT OR REPLACE INTO permission VALUES('PERMISSION_READ', 'Grants user ability to get permissions');
 INSERT OR REPLACE INTO permission VALUES('PERMISSION_WRITE', 'Grants user ability to post permissions');
 INSERT OR REPLACE INTO permission VALUES('PERMISSION_UPDATE', 'Grants user ability to put/patch permissions');

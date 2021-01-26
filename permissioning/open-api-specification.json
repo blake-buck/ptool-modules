@@ -1,0 +1,1398 @@
+{
+    "paths":{
+        "/permissionGroupToPermission": {
+            "get": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Retrieves records from the permissionGroupToPermission table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionGroupToPermissionArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Creates a record in the permissionGroupToPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToPermissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionGroupToPermission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Bulk updates records in the permissionGroupToPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToPermissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Bulk partially-update entries in the permissionGroupToPermission table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToPermissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Bulk deletes records in the permissionGroupToPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            }
+        },
+        "/permissionGroupToPermission/{id}": {
+            "get": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Gets a specific record from the permissionGroupToPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionGroupToPermission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Updates a specific record in the permissionGroupToPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToPermission"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Partially update a specific entry in the permissionGroupToPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToPermissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "permissionGroupToPermission operations"
+                ],
+                "summary": "Deletes a specific record in the permissionGroupToPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToPermissionError"
+                    }
+                }
+            }
+        },
+        "/permissionGroupToUser": {
+            "get": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Retrieves records from the permissionGroupToUser table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionGroupToUserArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Creates a record in the permissionGroupToUser table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToUserMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionGroupToUser"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Bulk updates records in the permissionGroupToUser table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToUserArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToUserOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Bulk partially-update entries in the permissionGroupToUser table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToUserArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToUserOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Bulk deletes records in the permissionGroupToUser table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToUserOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            }
+        },
+        "/permissionGroupToUser/{id}": {
+            "get": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Gets a specific record from the permissionGroupToUser table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionGroupToUser"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Updates a specific record in the permissionGroupToUser table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToUserOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Partially update a specific entry in the permissionGroupToUser table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionGroupToUserMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToUserOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "permissionGroupToUser operations"
+                ],
+                "summary": "Deletes a specific record in the permissionGroupToUser table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionGroupToUserOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionGroupToUserError"
+                    }
+                }
+            }
+        },
+        "/permission": {
+            "get": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Retrieves records from the permission table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permissionArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Creates a record in the permission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Bulk updates records in the permission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Bulk partially-update entries in the permission table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Bulk deletes records in the permission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            }
+        },
+        "/permission/{id}": {
+            "get": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Gets a specific record from the permission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/permission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Updates a specific record in the permission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permission"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Partially update a specific entry in the permission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/permissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "permission operations"
+                ],
+                "summary": "Deletes a specific record in the permission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/permissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/permissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/permissionError"
+                    }
+                }
+            }
+        },
+        "/group": {
+            "get": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Retrieves records from the group table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/groupArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Creates a record in the group table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/group"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Bulk updates records in the group table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Bulk partially-update entries in the group table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Bulk deletes records in the group table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            }
+        },
+        "/group/{id}": {
+            "get": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Gets a specific record from the group table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/group"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Updates a specific record in the group table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/group"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Partially update a specific entry in the group table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "group operations"
+                ],
+                "summary": "Deletes a specific record in the group table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupError"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "permissionGroupToPermissionOk": {
+                "description": "Standard OK response for the permissionGroupToPermission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "permissionGroupToPermissionError": {
+                "description": "Standard error for the permissionGroupToPermission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "permissionGroupToUserOk": {
+                "description": "Standard OK response for the permissionGroupToUser routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "permissionGroupToUserError": {
+                "description": "Standard error for the permissionGroupToUser routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "permissionOk": {
+                "description": "Standard OK response for the permission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "permissionError": {
+                "description": "Standard error for the permission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "groupOk": {
+                "description": "Standard OK response for the group routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "groupError": {
+                "description": "Standard error for the group routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "permissionGroupToPermission": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "groupId": {
+                        "type": "integer"
+                    },
+                    "permissionId": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "permissionGroupToPermissionMinusId": {
+                "type": "object",
+                "properties": {
+                    "groupId": {
+                        "type": "integer"
+                    },
+                    "permissionId": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "permissionGroupToPermissionArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/permissionGroupToPermission"
+                }
+            },
+            "permissionGroupToUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "permissionGroupToUserMinusId": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "permissionGroupToUserArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/permissionGroupToUser"
+                }
+            },
+            "permission": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "permissionMinusId": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "permissionArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/permission"
+                }
+            },
+            "group": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "groupMinusId": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "groupArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/group"
+                }
+            }
+        }
+    }
+}
