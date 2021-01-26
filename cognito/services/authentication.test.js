@@ -1,9 +1,12 @@
-const authenticationService = require('./authentication');
-const {initializeCognito, aws} = require('../initialization');
+const dependencyInjector = require('../dependency-injector');
+const {initializeCognito} = require('../initialization');
 const {AWS_USER_POOL_ID} = require('../config');
 
+initializeCognito();
+const authenticationService = require('./authentication');
+
+
 describe('authentication services testing', () => {
-    initializeCognito();
     const ip = '127.0.0.1';
     const headers = {
         'Accept':'application/json',
@@ -16,9 +19,9 @@ describe('authentication services testing', () => {
 
     it('register() is functional', async (done) => {
         const result = await authenticationService.register(username, password);
-        expect(result.body.CodeDeliveryDetails).toBeTruthy();
+        expect(result.body.message).toBeTruthy();
 
-        await aws.cognito.adminConfirmSignUp({
+        await dependencyInjector.dependencies.cognito.adminConfirmSignUp({
             UserPoolId:AWS_USER_POOL_ID,
             Username:username
         }).promise();

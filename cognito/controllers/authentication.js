@@ -1,5 +1,6 @@
 const Joi = require('joi');
-const authenticationService = require('../services/authentication');
+const dependencyInjector = require('../dependency-injector');
+const authenticationService = dependencyInjector.inject('authenticationService');
 const logger = require('../logger');
 const controllerWrapper = require('./controllerWrapper');
 

@@ -3,15 +3,15 @@ const logger = require('../logger');
 const {createHmac} = require('crypto');
 const jsonwebtoken = require('jsonwebtoken');
 
+const dependencyInjector = require('../dependency-injector');
+const cognito = dependencyInjector.inject('cognito');
+
 const {
     AWS_CLIENT_ID,
     AWS_COGNITO_SECRET_HASH,
     AWS_USER_POOL_ID,
     AWS_COGNITO_SERVER_NAME
 } = require('../config.js');
-
-const {aws} = require('../initialization');
-
 
 function decodeToken(jwt){
     const decodedToken = jsonwebtoken.decode(jwt);
@@ -54,7 +54,7 @@ async function register(username, password){
             Password: password,
             SecretHash: createSecretHash(username)
         };
-        await aws.cognito.signUp(params).promise()
+        await cognito.signUp(params).promise()
     }
     catch(e){
         // we dont want potential attackers to know what emails already exist in the system; but if it isn't a UsernameExistsException we want the error to be handled
@@ -87,7 +87,7 @@ async function login(username, password, {ip, headers}){
         }
     }
 
-    return {status: 200, body: await aws.cognito.adminInitiateAuth(params).promise()};
+    return {status: 200, body: await cognito.adminInitiateAuth(params).promise()};
 }
 
 async function refreshToken({refresh, headers, ip}){
@@ -109,7 +109,7 @@ async function refreshToken({refresh, headers, ip}){
         }
     };
 
-    return {status:200, body: await aws.cognito.adminInitiateAuth(params).promise()};
+    return {status:200, body: await cognito.adminInitiateAuth(params).promise()};
 }
 async function changePassword({previousPassword, proposedPassword}, jwt){
     const signOutParams = {
@@ -121,8 +121,8 @@ async function changePassword({previousPassword, proposedPassword}, jwt){
         ProposedPassword: proposedPassword
     }
 
-    await aws.cognito.changePassword(changePasswordParams).promise();
-    await aws.cognito.globalSignOut(signOutParams).promise();
+    await cognito.changePassword(changePasswordParams).promise();
+    await cognito.globalSignOut(signOutParams).promise();
 
     // the above functions return nothing if they succeed, hence the need for an empty body here
     return {status: 200, body: {}};
@@ -135,7 +135,7 @@ async function forgotPassword(username){
         SecretHash: createSecretHash(username)
     }
 
-    return {status:200, body: await aws.cognito.forgotPassword(params).promise()};
+    return {status:200, body: await cognito.forgotPassword(params).promise()};
 }
 async function confirmForgotPassword({confirmationCode, username, password}){
     const params = {
@@ -146,7 +146,7 @@ async function confirmForgotPassword({confirmationCode, username, password}){
         SecretHash: createSecretHash(username)
     }
 
-    await aws.cognito.confirmForgotPassword(params).promise();
+    await cognito.confirmForgotPassword(params).promise();
 
     // the above function returns nothing if it succeeds, hence the need for an empty body here
     return {status:200, body: {}};
@@ -156,7 +156,7 @@ async function deleteAccount(jwt){
     const params = {
         AccessToken:jwt
     }
-    await aws.cognito.deleteUser(params).promise();
+    await cognito.deleteUser(params).promise();
 
     // the above function returns nothing if it succeeds, hence the need for an empty body here
     return {status:200, body: {}};
