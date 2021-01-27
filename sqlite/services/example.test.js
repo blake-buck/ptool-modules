@@ -34,7 +34,7 @@ const exampleServices = require('./example');
 describe('example service tests', () => {
     
     it('getExamples should return two records', async (done) => {
-        let response = await exampleServices.getExamples({limit:10, offset: 0}, 'id,description,status');
+        let response = await exampleServices.getExamples({value:{limit:10, offset: 0, fields: 'id,description,status'}});
         expect(response.status).toBe(200);
         expect(response.body).toBeTruthy();
         expect(response.body.length).toBe(2);
