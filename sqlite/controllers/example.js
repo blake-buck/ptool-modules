@@ -4,25 +4,42 @@ const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector.js');
 const exampleService = dependencyInjector.inject('exampleService');
 
+const validQueryKeys = 'id,description,status'.split(',');
+
 const idParametersSchema = Joi.object({
     id: Joi.number()
 })
 
-const getExamplesSchema = Joi.object({
-    limit: Joi.number().default(10),
-    offset: Joi.number().default(0),
-    fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,description,status')
-});
+const getExamplesSchema = Joi
+    .object({
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,description,status')
+    })
+    .pattern(
+        Joi.alternatives().try(...validQueryKeys), 
+        Joi.alternatives().try(
+            Joi.string(), 
+            Joi.number(), 
+            Joi.boolean(),
+            Joi.object({
+                lt: Joi.alternatives().try(Joi.string(), Joi.number()),
+                gt: Joi.alternatives().try(Joi.string(), Joi.number()),
+                lte: Joi.alternatives().try(Joi.string(), Joi.number()),
+                gte: Joi.alternatives().try(Joi.string(), Joi.number()),
+                ne: Joi.alternatives().try(Joi.string(), Joi.number()),
+                like: Joi.string(),
+                in: Joi.alternatives().try(Joi.string().pattern(/^(\d|\d,)+$/), Joi.object({like: Joi.string()})),
+            })
+        )
+    );
 async function getExamples(request, response){
     const validationResult = getExamplesSchema.validate(request.query);
     if(validationResult.error){
         throw new Error(validationResult.error);
     }
 
-    const paginationData = {limit, offset} = validationResult.value;
-    const fieldData = validationResult.value.fields;
-
-    const result = await exampleService.getExamples(paginationData, fieldData);
+    const result = await exampleService.getExamples(validationResult);
     return response.status(result.status).json(result.body);
 }
 
