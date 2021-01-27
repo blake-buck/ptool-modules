@@ -19,7 +19,7 @@ INSERT OR REPLACE INTO permission VALUES('GROUP_TO_USER_WRITE', 'Grants user abi
 INSERT OR REPLACE INTO permission VALUES('GROUP_TO_USER_UPDATE', 'Grants user ability to put/patch group to user links');
 INSERT OR REPLACE INTO permission VALUES('GROUP_TO_USER_DELETE', 'Grants user ability to delete group to user links');
 
-CREATE TABLE IF NOT EXISTS group(id INTEGER PRIMARY KEY, name TEXT, description TEXT);
+CREATE TABLE IF NOT EXISTS group(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
 INSERT OR REPLACE INTO group VALUES(1, 'root', 'Permission to do everything. The key that unlocks all doors.');
 
 

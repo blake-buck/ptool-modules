@@ -1,0 +1,1 @@
+Change hasPermission middleware to properly pull in the userId from a request; by default it looks for the userId parameter in the request header.
