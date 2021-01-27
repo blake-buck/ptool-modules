@@ -2,27 +2,74 @@
     const dependencyInjector = require('../dependency-injector.js');
     const sqlite = dependencyInjector.inject('sqlite');
 
-    function getPermissions({limit, offset}, fieldData, remainingQueryData){
-        const escapedValues = {};
-        escapedValues.$limit = limit;
-        escapedValues.$offset = offset;
-
-        // proceed with caution; query params _NEED_ to be validated at the controller otherwise you're looking at a potential SQL injection vulnerability
-        let whereQuery = '';
-        for(const key in remainingQueryData){
-            escapedValues[`$${key}Escaped`] = key;
-            escapedValues[`$${key}`] = remainingQueryData[key];
-            if(whereQuery === ''){
-                whereQuery += `WHERE $${key}Escaped=$${key}`
+    function buildEscapedQueryValuesObject(queryObj){
+        const escapedQueryValues = {};
+        let query = '';
+        const conversionHashmap = {
+            lt: '<',
+            gt: '>',
+            lte: '<=',
+            gte: '>=',
+            ne: '!='
+        };
+        let precursor = 'WHERE';
+        let counter = 0;
+        for(const outerKey in queryObj){
+            const queryValue = queryObj[outerKey];
+            
+            if(typeof queryValue === 'object'){
+                for(const innerKey in queryValue){
+    
+                    const escapedQueryValue = `$queryValue${counter}`;
+    
+                    escapedQueryValues[escapedQueryValue] = queryValue[innerKey];
+                    
+                    if(innerKey === 'in'){
+                        query += ` ${precursor} ${outerKey} IN ( ${queryValue[innerKey]} )`;
+                        delete escapedQueryValues[escapedQueryValue];
+                        
+                    }
+                    else if(innerKey=== 'like'){
+                        escapedQueryValues[escapedQueryValue] = `%${queryValue[innerKey]}%`;
+                        query += ` ${precursor} ${outerKey} LIKE ${escapedQueryValue}`;
+                    }
+                    else{
+                        query += ` ${precursor} ${outerKey} ${conversionHashmap[innerKey]} ${escapedQueryValue}`;
+                    }
+                    counter++;
+                    precursor = 'AND'
+                }
+                
             }
             else{
-                whereQuery += `AND $${key}Escaped=$${key}`
+                const escapedQueryValue = `$queryValue${counter}`;
+    
+                escapedQueryValues[escapedQueryValue] = queryValue;
+                query += ` ${precursor} ${outerKey}=${escapedQueryValue}`;
             }
+            counter++
+            precursor = 'AND'
         }
+        return {
+            query,
+            escapedQueryValues
+        }
+    }
+
+    function getPermissions({limit, offset}, fieldData, queryObject){
+        const {
+            query,
+            escapedQueryValues
+        } = buildEscapedQueryValuesObject(queryObject);
+
         return new Promise((resolve, reject) => {
             sqlite.all(
-                `SELECT ${fieldData} FROM permission ${whereQuery} LIMIT $limit OFFSET $offset`, 
-                escapedValues, 
+                `SELECT ${fieldData} FROM permission ${query} LIMIT $limit OFFSET $offset`, 
+                {
+                    $limit: limit, 
+                    $offset: offset,
+                    ...escapedQueryValues
+                }, 
                 (err, rows) => {
                     if(err){
                         return reject(err);

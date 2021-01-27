@@ -16,7 +16,7 @@
 
     describe('permission service tests', () => {
         it('getPermissions should return status 200 and two records', async (done) => {
-            let response = await permissionServices.getPermissions({limit:10, offset: 0}, 'undefined');
+            let response = await permissionServices.getPermissions({value: {limit:10, offset: 0, fields:'id,name,description'}});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.length).toBe(2);
@@ -25,7 +25,7 @@
         });
 
         it('getSpecificPermission should return status 200 and a singular record', async (done) => {
-            let response = await permissionServices.getSpecificPermission(1,'undefined');
+            let response = await permissionServices.getSpecificPermission(1,'id,name,description');
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.id).toBe(1);

@@ -4,8 +4,16 @@
 
     const standardLogger = require('../logger');
 
-    async function getGroups(paginationData, fieldData, remainingQueryData){
-        return {status: 200, body: await groupModel.getGroups(paginationData, fieldData, remainingQueryData)}
+    async function getGroups(validationResult){
+        const paginationData = {limit, offset} = validationResult.value;
+        const fieldData = validationResult.value.fields;
+        
+        const queryObject = {...validationResult.value};
+        delete queryObject.limit;
+        delete queryObject.offset;
+        delete queryObject.fields;
+
+        return {status: 200, body: await groupModel.getGroups(paginationData, fieldData, queryObject)}
     }
 
     async function getSpecificGroup(groupId, fieldData){

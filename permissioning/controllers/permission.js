@@ -5,25 +5,43 @@
     const dependencyInjector = require('../dependency-injector.js');
     const permissionService = dependencyInjector.inject('permissionService');
 
+    const validQueryKeys = 'id,name,description'.split(',');
+
     const specificParametersSchema = Joi.object({
         id: Joi.number().integer().required()
     })
 
-    const getPermissionsSchema = Joi.object({
-        limit: Joi.number().default(10),
-        offset: Joi.number().default(0),
-        fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,name,description')
-    });
+    const getPermissionsSchema = Joi
+        .object({
+            limit: Joi.number().default(10),
+            offset: Joi.number().default(0),
+            fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,name,description')
+        })
+        .pattern(
+            Joi.alternatives().try(...validQueryKeys), 
+            Joi.alternatives().try(
+                Joi.string(), 
+                Joi.number(), 
+                Joi.boolean(),
+                Joi.object({
+                    lt: Joi.alternatives().try(Joi.string(), Joi.number()),
+                    gt: Joi.alternatives().try(Joi.string(), Joi.number()),
+                    lte: Joi.alternatives().try(Joi.string(), Joi.number()),
+                    gte: Joi.alternatives().try(Joi.string(), Joi.number()),
+                    ne: Joi.alternatives().try(Joi.string(), Joi.number()),
+                    like: Joi.string(),
+                    in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+$/i), Joi.object({like: Joi.string()})),
+                })
+            )
+        );
+
     async function getPermissions(request, response){
         const validationResult = getPermissionsSchema.validate(request.query);
         if(validationResult.error){
             throw new Error(validationResult.error);
         }
 
-        const paginationData = {limit, offset} = validationResult.value;
-        const fieldData = validationResult.value.fields;
-
-        const result = await permissionService.getPermissions(paginationData, fieldData);
+        const result = await permissionService.getPermissions(validationResult);
         return response.status(result.status).json(result.body);
     }
 

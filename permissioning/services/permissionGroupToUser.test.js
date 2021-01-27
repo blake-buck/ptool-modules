@@ -16,7 +16,7 @@
 
     describe('permissionGroupToUser service tests', () => {
         it('getPermissionGroupToUsers should return status 200 and two records', async (done) => {
-            let response = await permissionGroupToUserServices.getPermissionGroupToUsers({limit:10, offset: 0}, 'undefined');
+            let response = await permissionGroupToUserServices.getPermissionGroupToUsers({value: {limit:10, offset: 0, fields:'id,userId,groupId'}});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.length).toBe(2);
@@ -25,7 +25,7 @@
         });
 
         it('getSpecificPermissionGroupToUser should return status 200 and a singular record', async (done) => {
-            let response = await permissionGroupToUserServices.getSpecificPermissionGroupToUser(1,'undefined');
+            let response = await permissionGroupToUserServices.getSpecificPermissionGroupToUser(1,'id,userId,groupId');
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.id).toBe(1);

@@ -4,8 +4,16 @@
 
     const standardLogger = require('../logger');
 
-    async function getPermissions(paginationData, fieldData){
-        return {status: 200, body: await permissionModel.getPermissions(paginationData, fieldData)}
+    async function getPermissions(validationResult){
+        const paginationData = {limit, offset} = validationResult.value;
+        const fieldData = validationResult.value.fields;
+        
+        const queryObject = {...validationResult.value};
+        delete queryObject.limit;
+        delete queryObject.offset;
+        delete queryObject.fields;
+
+        return {status: 200, body: await permissionModel.getPermissions(paginationData, fieldData, queryObject)}
     }
 
     async function getSpecificPermission(permissionId, fieldData){

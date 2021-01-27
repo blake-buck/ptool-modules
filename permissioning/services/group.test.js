@@ -16,7 +16,7 @@
 
     describe('group service tests', () => {
         it('getGroups should return status 200 and two records', async (done) => {
-            let response = await groupServices.getGroups({limit:10, offset: 0}, 'undefined');
+            let response = await groupServices.getGroups({value: {limit:10, offset: 0, fields:'id,name,description'}});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.length).toBe(2);
@@ -25,7 +25,7 @@
         });
 
         it('getSpecificGroup should return status 200 and a singular record', async (done) => {
-            let response = await groupServices.getSpecificGroup(1,'undefined');
+            let response = await groupServices.getSpecificGroup(1,'id,name,description');
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.id).toBe(1);
