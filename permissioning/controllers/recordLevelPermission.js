@@ -5,7 +5,7 @@
     const dependencyInjector = require('../dependency-injector.js');
     const recordLevelPermissionService = dependencyInjector.inject('recordLevelPermissionService');
 
-    const validQueryKeys = 'id,tableName,recordId,permissionType,granteeId,get,update,del'.split(',');
+    const validQueryKeys = 'id,tableName,recordId,permissionType,granteeId,get,modify,del'.split(',');
 
     const specificParametersSchema = Joi.object({
         id: Joi.number().integer().required()
@@ -15,7 +15,7 @@
         .object({
             limit: Joi.number().default(10),
             offset: Joi.number().default(0),
-            fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,tableName,recordId,permissionType,granteeId,get,update,del')
+            fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,tableName,recordId,permissionType,granteeId,get,modify,del')
         })
         .pattern(
             Joi.alternatives().try(...validQueryKeys), 
@@ -46,7 +46,7 @@
     }
 
     const getSpecificRecordLevelPermissionSchema = Joi.object({
-        fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,tableName,recordId,permissionType,granteeId,get,update,del')
+        fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,tableName,recordId,permissionType,granteeId,get,modify,del')
     })
     async function getSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
@@ -64,7 +64,7 @@
         return response.status(result.status).json(result.body);
     }
 
-    const postRecordLevelPermissionSchema = Joi.object({tableName:Joi.string().required(),recordId:Joi.number().integer().required(),permissionType:Joi.string().required(),granteeId:Joi.string().required(),get:Joi.number().integer().required(),update:Joi.number().integer().required(),del:Joi.number().integer().required()})
+    const postRecordLevelPermissionSchema = Joi.object({tableName:Joi.string().required(),recordId:Joi.number().integer().required(),permissionType:Joi.string().required(),granteeId:Joi.string().required(),get:Joi.number().integer().required(),modify:Joi.number().integer().required(),del:Joi.number().integer().required()})
     async function postRecordLevelPermission(request, response){
         const validationResult = postRecordLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
@@ -75,7 +75,7 @@
         return response.status(result.status).json(result.body);
     }
 
-    const updateRecordLevelPermissionsSchema = Joi.array().items({id:Joi.number().integer().required(),tableName:Joi.string().required(),recordId:Joi.number().integer().required(),permissionType:Joi.string().required(),granteeId:Joi.string().required(),get:Joi.number().integer().required(),update:Joi.number().integer().required(),del:Joi.number().integer().required()}) 
+    const updateRecordLevelPermissionsSchema = Joi.array().items({id:Joi.number().integer().required(),tableName:Joi.string().required(),recordId:Joi.number().integer().required(),permissionType:Joi.string().required(),granteeId:Joi.string().required(),get:Joi.number().integer().required(),modify:Joi.number().integer().required(),del:Joi.number().integer().required()}) 
     async function updateRecordLevelPermissions(request, response){
         const validationResult = updateRecordLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
@@ -86,7 +86,7 @@
         return response.status(result.status).json(result.body);
     }
 
-    const updateSpecificRecordLevelPermissionSchema = Joi.object({id:Joi.number().integer().required(),tableName:Joi.string().required(),recordId:Joi.number().integer().required(),permissionType:Joi.string().required(),granteeId:Joi.string().required(),get:Joi.number().integer().required(),update:Joi.number().integer().required(),del:Joi.number().integer().required()})
+    const updateSpecificRecordLevelPermissionSchema = Joi.object({id:Joi.number().integer().required(),tableName:Joi.string().required(),recordId:Joi.number().integer().required(),permissionType:Joi.string().required(),granteeId:Joi.string().required(),get:Joi.number().integer().required(),modify:Joi.number().integer().required(),del:Joi.number().integer().required()})
     async function updateSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
@@ -102,7 +102,7 @@
         return response.status(result.status).json(result.body);
     }
 
-    const patchRecordLevelPermissionsSchema = Joi.array().items({id:Joi.number().integer().required(),tableName:Joi.string(),recordId:Joi.number().integer(),permissionType:Joi.string(),granteeId:Joi.string(),get:Joi.number().integer(),update:Joi.number().integer(),del:Joi.number().integer()}) 
+    const patchRecordLevelPermissionsSchema = Joi.array().items({id:Joi.number().integer().required(),tableName:Joi.string(),recordId:Joi.number().integer(),permissionType:Joi.string(),granteeId:Joi.string(),get:Joi.number().integer(),modify:Joi.number().integer(),del:Joi.number().integer()}) 
     async function patchRecordLevelPermissions(request, response){
         const validationResult = patchRecordLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
@@ -113,7 +113,7 @@
         return response.status(result.status).json(result.body);
     }
 
-    const patchSpecificRecordLevelPermissionSchema = Joi.object({tableName:Joi.string(),recordId:Joi.number().integer(),permissionType:Joi.string(),granteeId:Joi.string(),get:Joi.number().integer(),update:Joi.number().integer(),del:Joi.number().integer()})
+    const patchSpecificRecordLevelPermissionSchema = Joi.object({tableName:Joi.string(),recordId:Joi.number().integer(),permissionType:Joi.string(),granteeId:Joi.string(),get:Joi.number().integer(),modify:Joi.number().integer(),del:Joi.number().integer()})
     async function patchSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){

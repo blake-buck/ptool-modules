@@ -14,17 +14,17 @@
 
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE recordLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, recordId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, update INTEGER, del INTEGER);', (err) => {
+            dependencyInjector.dependencies.sqlite.run('CREATE TABLE recordLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, recordId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, modify INTEGER, del INTEGER);', (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
+                    dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, modify, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
                         if(err){
                             reject(err);
                         }
                         else{
-                            dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
+                            dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, modify, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
                                 if(err){
                                     reject(err);
                                 }
@@ -54,7 +54,7 @@
 
     describe('recordLevelPermission routes tests ', () => {
         const app = express();
-        app.use(express.json());
+        initializeStandardMiddleware(app);
         app.use(recordLevelPermissionRouter);
 
 
@@ -80,7 +80,7 @@
             request(app)
                 .post('/recordLevelPermission')
                 .set('Accept', 'application/json')
-                .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0})
+                .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -100,7 +100,7 @@
             request(app)
                 .put('/recordLevelPermission')
                 .set('Accept', 'application/json')
-                .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0}])
+                .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}])
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -120,7 +120,7 @@
             request(app)
                 .patch('/recordLevelPermission')
                 .set('Accept', 'application/json')
-                .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0}])
+                .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}])
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -182,7 +182,7 @@
             request(app)
                 .put('/recordLevelPermission/1')
                 .set('Accept', 'application/json')
-                .send({"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0})
+                .send({"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -202,7 +202,7 @@
             request(app)
                 .patch('/recordLevelPermission/1')
                 .set('Accept', 'application/json')
-                .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0})
+                .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {

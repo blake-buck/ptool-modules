@@ -16,8 +16,8 @@
         );
         const recordLevelPermissionControllers = require('./recordLevelPermission');
 
-        const properValues = {"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0};
-        const patchSpecificProperValues = {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0}
+        const properValues = {"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0};
+        const patchSpecificProperValues = {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}
 
         const mockResponse = () => {
             const res = {};
@@ -193,12 +193,12 @@
         });
         
         
-        it('postRecordLevelPermission - improper update fails validation', () => {
+        it('postRecordLevelPermission - improper modify fails validation', () => {
             recordLevelPermissionControllers.postRecordLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        update:"string"
+                        modify:"string"
                     }
                 },
                 mockResponse(),
@@ -306,12 +306,12 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper update fails validation', () => {
+        it('updateRecordLevelPermissions - improper modify fails validation', () => {
             recordLevelPermissionControllers.updateRecordLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        update:"string"
+                        modify:"string"
                     }]
                 },
                 mockResponse(),
@@ -418,12 +418,12 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper update fails validation', () => {
+        it('updateSpecificRecordLevelPermission - improper modify fails validation', () => {
             recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        update:"string"
+                        modify:"string"
                     }
                 },
                 mockResponse(),
@@ -531,12 +531,12 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper update fails validation', () => {
+        it('patchRecordLevelPermissions - improper modify fails validation', () => {
             recordLevelPermissionControllers.patchRecordLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        update:"string"
+                        modify:"string"
                     }]
                 },
                 mockResponse(),
@@ -643,12 +643,12 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper update fails validation', () => {
+        it('patchSpecificRecordLevelPermission - improper modify fails validation', () => {
             recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
-                        update:"string"
+                        modify:"string"
                     }
                 },
                 mockResponse(),

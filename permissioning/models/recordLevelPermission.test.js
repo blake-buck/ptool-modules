@@ -6,17 +6,17 @@
     
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE recordLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, recordId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, update INTEGER, del INTEGER);', (err) => {
+            dependencyInjector.dependencies.sqlite.run('CREATE TABLE recordLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, recordId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, modify INTEGER, del INTEGER);', (err) => {
             if(err){
                 reject(err);
             }
             else{
-                dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
+                dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, modify, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
                     if(err){
                         reject(err);
                     }
                     else{
-                        dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
+                        dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, modify, del) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
                             if(err){
                                 reject(err);
                             }
@@ -46,14 +46,14 @@
 
     describe('recordLevelPermission model tests ', () => {
         it('getRecordLevelPermission should return two records', async (done) => {
-            let records = await recordLevelPermissionModels.getRecordLevelPermissions({limit:10, offset: 0}, 'id,tableName,recordId,permissionType,granteeId,get,update,del');
+            let records = await recordLevelPermissionModels.getRecordLevelPermissions({limit:10, offset: 0}, 'id,tableName,recordId,permissionType,granteeId,get,modify,del');
             expect(records.length).toBe(2);
 
             done();
         });
 
         it('getSpecificRecordLevelPermission should return a singular record', async (done) => {
-            let record = await recordLevelPermissionModels.getSpecificRecordLevelPermission(1, 'id,tableName,recordId,permissionType,granteeId,get,update,del');
+            let record = await recordLevelPermissionModels.getSpecificRecordLevelPermission(1, 'id,tableName,recordId,permissionType,granteeId,get,modify,del');
             expect(record).toBeTruthy();
             expect(record.id).toBeTruthy();
 
@@ -61,7 +61,7 @@
         });
 
         it('postRecordLevelPermission should return an object with an id', async (done) => {
-            let result = await recordLevelPermissionModels.postRecordLevelPermission({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0});
+            let result = await recordLevelPermissionModels.postRecordLevelPermission({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0});
             expect(result).toBeTruthy();
             expect(result.id).toBeTruthy();
 
@@ -69,11 +69,11 @@
         });
 
         it('updateRecordLevelPermissions should update records', async (done) => {
-            let result = await recordLevelPermissionModels.updateRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0}]);
+            let result = await recordLevelPermissionModels.updateRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}]);
             expect(result).toBeTruthy();
 
             dependencyInjector.dependencies.sqlite.get('SELECT * FROM recordLevelPermission WHERE id=1', (err, row) => {
-                const oldRecord = JSON.stringify({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"update":1,"del":1});
+                const oldRecord = JSON.stringify({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"modify":1,"del":1});
                 const updatedRecord = JSON.stringify(row);
 
                 expect(oldRecord === updatedRecord).toBe(false);
@@ -83,11 +83,11 @@
         });
 
         it('updateSpecificRecordLevelPermission should update a specific record', async (done) => {
-            let result = await recordLevelPermissionModels.updateSpecificRecordLevelPermission({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"update":1,"del":1});
+            let result = await recordLevelPermissionModels.updateSpecificRecordLevelPermission({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"modify":1,"del":1});
             expect(result).toBeTruthy();
 
             dependencyInjector.dependencies.sqlite.get('SELECT * FROM recordLevelPermission WHERE id=1', (err, row) => {
-                const oldRecord = JSON.stringify({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"update":1,"del":1});
+                const oldRecord = JSON.stringify({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"modify":1,"del":1});
                 const updatedRecord = JSON.stringify(row);
 
                 expect(oldRecord === updatedRecord).toBe(false);
@@ -96,11 +96,11 @@
         });
 
         it('patchRecordLevelPermissions should update records', async (done) => {
-            let result = await recordLevelPermissionModels.patchRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0}]);
+            let result = await recordLevelPermissionModels.patchRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}]);
             expect(result).toBeTruthy();
 
             dependencyInjector.dependencies.sqlite.get('SELECT * FROM recordLevelPermission WHERE id=1', (err, row) => {
-                const oldRecord = JSON.stringify({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"update":1,"del":1});
+                const oldRecord = JSON.stringify({"id":2,"tableName":"stringa","recordId":1,"permissionType":"stringa","granteeId":"stringa","get":1,"modify":1,"del":1});
                 const updatedRecord = JSON.stringify(row);
 
                 expect(oldRecord === updatedRecord).toBe(false);
@@ -110,11 +110,11 @@
         });
 
         it('patchSpecificRecordLevelPermission should update a specific record', async (done) => {
-            let result = await recordLevelPermissionModels.patchSpecificRecordLevelPermission(1, {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0});
+            let result = await recordLevelPermissionModels.patchSpecificRecordLevelPermission(1, {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0});
             expect(result).toBeTruthy();
 
             dependencyInjector.dependencies.sqlite.get('SELECT * FROM recordLevelPermission WHERE id=1', (err, row) => {
-                const oldRecord = JSON.stringify({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0});
+                const oldRecord = JSON.stringify({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0});
                 const updatedRecord = JSON.stringify(row);
 
                 expect(oldRecord === updatedRecord).toBe(false);

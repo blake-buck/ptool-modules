@@ -97,12 +97,12 @@
         });
     }
 
-    function postRecordLevelPermission({tableName,recordId,permissionType,granteeId,get,update,del}){
+    function postRecordLevelPermission({tableName,recordId,permissionType,granteeId,get,modify,del}){
         return new Promise((resolve, reject) => {
             sqlite.get(
-                `INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, del) VALUES($tableName, $recordId, $permissionType, $granteeId, $get, $update, $del);`,
+                `INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, modify, del) VALUES($tableName, $recordId, $permissionType, $granteeId, $get, $modify, $del);`,
                 {
-                    $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $update:update, $del:del
+                    $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $modify:modify, $del:del
                 },
                 (err) => {
                     if(err){
@@ -116,7 +116,7 @@
                             }
                             return resolve({
                                 id:idData['MAX(id)'],
-                                tableName,recordId,permissionType,granteeId,get,update,del
+                                tableName,recordId,permissionType,granteeId,get,modify,del
                             })
                         }
                     )
@@ -126,13 +126,13 @@
     }
 
     function updateRecordLevelPermissions(recordLevelPermissionDataArray){
-        return Promise.all(recordLevelPermissionDataArray.map(({id, tableName, recordId, permissionType, granteeId, get, update, del}) => {
+        return Promise.all(recordLevelPermissionDataArray.map(({id, tableName, recordId, permissionType, granteeId, get, modify, del}) => {
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `UPDATE recordLevelPermission SET tableName=$tableName, recordId=$recordId, permissionType=$permissionType, granteeId=$granteeId, get=$get, update=$update, del=$del WHERE id=$id`,
+                    `UPDATE recordLevelPermission SET tableName=$tableName, recordId=$recordId, permissionType=$permissionType, granteeId=$granteeId, get=$get, modify=$modify, del=$del WHERE id=$id`,
                     {
                         $id: id,
-                        $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $update:update, $del:del
+                        $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $modify:modify, $del:del
                     },
                     (err) => {
                         if(err){
@@ -145,13 +145,13 @@
         }))
     }
 
-    function updateSpecificRecordLevelPermission({id, tableName, recordId, permissionType, granteeId, get, update, del}){
+    function updateSpecificRecordLevelPermission({id, tableName, recordId, permissionType, granteeId, get, modify, del}){
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `UPDATE recordLevelPermission SET tableName=$tableName, recordId=$recordId, permissionType=$permissionType, granteeId=$granteeId, get=$get, update=$update, del=$del WHERE id=$id`,
+                `UPDATE recordLevelPermission SET tableName=$tableName, recordId=$recordId, permissionType=$permissionType, granteeId=$granteeId, get=$get, modify=$modify, del=$del WHERE id=$id`,
                 {
                     $id:id,
-                    $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $update:update, $del:del
+                    $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $modify:modify, $del:del
                 },
                 (err) => {
                     if(err){
@@ -334,4 +334,3 @@
         runRecordLevelPermissionQuery,
         addRecordLevelPermissionCheckToBulkGet
     }
-    
