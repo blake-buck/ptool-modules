@@ -12,7 +12,29 @@ function hasGroupLevelPermission(tableName, operation){
             const {userId} = req.headers;
             let groupId;
             if(operation === 'get'){
-                
+                if(typeof req.params.groupId === 'object'){
+                    // Temporary hack so i can start testing queries, should really just change the query to accept an IN (groupIds) instead of an individual id
+                    const groupIds = req.params.groupId.in.split(',');
+                    const results = await Promise.all(
+                        groupIds.map(groupId => {
+                            return groupLevelPermissionService.runGroupLevelPermissionQuery({
+                                userId, 
+                                groupId, 
+                                tableName, 
+                                operation
+                            });
+                        })
+                    )
+
+                    const hasPermission = results.every(res => res);
+                    if(!hasPermission){
+                        throw new Error('User does not have permission to perform action.');
+                    }
+                    return next();
+                }
+                else{
+                    groupId = req.params.groupId;
+                }
             }
             if(operation === 'post'){
                 const {groupId} = req.body;
