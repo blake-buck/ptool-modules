@@ -254,6 +254,55 @@
         });
     }
 
+    function runGroupLevelPermissionQuery(userId, groupId, tableName, operation){
+        const escapedValues = {
+            $userId: userId,
+            $groupId: groupId,
+            $tableName: tableName
+        };
+        const userGroupsQuery = `SELECT groupId FROM permissionGroupToUser WHERE userId=$userId`;
+        const selectGroupPermissions = `
+        SELECT COUNT(*)
+        FROM groupLevelPermission as glp
+        WHERE glp.permissionType='group'
+        AND glp.tableName=$tableName
+        AND glp.groupId=$groupId
+        AND glp.${operation}=1
+        AND glp.granteeId IN (${userGroupsQuery})
+        `;
+
+        const selectUserPermissions =`
+        SELECT COUNT(*)
+        FROM groupLevelPermission as glp
+        WHERE glp.permissionType='group'
+        AND glp.tableName=$tableName
+        AND glp.groupId=$groupId
+        AND glp.${operation}=1
+        AND glp.granteeId=$userId
+        `
+
+        const userHasPermissionQuery=`
+        SELECT (
+            (SELECT (${selectGroupPermissions}) > 0)
+            OR
+            (SELECT (${selectUserPermissions}) > 0)
+        );
+        `
+
+        return new Promise((resolve, reject) => {
+            sqlite.get(
+                userHasPermissionQuery,
+                escapedValues,
+                (err, result) => {
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve(!!result);
+                }
+            )
+        })
+    }
+
     module.exports = {
         getGroupLevelPermissions,
         getSpecificGroupLevelPermission,
@@ -263,6 +312,8 @@
         patchGroupLevelPermissions,
         patchSpecificGroupLevelPermission,
         deleteGroupLevelPermissions,
-        deleteSpecificGroupLevelPermission
+        deleteSpecificGroupLevelPermission,
+
+        runGroupLevelPermissionQuery
     }
     

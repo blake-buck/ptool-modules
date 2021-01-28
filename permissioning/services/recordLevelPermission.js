@@ -54,6 +54,24 @@
         return {status: 200, body: {message: 'RecordLevelPermission deleted successfully'}}
     }
 
+    async function runRecordLevelPermissionQuery(queryObject){
+        const validateRecordLevelPermisionQueryObject = Joi.object({
+            userId: Joi.string().required(),
+            recordId: Joi.number().integer().required(),
+            tableName: Joi.string().required(),
+            operation: Joi.string().alternatives().try('get', 'put', 'del')
+        });
+
+        const validationResult = validateRecordLevelPermisionQueryObject.validate(queryObject);
+
+        if(validationResult.error){
+            throw new Error(validationResult.error);
+        }
+
+        const {userId, recordId, tableName, operation} = validationResult.value;
+        return await recordLevelPermissionModel.runRecordLevelPermissionQuery(userId, recordId, tableName, operation)
+    }
+
     module.exports = {
         getRecordLevelPermissions,
         getSpecificRecordLevelPermission,
@@ -63,6 +81,8 @@
         patchRecordLevelPermissions,
         patchSpecificRecordLevelPermission,
         deleteRecordLevelPermissions,
-        deleteSpecificRecordLevelPermission
+        deleteSpecificRecordLevelPermission,
+
+        runRecordLevelPermissionQuery
     }
     

@@ -3,6 +3,7 @@
     const groupLevelPermissionModel = dependencyInjector.inject('groupLevelPermissionModel');
 
     const standardLogger = require('../logger');
+    const Joi = require('joi');
 
     async function getGroupLevelPermissions(validationResult){
         const paginationData = {limit, offset} = validationResult.value;
@@ -54,6 +55,24 @@
         return {status: 200, body: {message: 'GroupLevelPermission deleted successfully'}}
     }
 
+    async function runGroupLevelPermissionQuery(queryObject){
+        const validateGroupLevelPermisionQueryObject = Joi.object({
+            userId: Joi.string(),
+            groupId: Joi.integer().positive().required(),
+            tableName: Joi.string().required(),
+            operation: Joi.alternatives().try('get', 'post').required()
+        });
+
+        const validationResult = await validateGroupLevelPermisionQueryObject.validate(queryObject);
+        if(validationResult.error){
+            throw new Error(validationResult.error);
+        }
+
+        const {userId, groupId, tableName, operation} = validationResult.value;
+
+        return await groupLevelPermissionModel.runGroupLevelPermissionQuery(userId, groupId, tableName, operation);
+    }
+
     module.exports = {
         getGroupLevelPermissions,
         getSpecificGroupLevelPermission,
@@ -63,6 +82,8 @@
         patchGroupLevelPermissions,
         patchSpecificGroupLevelPermission,
         deleteGroupLevelPermissions,
-        deleteSpecificGroupLevelPermission
+        deleteSpecificGroupLevelPermission,
+
+        runGroupLevelPermissionQuery
     }
     

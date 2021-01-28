@@ -254,6 +254,73 @@
         });
     }
 
+    function runRecordLevelPermissionQuery(userId, recordId, tableName, operation){
+        const escapedValues = {
+            $userId: userId,
+            $tableName: tableName,
+            $recordId: recordId
+        }
+        const userGroupsQuery = `SELECT groupId FROM permissionGroupToUser WHERE userId=$userId`;
+        const selectGroupPermissions = `
+        WITH userGroups AS (${userGroupsQuery})
+        SELECT COUNT(*) 
+        FROM recordLevelPermission as rlp
+        WHERE rlp.permissionType = 'group'
+        AND rlp.tableName = $tableName
+        AND rlp.${operation} = 1
+        AND rlp.recordId = $recordId
+        AND rlp.granteeId IN (userGroups)`
+
+        const selectUserPermissions=`
+        WITH userGroups AS(${userGroupsQuery})
+        SELECT COUNT(*)
+        FROM recordLevelPermission as rlp
+        WHERE rlp.permissionType = 'user'
+        AND rlp.tableName = $tableName
+        AND rlp.${operation} = 1
+        AND rlp.recordId = $recordId
+        AND rlp.granteeId = $userId
+        `;
+
+        const userHasPermissionQuery=`
+        SELECT (
+            (SELECT (${selectGroupPermissions}) > 0)
+            OR
+            (SELECT (${selectUserPermissions}) > 0)
+        );
+        `
+
+        return new Promise((resolve, reject) => {
+            sqlite.get(
+                userHasPermissionQuery,
+                escapedValues,
+                (err, result) => {
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve(!!result);
+                }
+            )
+        })
+    }
+
+
+    function addRecordLevelPermissionCheckToBulkGet(tableName, recordName, userId, commaSeperatedGroupList){
+        // $userId
+        return {
+            query: `AND SELECT(
+                (SELECT (SELECT COUNT(*) FROM recordLevelPermission as rlp WHERE rlp.table=$tableName AND rlp.recordId=${recordName}.id AND rlp.permissionType='group' AND rlp.granteeId IN(${commaSeperatedGroupList}) AND rlp.get=1) > 0)
+                OR
+                (SELECT (SELECT COUNT(*) FROM recordLevelPermission as rlp WHERE rlp.table=$tableName AND rlp.recordId=${recordName}.id AND rlp.permissionType='user' AND rlp.granteeId=$userId AND rlp.get=1) > 0)
+            )
+            `,
+            escapedValues: {
+                $userId: userId,
+                $tableName: tableName
+            }
+        }
+    }
+
     module.exports = {
         getRecordLevelPermissions,
         getSpecificRecordLevelPermission,
@@ -263,6 +330,8 @@
         patchRecordLevelPermissions,
         patchSpecificRecordLevelPermission,
         deleteRecordLevelPermissions,
-        deleteSpecificRecordLevelPermission
+        deleteSpecificRecordLevelPermission,
+        runRecordLevelPermissionQuery,
+        addRecordLevelPermissionCheckToBulkGet
     }
     
