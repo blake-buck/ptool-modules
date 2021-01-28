@@ -2111,7 +2111,7 @@
                     "update": {
                         "type": "integer"
                     },
-                    "delete": {
+                    "del": {
                         "type": "integer"
                     }
                 }
@@ -2137,7 +2137,7 @@
                     "update": {
                         "type": "integer"
                     },
-                    "delete": {
+                    "del": {
                         "type": "integer"
                     }
                 }

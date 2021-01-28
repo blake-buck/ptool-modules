@@ -16,8 +16,8 @@
         );
         const recordLevelPermissionControllers = require('./recordLevelPermission');
 
-        const properValues = {"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0};
-        const patchSpecificProperValues = {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0}
+        const properValues = {"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0};
+        const patchSpecificProperValues = {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"del":0}
 
         const mockResponse = () => {
             const res = {};
@@ -207,12 +207,12 @@
         });
         
         
-        it('postRecordLevelPermission - improper delete fails validation', () => {
+        it('postRecordLevelPermission - improper del fails validation', () => {
             recordLevelPermissionControllers.postRecordLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        delete:"string"
+                        del:"string"
                     }
                 },
                 mockResponse(),
@@ -320,12 +320,12 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper delete fails validation', () => {
+        it('updateRecordLevelPermissions - improper del fails validation', () => {
             recordLevelPermissionControllers.updateRecordLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        delete:"string"
+                        del:"string"
                     }]
                 },
                 mockResponse(),
@@ -432,12 +432,12 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper delete fails validation', () => {
+        it('updateSpecificRecordLevelPermission - improper del fails validation', () => {
             recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        delete:"string"
+                        del:"string"
                     }
                 },
                 mockResponse(),
@@ -545,12 +545,12 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper delete fails validation', () => {
+        it('patchRecordLevelPermissions - improper del fails validation', () => {
             recordLevelPermissionControllers.patchRecordLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        delete:"string"
+                        del:"string"
                     }]
                 },
                 mockResponse(),
@@ -657,12 +657,12 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper delete fails validation', () => {
+        it('patchSpecificRecordLevelPermission - improper del fails validation', () => {
             recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
-                        delete:"string"
+                        del:"string"
                     }
                 },
                 mockResponse(),
