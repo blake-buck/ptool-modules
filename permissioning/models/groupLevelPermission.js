@@ -56,7 +56,7 @@
         }
     }
 
-    function getRecordLevelPermissions({limit, offset}, fieldData, queryObject){
+    function getGroupLevelPermissions({limit, offset}, fieldData, queryObject){
         const {
             query,
             escapedQueryValues
@@ -64,7 +64,7 @@
 
         return new Promise((resolve, reject) => {
             sqlite.all(
-                `SELECT ${fieldData} FROM recordLevelPermission ${query} LIMIT $limit OFFSET $offset`, 
+                `SELECT ${fieldData} FROM groupLevelPermission ${query} LIMIT $limit OFFSET $offset`, 
                 {
                     $limit: limit, 
                     $offset: offset,
@@ -80,12 +80,12 @@
         })
     }
 
-    function getSpecificRecordLevelPermission(recordLevelPermissionId, fieldData){
+    function getSpecificGroupLevelPermission(groupLevelPermissionId, fieldData){
         return new Promise((resolve, reject) => {
             sqlite.get(
-                `SELECT ${fieldData} FROM recordLevelPermission WHERE id=$id`,
+                `SELECT ${fieldData} FROM groupLevelPermission WHERE id=$id`,
                 {
-                    $id: recordLevelPermissionId
+                    $id: groupLevelPermissionId
                 },
                 (err, row) => {
                     if(err){
@@ -97,26 +97,26 @@
         });
     }
 
-    function postRecordLevelPermission({tableName,recordId,permissionType,granteeId,get,update,delete}){
+    function postGroupLevelPermission({tableName,groupId,permissionType,granteeId,get,post}){
         return new Promise((resolve, reject) => {
             sqlite.get(
-                `INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, delete) VALUES($tableName, $recordId, $permissionType, $granteeId, $get, $update, $delete);`,
+                `INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES($tableName, $groupId, $permissionType, $granteeId, $get, $post);`,
                 {
-                    $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $update:update, $delete:delete
+                    $tableName:tableName, $groupId:groupId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $post:post
                 },
                 (err) => {
                     if(err){
                         return reject(err);
                     }
                     sqlite.get(
-                        `SELECT MAX(id) FROM recordLevelPermission`,
+                        `SELECT MAX(id) FROM groupLevelPermission`,
                         (err, idData) => {
                             if(err){
                                 return reject(err);
                             }
                             return resolve({
                                 id:idData['MAX(id)'],
-                                tableName,recordId,permissionType,granteeId,get,update,delete
+                                tableName,groupId,permissionType,granteeId,get,post
                             })
                         }
                     )
@@ -125,14 +125,14 @@
         });
     }
 
-    function updateRecordLevelPermissions(recordLevelPermissionDataArray){
-        return Promise.all(recordLevelPermissionDataArray.map(({id, tableName, recordId, permissionType, granteeId, get, update, delete}) => {
+    function updateGroupLevelPermissions(groupLevelPermissionDataArray){
+        return Promise.all(groupLevelPermissionDataArray.map(({id, tableName, groupId, permissionType, granteeId, get, post}) => {
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `UPDATE recordLevelPermission SET tableName=$tableName, recordId=$recordId, permissionType=$permissionType, granteeId=$granteeId, get=$get, update=$update, delete=$delete WHERE id=$id`,
+                    `UPDATE groupLevelPermission SET tableName=$tableName, groupId=$groupId, permissionType=$permissionType, granteeId=$granteeId, get=$get, post=$post WHERE id=$id`,
                     {
                         $id: id,
-                        $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $update:update, $delete:delete
+                        $tableName:tableName, $groupId:groupId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $post:post
                     },
                     (err) => {
                         if(err){
@@ -145,13 +145,13 @@
         }))
     }
 
-    function updateSpecificRecordLevelPermission({id, tableName, recordId, permissionType, granteeId, get, update, delete}){
+    function updateSpecificGroupLevelPermission({id, tableName, groupId, permissionType, granteeId, get, post}){
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `UPDATE recordLevelPermission SET tableName=$tableName, recordId=$recordId, permissionType=$permissionType, granteeId=$granteeId, get=$get, update=$update, delete=$delete WHERE id=$id`,
+                `UPDATE groupLevelPermission SET tableName=$tableName, groupId=$groupId, permissionType=$permissionType, granteeId=$granteeId, get=$get, post=$post WHERE id=$id`,
                 {
                     $id:id,
-                    $tableName:tableName, $recordId:recordId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $update:update, $delete:delete
+                    $tableName:tableName, $groupId:groupId, $permissionType:permissionType, $granteeId:granteeId, $get:get, $post:post
                 },
                 (err) => {
                     if(err){
@@ -163,23 +163,23 @@
         });
     }
 
-    function patchRecordLevelPermissions(recordLevelPermissionDataArray){
-        return Promise.all(recordLevelPermissionDataArray.map((recordLevelPermissionData) => {
+    function patchGroupLevelPermissions(groupLevelPermissionDataArray){
+        return Promise.all(groupLevelPermissionDataArray.map((groupLevelPermissionData) => {
     
             let queryContents = 'SET';
             let queryData = {};
-            queryData.$id = recordLevelPermissionData.id;
-            delete recordLevelPermissionData.id
-            for(let key in recordLevelPermissionData){
+            queryData.$id = groupLevelPermissionData.id;
+            delete groupLevelPermissionData.id
+            for(let key in groupLevelPermissionData){
                 queryContents += ` ${key}=$${key},`
-                queryData['$' + key] = recordLevelPermissionData[key];
+                queryData['$' + key] = groupLevelPermissionData[key];
             }
             queryContents = queryContents.slice(0, queryContents.length - 1);
             queryContents += ' WHERE id=$id';
     
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `UPDATE recordLevelPermission ${queryContents}`,
+                    `UPDATE groupLevelPermission ${queryContents}`,
                     queryData,
                     (err) => {
                         if(err){
@@ -192,21 +192,21 @@
         }))
     }
     
-    function patchSpecificRecordLevelPermission(id, recordLevelPermissionData){
+    function patchSpecificGroupLevelPermission(id, groupLevelPermissionData){
         // description, status
         let queryContents = 'SET';
         let queryData = {};
         queryData.$id = id;
-        for(let key in recordLevelPermissionData){
+        for(let key in groupLevelPermissionData){
             queryContents += ` ${key}=$${key},`
-            queryData['$' + key] = recordLevelPermissionData[key];
+            queryData['$' + key] = groupLevelPermissionData[key];
         }
         queryContents = queryContents.slice(0, queryContents.length - 1);
         queryContents += ' WHERE id=$id';
     
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `UPDATE recordLevelPermission ${queryContents}`,
+                `UPDATE groupLevelPermission ${queryContents}`,
                 queryData,
                 (err) => {
                     if(err){
@@ -218,11 +218,11 @@
         });
     }
 
-    function deleteRecordLevelPermissions(recordLevelPermissionIdList){
-        return Promise.all(recordLevelPermissionIdList.map(id=> {
+    function deleteGroupLevelPermissions(groupLevelPermissionIdList){
+        return Promise.all(groupLevelPermissionIdList.map(id=> {
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `DELETE FROM recordLevelPermission WHERE id=$id`,
+                    `DELETE FROM groupLevelPermission WHERE id=$id`,
                     {
                         $id:id
                     },
@@ -237,12 +237,12 @@
         }))
     }
 
-    function deleteSpecificRecordLevelPermission(recordLevelPermissionId){
+    function deleteSpecificGroupLevelPermission(groupLevelPermissionId){
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `DELETE FROM recordLevelPermission WHERE id=$id`,
+                `DELETE FROM groupLevelPermission WHERE id=$id`,
                 {
-                    $id:recordLevelPermissionId
+                    $id:groupLevelPermissionId
                 },
                 (err) => {
                     if(err){
@@ -255,14 +255,14 @@
     }
 
     module.exports = {
-        getRecordLevelPermissions,
-        getSpecificRecordLevelPermission,
-        postRecordLevelPermission,
-        updateRecordLevelPermissions,
-        updateSpecificRecordLevelPermission,
-        patchRecordLevelPermissions,
-        patchSpecificRecordLevelPermission,
-        deleteRecordLevelPermissions,
-        deleteSpecificRecordLevelPermission
+        getGroupLevelPermissions,
+        getSpecificGroupLevelPermission,
+        postGroupLevelPermission,
+        updateGroupLevelPermissions,
+        updateSpecificGroupLevelPermission,
+        patchGroupLevelPermissions,
+        patchSpecificGroupLevelPermission,
+        deleteGroupLevelPermissions,
+        deleteSpecificGroupLevelPermission
     }
     

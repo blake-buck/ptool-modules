@@ -6,25 +6,25 @@
     const {initializeSqlite, initializeStandardMiddleware} = require('../initialization');
 
     initializeSqlite(':memory:');
-    dependencyInjector.register('recordLevelPermissionModel', require('../models/recordLevelPermission'));
-    dependencyInjector.register('recordLevelPermissionService', require('../services/recordLevelPermission'));
-    dependencyInjector.register('recordLevelPermissionController', require('../controllers/recordLevelPermission'));
+    dependencyInjector.register('groupLevelPermissionModel', require('../models/groupLevelPermission'));
+    dependencyInjector.register('groupLevelPermissionService', require('../services/groupLevelPermission'));
+    dependencyInjector.register('groupLevelPermissionController', require('../controllers/groupLevelPermission'));
 
-    const recordLevelPermissionRouter = require('./recordLevelPermission');
+    const groupLevelPermissionRouter = require('./groupLevelPermission');
 
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE recordLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, recordId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, update INTEGER, delete INTEGER);', (err) => {
+            dependencyInjector.dependencies.sqlite.run('CREATE TABLE groupLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, groupId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, post INTEGER);', (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, delete) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
+                    dependencyInjector.dependencies.sqlite.run('INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES("string", 0, "string", "string", 0, 0);', (err) => {
                         if(err){
                             reject(err);
                         }
                         else{
-                            dependencyInjector.dependencies.sqlite.run('INSERT INTO recordLevelPermission(tableName, recordId, permissionType, granteeId, get, update, delete) VALUES("string", 0, "string", "string", 0, 0, 0);', (err) => {
+                            dependencyInjector.dependencies.sqlite.run('INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES("string", 0, "string", "string", 0, 0);', (err) => {
                                 if(err){
                                     reject(err);
                                 }
@@ -41,7 +41,7 @@
     
     afterEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('DROP TABLE recordLevelPermission', (err) => {
+            dependencyInjector.dependencies.sqlite.run('DROP TABLE groupLevelPermission', (err) => {
                 if(err){
                     reject(err);
                 }
@@ -52,15 +52,15 @@
         })
     })
 
-    describe('recordLevelPermission routes tests ', () => {
+    describe('groupLevelPermission routes tests ', () => {
         const app = express();
         initializeStandardMiddleware(app);
-        app.use(recordLevelPermissionRouter);
+        app.use(groupLevelPermissionRouter);
 
 
-        it('GET - /recordLevelPermission', async (done) => {
+        it('GET - /groupLevelPermission', async (done) => {
             request(app)
-                .get('/recordLevelPermission')
+                .get('/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)
@@ -76,11 +76,11 @@
                 });
         });
 
-        it('POST - /recordLevelPermission', async (done) => {
+        it('POST - /groupLevelPermission', async (done) => {
             request(app)
-                .post('/recordLevelPermission')
+                .post('/groupLevelPermission')
                 .set('Accept', 'application/json')
-                .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0})
+                .send({"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -96,11 +96,11 @@
                 });
         });
 
-        it('PUT - /recordLevelPermission', async (done) => {
+        it('PUT - /groupLevelPermission', async (done) => {
             request(app)
-                .put('/recordLevelPermission')
+                .put('/groupLevelPermission')
                 .set('Accept', 'application/json')
-                .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0}])
+                .send([{"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0}])
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -116,11 +116,11 @@
                 });
         });
 
-        it('PATCH - /recordLevelPermission', async (done) => {
+        it('PATCH - /groupLevelPermission', async (done) => {
             request(app)
-                .patch('/recordLevelPermission')
+                .patch('/groupLevelPermission')
                 .set('Accept', 'application/json')
-                .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0}])
+                .send([{"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0}])
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -136,9 +136,9 @@
                 });
         });
 
-        it('DELETE - /recordLevelPermission', async (done) => {
+        it('DELETE - /groupLevelPermission', async (done) => {
             request(app)
-                .delete('/recordLevelPermission')
+                .delete('/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .send([1,2])
                 .expect('Content-Type', /json/)
@@ -158,9 +158,9 @@
     
 
     
-        it('GET - /recordLevelPermission/:id', async (done) => {
+        it('GET - /groupLevelPermission/:id', async (done) => {
             request(app)
-                .get('/recordLevelPermission/1')
+                .get('/groupLevelPermission/1')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)
@@ -178,11 +178,11 @@
                 });
         });
 
-        it('PUT - /recordLevelPermission/:id', async (done) => {
+        it('PUT - /groupLevelPermission/:id', async (done) => {
             request(app)
-                .put('/recordLevelPermission/1')
+                .put('/groupLevelPermission/1')
                 .set('Accept', 'application/json')
-                .send({"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0})
+                .send({"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -198,11 +198,11 @@
                 });
         });
 
-        it('PATCH - /recordLevelPermission/:id', async (done) => {
+        it('PATCH - /groupLevelPermission/:id', async (done) => {
             request(app)
-                .patch('/recordLevelPermission/1')
+                .patch('/groupLevelPermission/1')
                 .set('Accept', 'application/json')
-                .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0})
+                .send({"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {
@@ -218,9 +218,9 @@
                 });
         });
 
-        it('DELETE - /recordLevelPermission/:id', async (done) => {
+        it('DELETE - /groupLevelPermission/:id', async (done) => {
             request(app)
-                .delete('/recordLevelPermission/1')
+                .delete('/groupLevelPermission/1')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)

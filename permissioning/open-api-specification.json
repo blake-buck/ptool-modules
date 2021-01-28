@@ -1175,6 +1175,590 @@
                     }
                 }
             }
+        },
+        "/recordLevelPermission": {
+            "get": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Retrieves records from the recordLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    },
+                    {
+                        "name": "queryParameters",
+                        "description": "the ways in which one can filter the get query",
+                        "in": "query",
+                        "type": "object",
+                        "additionalProperties": true,
+                        "style": "form",
+                        "explode": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recordLevelPermissionArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Creates a record in the recordLevelPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recordLevelPermissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recordLevelPermission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Bulk updates records in the recordLevelPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recordLevelPermissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/recordLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Bulk partially-update entries in the recordLevelPermission table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recordLevelPermissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/recordLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Bulk deletes records in the recordLevelPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/recordLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            }
+        },
+        "/recordLevelPermission/{id}": {
+            "get": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Gets a specific record from the recordLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recordLevelPermission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Updates a specific record in the recordLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recordLevelPermission"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/recordLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Partially update a specific entry in the recordLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recordLevelPermissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/recordLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "recordLevelPermission operations"
+                ],
+                "summary": "Deletes a specific record in the recordLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/recordLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/recordLevelPermissionError"
+                    }
+                }
+            }
+        },
+        "/groupLevelPermission": {
+            "get": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Retrieves records from the groupLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    },
+                    {
+                        "name": "queryParameters",
+                        "description": "the ways in which one can filter the get query",
+                        "in": "query",
+                        "type": "object",
+                        "additionalProperties": true,
+                        "style": "form",
+                        "explode": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/groupLevelPermissionArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Creates a record in the groupLevelPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupLevelPermissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/groupLevelPermission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Bulk updates records in the groupLevelPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupLevelPermissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Bulk partially-update entries in the groupLevelPermission table. Every parameter except id is optional.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupLevelPermissionArray"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Bulk deletes records in the groupLevelPermission table",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "style": "simple",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            }
+        },
+        "/groupLevelPermission/{id}": {
+            "get": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Gets a specific record from the groupLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/groupLevelPermission"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Updates a specific record in the groupLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupLevelPermission"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Partially update a specific entry in the groupLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/groupLevelPermissionMinusId"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "groupLevelPermission operations"
+                ],
+                "summary": "Deletes a specific record in the groupLevelPermission table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/groupLevelPermissionOk"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/groupLevelPermissionError"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1295,6 +1879,72 @@
             },
             "groupError": {
                 "description": "Standard error for the group routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "recordLevelPermissionOk": {
+                "description": "Standard OK response for the recordLevelPermission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "recordLevelPermissionError": {
+                "description": "Standard error for the recordLevelPermission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "groupLevelPermissionOk": {
+                "description": "Standard OK response for the groupLevelPermission routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "groupLevelPermissionError": {
+                "description": "Standard error for the groupLevelPermission routes",
                 "content": {
                     "application/json": {
                         "schema": {
@@ -1435,6 +2085,122 @@
                 "type": "array",
                 "items": {
                     "$ref": "#/components/schemas/group"
+                }
+            },
+            "recordLevelPermission": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "tableName": {
+                        "type": "string"
+                    },
+                    "recordId": {
+                        "type": "integer"
+                    },
+                    "permissionType": {
+                        "type": "string"
+                    },
+                    "granteeId": {
+                        "type": "string"
+                    },
+                    "get": {
+                        "type": "integer"
+                    },
+                    "update": {
+                        "type": "integer"
+                    },
+                    "delete": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "recordLevelPermissionMinusId": {
+                "type": "object",
+                "properties": {
+                    "tableName": {
+                        "type": "string"
+                    },
+                    "recordId": {
+                        "type": "integer"
+                    },
+                    "permissionType": {
+                        "type": "string"
+                    },
+                    "granteeId": {
+                        "type": "string"
+                    },
+                    "get": {
+                        "type": "integer"
+                    },
+                    "update": {
+                        "type": "integer"
+                    },
+                    "delete": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "recordLevelPermissionArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/recordLevelPermission"
+                }
+            },
+            "groupLevelPermission": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "tableName": {
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "type": "integer"
+                    },
+                    "permissionType": {
+                        "type": "string"
+                    },
+                    "granteeId": {
+                        "type": "string"
+                    },
+                    "get": {
+                        "type": "integer"
+                    },
+                    "post": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "groupLevelPermissionMinusId": {
+                "type": "object",
+                "properties": {
+                    "tableName": {
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "type": "integer"
+                    },
+                    "permissionType": {
+                        "type": "string"
+                    },
+                    "granteeId": {
+                        "type": "string"
+                    },
+                    "get": {
+                        "type": "integer"
+                    },
+                    "post": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "groupLevelPermissionArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/groupLevelPermission"
                 }
             }
         }

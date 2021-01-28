@@ -16,7 +16,7 @@
 
     describe('recordLevelPermission service tests', () => {
         it('getRecordLevelPermissions should return status 200 and two records', async (done) => {
-            let response = await recordLevelPermissionServices.getRecordLevelPermissions({value: {limit:10, offset: 0, fields:'id,tableName,recordId,permissionType,get,update,delete'}});
+            let response = await recordLevelPermissionServices.getRecordLevelPermissions({value: {limit:10, offset: 0, fields:'id,tableName,recordId,permissionType,granteeId,get,update,delete'}});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.length).toBe(2);
@@ -25,7 +25,7 @@
         });
 
         it('getSpecificRecordLevelPermission should return status 200 and a singular record', async (done) => {
-            let response = await recordLevelPermissionServices.getSpecificRecordLevelPermission(1,'id,tableName,recordId,permissionType,get,update,delete');
+            let response = await recordLevelPermissionServices.getSpecificRecordLevelPermission(1,'id,tableName,recordId,permissionType,granteeId,get,update,delete');
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.id).toBe(1);
@@ -34,7 +34,7 @@
         });
 
         it('postRecordLevelPermission should return status 200 and an object with an id', async (done) => {
-            let response = await recordLevelPermissionServices.postRecordLevelPermission({"tableName":"string","recordId":0,"permissionType":"string","get":"string","update":"string","delete":"string"});
+            let response = await recordLevelPermissionServices.postRecordLevelPermission({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.id).toBeTruthy();
@@ -43,7 +43,7 @@
         });
 
         it('updateRecordLevelPermissions should return status 200 and a body with a message property', async (done) => {
-            let response = await recordLevelPermissionServices.updateRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","get":"string","update":"string","delete":"string"}]);
+            let response = await recordLevelPermissionServices.updateRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0}]);
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.message).toBeTruthy();
@@ -51,7 +51,7 @@
         });
 
         it('updateSpecificRecordLevelPermission should return status 200 and a body with a message property', async (done) => {
-            let response = await recordLevelPermissionServices.updateSpecificRecordLevelPermission({"id":1,"tableName":"string","recordId":0,"permissionType":"string","get":"string","update":"string","delete":"string"});
+            let response = await recordLevelPermissionServices.updateSpecificRecordLevelPermission({"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.message).toBeTruthy();
@@ -59,7 +59,7 @@
         });
 
         it('patchRecordLevelPermissions should return status 200 and a body with a message property', async (done) => {
-            let response = await recordLevelPermissionServices.patchRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","get":"string","update":"string","delete":"string"}]);
+            let response = await recordLevelPermissionServices.patchRecordLevelPermissions([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0}]);
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.message).toBeTruthy();
@@ -67,7 +67,7 @@
         });
 
         it('patchSpecificRecordLevelPermission should return status 200 and a body with a message property', async (done) => {
-            let response = await recordLevelPermissionServices.patchSpecificRecordLevelPermission(1, {"tableName":"string","recordId":0,"permissionType":"string","get":"string","update":"string","delete":"string"});
+            let response = await recordLevelPermissionServices.patchSpecificRecordLevelPermission(1, {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0});
             expect(response.status).toBe(200);
             expect(response.body).toBeTruthy();
             expect(response.body.message).toBeTruthy();

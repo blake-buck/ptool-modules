@@ -1,23 +1,23 @@
 
         const dependencyInjector = require('../dependency-injector.js');
         dependencyInjector.register(
-            'recordLevelPermissionService', 
+            'groupLevelPermissionService', 
             {
-                getRecordLevelPermissions: () => true,
-                getSpecificRecordLevelPermission: () => true,
-                postRecordLevelPermission: () => true,
-                updateRecordLevelPermissions: () => true,
-                updateSpecificRecordLevelPermission: () => true,
-                patchRecordLevelPermissions: () => true,
-                patchSpecificRecordLevelPermission: () => true,
-                deleteRecordLevelPermissions: () => true,
-                deleteSpecificRecordLevelPermission: () => true
+                getGroupLevelPermissions: () => true,
+                getSpecificGroupLevelPermission: () => true,
+                postGroupLevelPermission: () => true,
+                updateGroupLevelPermissions: () => true,
+                updateSpecificGroupLevelPermission: () => true,
+                patchGroupLevelPermissions: () => true,
+                patchSpecificGroupLevelPermission: () => true,
+                deleteGroupLevelPermissions: () => true,
+                deleteSpecificGroupLevelPermission: () => true
             }
         );
-        const recordLevelPermissionControllers = require('./recordLevelPermission');
+        const groupLevelPermissionControllers = require('./groupLevelPermission');
 
-        const properValues = {"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0};
-        const patchSpecificProperValues = {"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"update":0,"delete":0}
+        const properValues = {"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0};
+        const patchSpecificProperValues = {"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0}
 
         const mockResponse = () => {
             const res = {};
@@ -37,10 +37,10 @@
             expect(e).toBeTruthy();
         }
 
-        describe('recordLevelPermission controller tests', () => {
+        describe('groupLevelPermission controller tests', () => {
             
-    it('getRecordLevelPermissions - improper offset fails validation', () => {
-        recordLevelPermissionControllers.getRecordLevelPermissions(
+    it('getGroupLevelPermissions - improper offset fails validation', () => {
+        groupLevelPermissionControllers.getGroupLevelPermissions(
             {
                 query:{
                     offset: "string",
@@ -52,8 +52,8 @@
             mockNext
         );
     })
-    it('getRecordLevelPermissions - improper limit fails validation', () => {
-        recordLevelPermissionControllers.getRecordLevelPermissions(
+    it('getGroupLevelPermissions - improper limit fails validation', () => {
+        groupLevelPermissionControllers.getGroupLevelPermissions(
             {
                 query:{
                     offset: 0,
@@ -65,8 +65,8 @@
             mockNext
         );
     })
-    it('getRecordLevelPermissions - improper fields fails validation', () => {
-        recordLevelPermissionControllers.getRecordLevelPermissions(
+    it('getGroupLevelPermissions - improper fields fails validation', () => {
+        groupLevelPermissionControllers.getGroupLevelPermissions(
             {
                 query:{
                     offset: 0,
@@ -79,8 +79,8 @@
         );
     })
 
-    it('getSpecificRecordLevelPermission - improper id fails validation', () => {
-        recordLevelPermissionControllers.getRecordLevelPermissions(
+    it('getSpecificGroupLevelPermission - improper id fails validation', () => {
+        groupLevelPermissionControllers.getGroupLevelPermissions(
             {
                 query:{
                     fields: "string,string"
@@ -93,8 +93,8 @@
             mockNext
         );
     })
-    it('getSpecificRecordLevelPermission - improper fields fails validation', () => {
-        recordLevelPermissionControllers.getRecordLevelPermissions(
+    it('getSpecificGroupLevelPermission - improper fields fails validation', () => {
+        groupLevelPermissionControllers.getGroupLevelPermissions(
             {
                 query:{
                     fields: false
@@ -109,8 +109,8 @@
     })
 
             
-        it('postRecordLevelPermission - improper id fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper id fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -123,8 +123,8 @@
         });
         
         
-        it('postRecordLevelPermission - improper tableName fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper tableName fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -137,12 +137,12 @@
         });
         
         
-        it('postRecordLevelPermission - improper recordId fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper groupId fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        recordId:"string"
+                        groupId:"string"
                     }
                 },
                 mockResponse(),
@@ -151,8 +151,8 @@
         });
         
         
-        it('postRecordLevelPermission - improper permissionType fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper permissionType fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -165,8 +165,8 @@
         });
         
         
-        it('postRecordLevelPermission - improper granteeId fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper granteeId fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -179,8 +179,8 @@
         });
         
         
-        it('postRecordLevelPermission - improper get fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper get fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -193,26 +193,12 @@
         });
         
         
-        it('postRecordLevelPermission - improper update fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
+        it('postGroupLevelPermission - improper post fails validation', () => {
+            groupLevelPermissionControllers.postGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        update:"string"
-                    }
-                },
-                mockResponse(),
-                mockNext
-            )
-        });
-        
-        
-        it('postRecordLevelPermission - improper delete fails validation', () => {
-            recordLevelPermissionControllers.postRecordLevelPermission(
-                {
-                    body:{
-                        ...properValues,
-                        delete:"string"
+                        post:"string"
                     }
                 },
                 mockResponse(),
@@ -222,8 +208,8 @@
         
         
             
-        it('updateRecordLevelPermissions - improper id fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper id fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -236,8 +222,8 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper tableName fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper tableName fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -250,12 +236,12 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper recordId fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper groupId fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        recordId:"string"
+                        groupId:"string"
                     }]
                 },
                 mockResponse(),
@@ -264,8 +250,8 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper permissionType fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper permissionType fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -278,8 +264,8 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper granteeId fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper granteeId fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -292,8 +278,8 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper get fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper get fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -306,12 +292,12 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper update fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
+        it('updateGroupLevelPermissions - improper post fails validation', () => {
+            groupLevelPermissionControllers.updateGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        update:"string"
+                        post:"string"
                     }]
                 },
                 mockResponse(),
@@ -320,22 +306,8 @@
         })
 
         
-        it('updateRecordLevelPermissions - improper delete fails validation', () => {
-            recordLevelPermissionControllers.updateRecordLevelPermissions(
-                {
-                    body:[{
-                        ...properValues,
-                        delete:"string"
-                    }]
-                },
-                mockResponse(),
-                mockNext
-            )
-        })
-
-        
-        it('updateSpecificRecordLevelPermission - improper id fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper id fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -348,8 +320,8 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper tableName fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper tableName fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -362,12 +334,12 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper recordId fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper groupId fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        recordId:"string"
+                        groupId:"string"
                     }
                 },
                 mockResponse(),
@@ -376,8 +348,8 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper permissionType fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper permissionType fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -390,8 +362,8 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper granteeId fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper granteeId fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -404,8 +376,8 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper get fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper get fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
@@ -418,26 +390,12 @@
         })
 
         
-        it('updateSpecificRecordLevelPermission - improper update fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
+        it('updateSpecificGroupLevelPermission - improper post fails validation', () => {
+            groupLevelPermissionControllers.updateSpecificGroupLevelPermission(
                 {
                     body:{
                         ...properValues,
-                        update:"string"
-                    }
-                },
-                mockResponse(),
-                mockNext
-            )
-        })
-
-        
-        it('updateSpecificRecordLevelPermission - improper delete fails validation', () => {
-            recordLevelPermissionControllers.updateSpecificRecordLevelPermission(
-                {
-                    body:{
-                        ...properValues,
-                        delete:"string"
+                        post:"string"
                     }
                 },
                 mockResponse(),
@@ -447,8 +405,8 @@
 
         
             
-        it('patchRecordLevelPermissions - improper id fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper id fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -461,8 +419,8 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper tableName fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper tableName fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -475,12 +433,12 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper recordId fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper groupId fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        recordId:"string"
+                        groupId:"string"
                     }]
                 },
                 mockResponse(),
@@ -489,8 +447,8 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper permissionType fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper permissionType fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -503,8 +461,8 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper granteeId fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper granteeId fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -517,8 +475,8 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper get fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper get fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
@@ -531,12 +489,12 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper update fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
+        it('patchGroupLevelPermissions - improper post fails validation', () => {
+            groupLevelPermissionControllers.patchGroupLevelPermissions(
                 {
                     body:[{
                         ...properValues,
-                        update:"string"
+                        post:"string"
                     }]
                 },
                 mockResponse(),
@@ -545,22 +503,8 @@
         })
 
         
-        it('patchRecordLevelPermissions - improper delete fails validation', () => {
-            recordLevelPermissionControllers.patchRecordLevelPermissions(
-                {
-                    body:[{
-                        ...properValues,
-                        delete:"string"
-                    }]
-                },
-                mockResponse(),
-                mockNext
-            )
-        })
-
-        
-        it('patchSpecificRecordLevelPermission - improper id fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper id fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
@@ -573,8 +517,8 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper tableName fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper tableName fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
@@ -587,12 +531,12 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper recordId fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper groupId fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
-                        recordId:"string"
+                        groupId:"string"
                     }
                 },
                 mockResponse(),
@@ -601,8 +545,8 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper permissionType fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper permissionType fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
@@ -615,8 +559,8 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper granteeId fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper granteeId fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
@@ -629,8 +573,8 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper get fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper get fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
@@ -643,26 +587,12 @@
         })
 
         
-        it('patchSpecificRecordLevelPermission - improper update fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
+        it('patchSpecificGroupLevelPermission - improper post fails validation', () => {
+            groupLevelPermissionControllers.patchSpecificGroupLevelPermission(
                 {
                     body:{
                         ...patchSpecificProperValues,
-                        update:"string"
-                    }
-                },
-                mockResponse(),
-                mockNext
-            )
-        })
-
-        
-        it('patchSpecificRecordLevelPermission - improper delete fails validation', () => {
-            recordLevelPermissionControllers.patchSpecificRecordLevelPermission(
-                {
-                    body:{
-                        ...patchSpecificProperValues,
-                        delete:"string"
+                        post:"string"
                     }
                 },
                 mockResponse(),
@@ -672,8 +602,8 @@
 
         
             
-    it('deleteRecordLevelPermissions - improper request fails validation', () => {
-        recordLevelPermissionControllers.deleteRecordLevelPermissions(
+    it('deleteGroupLevelPermissions - improper request fails validation', () => {
+        groupLevelPermissionControllers.deleteGroupLevelPermissions(
             {
                 body:[
                     "string"
@@ -684,8 +614,8 @@
         );
     });
 
-    it('deleteSpecificRecordLevelPermission - improper id fails validation', () => {
-        recordLevelPermissionControllers.deleteRecordLevelPermissions(
+    it('deleteSpecificGroupLevelPermission - improper id fails validation', () => {
+        groupLevelPermissionControllers.deleteGroupLevelPermissions(
             {
                 params:{
                     id:"string"
