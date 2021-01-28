@@ -54,7 +54,7 @@
 
     describe('groupLevelPermission routes tests ', () => {
         const app = express();
-        initializeStandardMiddleware(app);
+        app.use(express.json());
         app.use(groupLevelPermissionRouter);
 
 
