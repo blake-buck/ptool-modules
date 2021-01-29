@@ -303,16 +303,28 @@
     }
 
 
-    function addRecordLevelPermissionCheckToBulkGet(tableName, recordName, userId, commaSeperatedGroupList){
-        // $userId
+    function addRecordLevelPermissionCheckToBulkGet(tableName, recordName, userId){
+        const userGroupsQuery = `SELECT groupId FROM permissionGroupToUser WHERE permissionGroupToUser.userId=$userId`;
+        const selectGroupPermissions = `SELECT COUNT(*) 
+        FROM recordLevelPermission AS rlp 
+        WHERE rlp.tableName=$tableName 
+        AND rlp.recordId=${recordName}.id 
+        AND rlp.permissionType='group' 
+        AND rlp.granteeId IN(${userGroupsQuery})
+        AND rlp.get=1`;
+
+        const selectUserPermissions = `SELECT COUNT(*) 
+        FROM recordLevelPermission AS rlp 
+        WHERE rlp.tableName=$tableName 
+        AND rlp.recordId=${recordName}.id 
+        AND rlp.permissionType='user' 
+        AND rlp.granteeId=$userId 
+        AND rlp.get=1`
         return {
-            query: `AND SELECT(
-                (SELECT (SELECT COUNT(*) FROM recordLevelPermission as rlp WHERE rlp.table=$tableName AND rlp.recordId=${recordName}.id AND rlp.permissionType='group' AND rlp.granteeId IN(${commaSeperatedGroupList}) AND rlp.get=1) > 0)
-                OR
-                (SELECT (SELECT COUNT(*) FROM recordLevelPermission as rlp WHERE rlp.table=$tableName AND rlp.recordId=${recordName}.id AND rlp.permissionType='user' AND rlp.granteeId=$userId AND rlp.get=1) > 0)
-            )
+            query: `
+            ((${selectGroupPermissions}) OR (${selectUserPermissions})) > 1
             `,
-            escapedValues: {
+            escapedQueryValues: {
                 $userId: userId,
                 $tableName: tableName
             }
