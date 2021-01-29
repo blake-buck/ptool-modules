@@ -270,7 +270,7 @@
         `;
 
         const userHasPermissionQuery=`
-        SELECT (${selectPermissions}) > 0;
+        SELECT (${selectPermissions}) > 0 AS hasPermission;
         `;
 
         return new Promise((resolve, reject) => {
@@ -281,10 +281,10 @@
                     if(err){
                         return reject(err);
                     }
-                    return resolve(!!result);
+                    return resolve(!!result.hasPermission);
                 }
             )
-        })
+        });
     }
 
     module.exports = {

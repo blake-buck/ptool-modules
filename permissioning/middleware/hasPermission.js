@@ -3,7 +3,7 @@ const dependencyInjector = require('../dependency-injector');
 const permissionModel = dependencyInjector.inject('permissionModel');
 const permissionService = dependencyInjector.inject('permissionService');
 
-async function hasPermission(permissionName){
+function hasPermission(permissionName){
     // permissionNames are declared server side, so they dont _NEED_ to be treated as hostile input, but it pays to be consistent IMO
     const validationResult = Joi.string().pattern(/^(\w+_)+(GET|POST|MODIFY|DELETE)$/).validate(permissionName);
     if(validationResult.error){
@@ -19,7 +19,8 @@ async function hasPermission(permissionName){
                     {limit:1, offset: 0},
                     'id',
                     {name: permissionName}
-                )
+                );
+
                 if(!permissionNeededQuery.length){
                     throw new Error('Permission not found');
                 }
@@ -27,10 +28,10 @@ async function hasPermission(permissionName){
                 permissionId = permissionNeededQuery[0].id;
             }
             // this needs to be updated whenever the module is installed
-            const {userId} = req.headers;
+            const {userid} = req.headers;
 
             const hasPermission = await permissionService.runPermissionQuery({
-                userId,
+                userId: userid,
                 permissionId
             })
 

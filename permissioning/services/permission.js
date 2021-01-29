@@ -59,7 +59,7 @@
     async function runPermissionQuery(queryObj){
         const validatePermissionQueryObject = Joi.object({
             userId: Joi.string().required(),
-            permissionId: Joi.integer().required()
+            permissionId: Joi.number().integer().required()
         });
 
         const validationResult = validatePermissionQueryObject.validate(queryObj);
@@ -69,7 +69,7 @@
 
         const {userId, permissionId} = validationResult.value;
 
-        return await permissionModel.runPermissionQuery()
+        return await permissionModel.runPermissionQuery(userId, permissionId)
     }
 
     module.exports = {
