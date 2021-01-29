@@ -2,6 +2,8 @@
     const dependencyInjector = require('../dependency-injector.js');
     const recordLevelPermissionModel = dependencyInjector.inject('recordLevelPermissionModel');
 
+    const Joi = require('joi');
+
     const standardLogger = require('../logger');
 
     async function getRecordLevelPermissions(validationResult){
@@ -59,7 +61,7 @@
             userId: Joi.string().required(),
             recordId: Joi.number().integer().required(),
             tableName: Joi.string().required(),
-            operation: Joi.string().alternatives().try('get', 'modify', 'del')
+            operation: Joi.alternatives().try('get', 'modify', 'del')
         });
 
         const validationResult = validateRecordLevelPermisionQueryObject.validate(queryObject);

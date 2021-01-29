@@ -3,7 +3,7 @@ const dependencyInjector = require('../dependency-injector');
 const recordLevelPermissionService = dependencyInjector.inject('recordLevelPermissionService');
 
 
-function hasRecordLevelPermission(tableName, operation){
+function hasRecordLevelPermissionBulk(tableName, operation){
     const operationValidation = Joi.alternatives().try('get', 'modify', 'del').validate(operation);
     if(operationValidation.error){
         throw new Error('Improper operation value passed into hasRecordLevelPermission. Must be get, modify, or del.')
@@ -46,4 +46,4 @@ function hasRecordLevelPermission(tableName, operation){
     }
 }
 
-module.exports = hasRecordLevelPermission;
+module.exports = hasRecordLevelPermissionBulk;

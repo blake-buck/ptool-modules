@@ -2350,7 +2350,7 @@
                     "get": {
                         "type": "integer"
                     },
-                    "update": {
+                    "modify": {
                         "type": "integer"
                     },
                     "del": {
@@ -2376,7 +2376,7 @@
                     "get": {
                         "type": "integer"
                     },
-                    "update": {
+                    "modify": {
                         "type": "integer"
                     },
                     "del": {

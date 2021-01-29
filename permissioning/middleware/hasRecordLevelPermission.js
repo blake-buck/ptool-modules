@@ -17,7 +17,7 @@ function hasRecordLevelPermission(tableName, operation){
             // a different record in the body
             const {id} = req.params;
 
-            const hasPermission = recordLevelPermissionService.runRecordLevelPermissionQuery({
+            const hasPermission = await recordLevelPermissionService.runRecordLevelPermissionQuery({
                 userId: userid,
                 recordId: id,
                 tableName,

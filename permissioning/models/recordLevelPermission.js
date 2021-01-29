@@ -262,17 +262,15 @@
         }
         const userGroupsQuery = `SELECT groupId FROM permissionGroupToUser WHERE userId=$userId`;
         const selectGroupPermissions = `
-        WITH userGroups AS (${userGroupsQuery})
         SELECT COUNT(*) 
         FROM recordLevelPermission as rlp
         WHERE rlp.permissionType = 'group'
         AND rlp.tableName = $tableName
         AND rlp.${operation} = 1
         AND rlp.recordId = $recordId
-        AND rlp.granteeId IN (userGroups)`
+        AND rlp.granteeId IN (${userGroupsQuery})`
 
         const selectUserPermissions=`
-        WITH userGroups AS(${userGroupsQuery})
         SELECT COUNT(*)
         FROM recordLevelPermission as rlp
         WHERE rlp.permissionType = 'user'
