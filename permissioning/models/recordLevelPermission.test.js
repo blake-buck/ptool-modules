@@ -1,5 +1,12 @@
 
     const dependencyInjector = require('../dependency-injector.js');
+
+    dependencyInjector.register('recordLevelPermissionService', () => ({}));
+    dependencyInjector.register('permissionGroupToUserModel', () => ({}));
+    dependencyInjector.register('permissionGroupToPermissionModel', () => ({}));
+    dependencyInjector.register('permissionModel', () => ({}));
+    dependencyInjector.register('groupLevelPermissionService', () => ({}));
+    
     const {initializeSqlite} = require('../initialization');
     initializeSqlite(':memory:');
     const recordLevelPermissionModels = require('./recordLevelPermission');

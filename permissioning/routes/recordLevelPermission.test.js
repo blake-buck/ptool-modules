@@ -3,7 +3,12 @@
     const express = require('express');
     const request = require('supertest');
 
-    const {initializeSqlite, initializeStandardMiddleware} = require('../initialization');
+    dependencyInjector.register('recordLevelPermissionService', () => ({}));
+    dependencyInjector.register('permissionGroupToUserModel', () => ({}));
+    dependencyInjector.register('permissionGroupToPermissionModel', () => ({}));
+    dependencyInjector.register('permissionModel', () => ({}));
+    dependencyInjector.register('groupLevelPermissionService', () => ({}));
+    const {initializeSqlite} = require('../initialization');
 
     initializeSqlite(':memory:');
     dependencyInjector.register('recordLevelPermissionModel', require('../models/recordLevelPermission'));
@@ -54,7 +59,7 @@
 
     describe('recordLevelPermission routes tests ', () => {
         const app = express();
-        initializeStandardMiddleware(app);
+        app.use(express.json());
         app.use(recordLevelPermissionRouter);
 
 

@@ -2,8 +2,12 @@
     const dependencyInjector = require('../dependency-injector.js');
     const express = require('express');
     const request = require('supertest');
-
-    const {initializeSqlite, initializeStandardMiddleware} = require('../initialization');
+    dependencyInjector.register('recordLevelPermissionService', () => ({}));
+    dependencyInjector.register('permissionGroupToUserModel', () => ({}));
+    dependencyInjector.register('permissionGroupToPermissionModel', () => ({}));
+    dependencyInjector.register('permissionModel', () => ({}));
+    dependencyInjector.register('groupLevelPermissionService', () => ({}));
+    const {initializeSqlite} = require('../initialization');
 
     initializeSqlite(':memory:');
     dependencyInjector.register('permissionGroupToPermissionModel', require('../models/permissionGroupToPermission'));
