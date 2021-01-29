@@ -2,34 +2,35 @@
     const dependencyInjector = require('../dependency-injector.js');
     const express = require('express');
     const request = require('supertest');
+    
     dependencyInjector.register('recordLevelPermissionService', () => ({}));
     dependencyInjector.register('permissionGroupToUserModel', () => ({}));
     dependencyInjector.register('permissionGroupToPermissionModel', () => ({}));
     dependencyInjector.register('permissionModel', () => ({}));
     dependencyInjector.register('groupLevelPermissionService', () => ({}));
-    dependencyInjector.register('recordLevelPermissionService', () => ({}))
-    const {initializeSqlite} = require('../initialization');
+    
+    const {initializeSqlite, initializeStandardMiddleware} = require('../initialization');
 
     initializeSqlite(':memory:');
-    dependencyInjector.register('groupModel', require('../models/group'));
-    dependencyInjector.register('groupService', require('../services/group'));
-    dependencyInjector.register('groupController', require('../controllers/group'));
+    dependencyInjector.register('permissionGroupModel', require('../models/permissionGroup'));
+    dependencyInjector.register('permissionGroupService', require('../services/permissionGroup'));
+    dependencyInjector.register('permissionGroupController', require('../controllers/permissionGroup'));
 
-    const groupRouter = require('./group');
+    const permissionGroupRouter = require('./permissionGroup');
 
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE group(id INTEGER PRIMARY KEY ASC, name TEXT, description TEXT);', (err) => {
+            dependencyInjector.dependencies.sqlite.run('CREATE TABLE permissionGroup(id INTEGER PRIMARY KEY ASC, name TEXT, description TEXT);', (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    dependencyInjector.dependencies.sqlite.run('INSERT INTO group(name, description) VALUES("string", "string");', (err) => {
+                    dependencyInjector.dependencies.sqlite.run('INSERT INTO permissionGroup(name, description) VALUES("string", "string");', (err) => {
                         if(err){
                             reject(err);
                         }
                         else{
-                            dependencyInjector.dependencies.sqlite.run('INSERT INTO group(name, description) VALUES("string", "string");', (err) => {
+                            dependencyInjector.dependencies.sqlite.run('INSERT INTO permissionGroup(name, description) VALUES("string", "string");', (err) => {
                                 if(err){
                                     reject(err);
                                 }
@@ -46,7 +47,7 @@
     
     afterEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('DROP TABLE group', (err) => {
+            dependencyInjector.dependencies.sqlite.run('DROP TABLE permissionGroup', (err) => {
                 if(err){
                     reject(err);
                 }
@@ -57,15 +58,15 @@
         })
     })
 
-    describe('group routes tests ', () => {
+    describe('permissionGroup routes tests ', () => {
         const app = express();
-        app.use(express.json());
-        app.use(groupRouter);
+        initializeStandardMiddleware(app);
+        app.use(permissionGroupRouter);
 
 
-        it('GET - /group', async (done) => {
+        it('GET - /permissionGroup', async (done) => {
             request(app)
-                .get('/group')
+                .get('/permissionGroup')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)
@@ -81,9 +82,9 @@
                 });
         });
 
-        it('POST - /group', async (done) => {
+        it('POST - /permissionGroup', async (done) => {
             request(app)
-                .post('/group')
+                .post('/permissionGroup')
                 .set('Accept', 'application/json')
                 .send({"name":"string","description":"string"})
                 .expect('Content-Type', /json/)
@@ -101,9 +102,9 @@
                 });
         });
 
-        it('PUT - /group', async (done) => {
+        it('PUT - /permissionGroup', async (done) => {
             request(app)
-                .put('/group')
+                .put('/permissionGroup')
                 .set('Accept', 'application/json')
                 .send([{"id":1,"name":"string","description":"string"}])
                 .expect('Content-Type', /json/)
@@ -121,9 +122,9 @@
                 });
         });
 
-        it('PATCH - /group', async (done) => {
+        it('PATCH - /permissionGroup', async (done) => {
             request(app)
-                .patch('/group')
+                .patch('/permissionGroup')
                 .set('Accept', 'application/json')
                 .send([{"id":1,"name":"string","description":"string"}])
                 .expect('Content-Type', /json/)
@@ -141,9 +142,9 @@
                 });
         });
 
-        it('DELETE - /group', async (done) => {
+        it('DELETE - /permissionGroup', async (done) => {
             request(app)
-                .delete('/group')
+                .delete('/permissionGroup')
                 .set('Accept', 'application/json')
                 .send([1,2])
                 .expect('Content-Type', /json/)
@@ -163,9 +164,9 @@
     
 
     
-        it('GET - /group/:id', async (done) => {
+        it('GET - /permissionGroup/:id', async (done) => {
             request(app)
-                .get('/group/1')
+                .get('/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)
@@ -183,9 +184,9 @@
                 });
         });
 
-        it('PUT - /group/:id', async (done) => {
+        it('PUT - /permissionGroup/:id', async (done) => {
             request(app)
-                .put('/group/1')
+                .put('/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .send({"id":1,"name":"string","description":"string"})
                 .expect('Content-Type', /json/)
@@ -203,9 +204,9 @@
                 });
         });
 
-        it('PATCH - /group/:id', async (done) => {
+        it('PATCH - /permissionGroup/:id', async (done) => {
             request(app)
-                .patch('/group/1')
+                .patch('/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .send({"name":"string","description":"string"})
                 .expect('Content-Type', /json/)
@@ -223,9 +224,9 @@
                 });
         });
 
-        it('DELETE - /group/:id', async (done) => {
+        it('DELETE - /permissionGroup/:id', async (done) => {
             request(app)
-                .delete('/group/1')
+                .delete('/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)

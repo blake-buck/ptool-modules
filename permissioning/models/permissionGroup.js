@@ -56,7 +56,7 @@
         }
     }
 
-    function getGroups({limit, offset}, fieldData, queryObject){
+    function getPermissionGroups({limit, offset}, fieldData, queryObject){
         const {
             query,
             escapedQueryValues
@@ -64,7 +64,7 @@
 
         return new Promise((resolve, reject) => {
             sqlite.all(
-                `SELECT ${fieldData} FROM group ${query} LIMIT $limit OFFSET $offset`, 
+                `SELECT ${fieldData} FROM permissionGroup ${query} LIMIT $limit OFFSET $offset`, 
                 {
                     $limit: limit, 
                     $offset: offset,
@@ -80,12 +80,12 @@
         })
     }
 
-    function getSpecificGroup(groupId, fieldData){
+    function getSpecificPermissionGroup(permissionGroupId, fieldData){
         return new Promise((resolve, reject) => {
             sqlite.get(
-                `SELECT ${fieldData} FROM group WHERE id=$id`,
+                `SELECT ${fieldData} FROM permissionGroup WHERE id=$id`,
                 {
-                    $id: groupId
+                    $id: permissionGroupId
                 },
                 (err, row) => {
                     if(err){
@@ -97,10 +97,10 @@
         });
     }
 
-    function postGroup({name,description}){
+    function postPermissionGroup({name,description}){
         return new Promise((resolve, reject) => {
             sqlite.get(
-                `INSERT INTO group(name, description) VALUES($name, $description);`,
+                `INSERT INTO permissionGroup(name, description) VALUES($name, $description);`,
                 {
                     $name:name, $description:description
                 },
@@ -109,7 +109,7 @@
                         return reject(err);
                     }
                     sqlite.get(
-                        `SELECT MAX(id) FROM group`,
+                        `SELECT MAX(id) FROM permissionGroup`,
                         (err, idData) => {
                             if(err){
                                 return reject(err);
@@ -125,11 +125,11 @@
         });
     }
 
-    function updateGroups(groupDataArray){
-        return Promise.all(groupDataArray.map(({id, name, description}) => {
+    function updatePermissionGroups(permissionGroupDataArray){
+        return Promise.all(permissionGroupDataArray.map(({id, name, description}) => {
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `UPDATE group SET name=$name, description=$description WHERE id=$id`,
+                    `UPDATE permissionGroup SET name=$name, description=$description WHERE id=$id`,
                     {
                         $id: id,
                         $name:name, $description:description
@@ -145,10 +145,10 @@
         }))
     }
 
-    function updateSpecificGroup({id, name, description}){
+    function updateSpecificPermissionGroup({id, name, description}){
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `UPDATE group SET name=$name, description=$description WHERE id=$id`,
+                `UPDATE permissionGroup SET name=$name, description=$description WHERE id=$id`,
                 {
                     $id:id,
                     $name:name, $description:description
@@ -163,23 +163,23 @@
         });
     }
 
-    function patchGroups(groupDataArray){
-        return Promise.all(groupDataArray.map((groupData) => {
+    function patchPermissionGroups(permissionGroupDataArray){
+        return Promise.all(permissionGroupDataArray.map((permissionGroupData) => {
     
             let queryContents = 'SET';
             let queryData = {};
-            queryData.$id = groupData.id;
-            delete groupData.id
-            for(let key in groupData){
+            queryData.$id = permissionGroupData.id;
+            delete permissionGroupData.id
+            for(let key in permissionGroupData){
                 queryContents += ` ${key}=$${key},`
-                queryData['$' + key] = groupData[key];
+                queryData['$' + key] = permissionGroupData[key];
             }
             queryContents = queryContents.slice(0, queryContents.length - 1);
             queryContents += ' WHERE id=$id';
     
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `UPDATE group ${queryContents}`,
+                    `UPDATE permissionGroup ${queryContents}`,
                     queryData,
                     (err) => {
                         if(err){
@@ -192,21 +192,21 @@
         }))
     }
     
-    function patchSpecificGroup(id, groupData){
+    function patchSpecificPermissionGroup(id, permissionGroupData){
         // description, status
         let queryContents = 'SET';
         let queryData = {};
         queryData.$id = id;
-        for(let key in groupData){
+        for(let key in permissionGroupData){
             queryContents += ` ${key}=$${key},`
-            queryData['$' + key] = groupData[key];
+            queryData['$' + key] = permissionGroupData[key];
         }
         queryContents = queryContents.slice(0, queryContents.length - 1);
         queryContents += ' WHERE id=$id';
     
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `UPDATE group ${queryContents}`,
+                `UPDATE permissionGroup ${queryContents}`,
                 queryData,
                 (err) => {
                     if(err){
@@ -218,11 +218,11 @@
         });
     }
 
-    function deleteGroups(groupIdList){
-        return Promise.all(groupIdList.map(id=> {
+    function deletePermissionGroups(permissionGroupIdList){
+        return Promise.all(permissionGroupIdList.map(id=> {
             return new Promise((resolve, reject) => {
                 sqlite.run(
-                    `DELETE FROM group WHERE id=$id`,
+                    `DELETE FROM permissionGroup WHERE id=$id`,
                     {
                         $id:id
                     },
@@ -237,12 +237,12 @@
         }))
     }
 
-    function deleteSpecificGroup(groupId){
+    function deleteSpecificPermissionGroup(permissionGroupId){
         return new Promise((resolve, reject) => {
             sqlite.run(
-                `DELETE FROM group WHERE id=$id`,
+                `DELETE FROM permissionGroup WHERE id=$id`,
                 {
-                    $id:groupId
+                    $id:permissionGroupId
                 },
                 (err) => {
                     if(err){
@@ -255,14 +255,14 @@
     }
 
     module.exports = {
-        getGroups,
-        getSpecificGroup,
-        postGroup,
-        updateGroups,
-        updateSpecificGroup,
-        patchGroups,
-        patchSpecificGroup,
-        deleteGroups,
-        deleteSpecificGroup
+        getPermissionGroups,
+        getSpecificPermissionGroup,
+        postPermissionGroup,
+        updatePermissionGroups,
+        updateSpecificPermissionGroup,
+        patchPermissionGroups,
+        patchSpecificPermissionGroup,
+        deletePermissionGroups,
+        deleteSpecificPermissionGroup
     }
     
