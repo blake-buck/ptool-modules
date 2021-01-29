@@ -18,17 +18,17 @@
 
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE permission(id INTEGER PRIMARY KEY ASC, name TEXT, description TEXT);', (err) => {
+            dependencyInjector.dependencies.sqlite.run('CREATE TABLE permission(id INTEGER PRIMARY KEY ASC, name TEXT UNIQUE, description TEXT);', (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("string", "string");', (err) => {
+                    dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("TEST_POST", "string");', (err) => {
                         if(err){
                             reject(err);
                         }
                         else{
-                            dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("string", "string");', (err) => {
+                            dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("TEST_MODFIY", "string");', (err) => {
                                 if(err){
                                     reject(err);
                                 }
@@ -84,7 +84,7 @@
             request(app)
                 .post('/permission')
                 .set('Accept', 'application/json')
-                .send({"name":"string","description":"string"})
+                .send({"name":"TEST_GET","description":"string"})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(async (err, res) => {

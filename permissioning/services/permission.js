@@ -2,6 +2,8 @@
     const dependencyInjector = require('../dependency-injector.js');
     const permissionModel = dependencyInjector.inject('permissionModel');
 
+    const Joi = require('joi');
+
     const standardLogger = require('../logger');
 
     async function getPermissions(validationResult){
@@ -54,6 +56,22 @@
         return {status: 200, body: {message: 'Permission deleted successfully'}}
     }
 
+    async function runPermissionQuery(queryObj){
+        const validatePermissionQueryObject = Joi.object({
+            userId: Joi.string().required(),
+            permissionId: Joi.integer().required()
+        });
+
+        const validationResult = validatePermissionQueryObject.validate(queryObj);
+        if(validationResult.error){
+            throw new Error(validationResult.error);
+        }
+
+        const {userId, permissionId} = validationResult.value;
+
+        return await permissionModel.runPermissionQuery()
+    }
+
     module.exports = {
         getPermissions,
         getSpecificPermission,
@@ -63,6 +81,7 @@
         patchPermissions,
         patchSpecificPermission,
         deletePermissions,
-        deleteSpecificPermission
+        deleteSpecificPermission,
+        runPermissionQuery
     }
     

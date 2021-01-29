@@ -254,6 +254,39 @@
         });
     }
 
+    function runPermissionQuery(userId, permissionId){
+        const escapedValues = {
+            $userId: userId,
+            $permissionId: permissionId
+        };
+
+        const userGroupsQuery = `SELECT groupId FROM permissionGroupToUser WHERE userId=$userId`;
+
+        const selectPermissions = `
+        SELECT COUNT(*)
+        FROM permissionGroupToPermission as pgtp
+        WHERE pgtp.permissionId=$permissionId
+        AND pgtp.groupId IN (${userGroupsQuery})
+        `;
+
+        const userHasPermissionQuery=`
+        SELECT (${selectPermissions}) > 0;
+        `;
+
+        return new Promise((resolve, reject) => {
+            sqlite.get(
+                userHasPermissionQuery,
+                escapedValues,
+                (err, result) => {
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve(!!result);
+                }
+            )
+        })
+    }
+
     module.exports = {
         getPermissions,
         getSpecificPermission,
@@ -263,6 +296,7 @@
         patchPermissions,
         patchSpecificPermission,
         deletePermissions,
-        deleteSpecificPermission
+        deleteSpecificPermission,
+        runPermissionQuery
     }
     

@@ -13,17 +13,17 @@
     
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE permission(id INTEGER PRIMARY KEY ASC, name TEXT, description TEXT);', (err) => {
+            dependencyInjector.dependencies.sqlite.run('CREATE TABLE permission(id INTEGER PRIMARY KEY ASC, name TEXT UNIQUE, description TEXT);', (err) => {
             if(err){
                 reject(err);
             }
             else{
-                dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("string", "string");', (err) => {
+                dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("TEST_GET", "string");', (err) => {
                     if(err){
                         reject(err);
                     }
                     else{
-                        dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("string", "string");', (err) => {
+                        dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("TEST_POST", "string");', (err) => {
                             if(err){
                                 reject(err);
                             }
@@ -68,7 +68,7 @@
         });
 
         it('postPermission should return an object with an id', async (done) => {
-            let result = await permissionModels.postPermission({"name":"string","description":"string"});
+            let result = await permissionModels.postPermission({"name":"TEST_MODIFY","description":"string"});
             expect(result).toBeTruthy();
             expect(result.id).toBeTruthy();
 

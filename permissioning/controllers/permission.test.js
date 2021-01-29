@@ -16,7 +16,7 @@
         );
         const permissionControllers = require('./permission');
 
-        const properValues = {"id":1,"name":"string","description":"string"};
+        const properValues = {"id":1,"name":"string","description":"TEST_MODIFY"};
         const patchSpecificProperValues = {"name":"string","description":"string"}
 
         const mockResponse = () => {

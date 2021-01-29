@@ -64,7 +64,10 @@
         return response.status(result.status).json(result.body);
     }
 
-    const postPermissionSchema = Joi.object({name:Joi.string().required(),description:Joi.string().required()})
+    const postPermissionSchema = Joi.object({
+        name:Joi.string().pattern(/^(\w+_)+(GET|POST|MODIFY|DELETE)$/).required(),
+        description:Joi.string().required()
+    });
     async function postPermission(request, response){
         const validationResult = postPermissionSchema.validate(request.body);
         if(validationResult.error){
