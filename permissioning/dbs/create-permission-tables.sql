@@ -58,3 +58,25 @@ INSERT OR REPLACE INTO permissionGroupToPermission VALUES(13, 1, 13);
 INSERT OR REPLACE INTO permissionGroupToPermission VALUES(14, 1, 14);
 INSERT OR REPLACE INTO permissionGroupToPermission VALUES(15, 1, 15);
 INSERT OR REPLACE INTO permissionGroupToPermission VALUES(16, 1, 16);
+
+CREATE TABLE IF NOT EXISTS recordLevelPermission(
+    id INTEGER PRIMARY KEY,
+    tableName TEXT, 
+    recordId INTEGER, 
+    permissionType TEXT, 
+    granteeId TEXT, 
+    get INTEGER, 
+    modify INTEGER, 
+    del INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS groupLevelPermission(
+    id INTEGER PRIMARY KEY,
+    tableName TEXT, 
+    recordId INTEGER, 
+    groupId INTEGER,
+    permissionType TEXT, 
+    granteeId TEXT, 
+    get INTEGER, 
+    post INTEGER
+);

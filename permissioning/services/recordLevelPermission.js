@@ -59,7 +59,7 @@
             userId: Joi.string().required(),
             recordId: Joi.number().integer().required(),
             tableName: Joi.string().required(),
-            operation: Joi.string().alternatives().try('get', 'put', 'del')
+            operation: Joi.string().alternatives().try('get', 'modify', 'del')
         });
 
         const validationResult = validateRecordLevelPermisionQueryObject.validate(queryObject);

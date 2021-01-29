@@ -8,6 +8,11 @@
                 "summary": "Retrieves records from the permissionGroupToPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "The number of records to return from the call."
@@ -57,6 +62,13 @@
                     "permissionGroupToPermission operations"
                 ],
                 "summary": "Creates a record in the permissionGroupToPermission table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -89,6 +101,13 @@
                     "permissionGroupToPermission operations"
                 ],
                 "summary": "Bulk updates records in the permissionGroupToPermission table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -175,6 +194,11 @@
                 "summary": "Gets a specific record from the permissionGroupToPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -210,6 +234,11 @@
                 "summary": "Updates a specific record in the permissionGroupToPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -242,6 +271,11 @@
                 ],
                 "summary": "Partially update a specific entry in the permissionGroupToPermission table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -276,6 +310,11 @@
                 "summary": "Deletes a specific record in the permissionGroupToPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -301,6 +340,11 @@
                 ],
                 "summary": "Retrieves records from the permissionGroupToUser table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "limit",
                         "in": "query",
@@ -351,6 +395,13 @@
                     "permissionGroupToUser operations"
                 ],
                 "summary": "Creates a record in the permissionGroupToUser table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -383,6 +434,13 @@
                     "permissionGroupToUser operations"
                 ],
                 "summary": "Bulk updates records in the permissionGroupToUser table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -469,6 +527,11 @@
                 "summary": "Gets a specific record from the permissionGroupToUser table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -504,6 +567,11 @@
                 "summary": "Updates a specific record in the permissionGroupToUser table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -537,6 +605,11 @@
                 "summary": "Partially update a specific entry in the permissionGroupToUser table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -569,6 +642,11 @@
                 ],
                 "summary": "Deletes a specific record in the permissionGroupToUser table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -943,6 +1021,11 @@
                 "summary": "Retrieves records from the permissionGroup table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "The number of records to return from the call."
@@ -990,6 +1073,13 @@
                     "permissionGroup operations"
                 ],
                 "summary": "Creates a record in the permissionGroup table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1022,6 +1112,13 @@
                     "permissionGroup operations"
                 ],
                 "summary": "Bulk updates records in the permissionGroup table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1108,6 +1205,11 @@
                 "summary": "Gets a specific record from the permissionGroup table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1143,6 +1245,11 @@
                 "summary": "Updates a specific record in the permissionGroup table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1175,6 +1282,11 @@
                 ],
                 "summary": "Partially update a specific entry in the permissionGroup table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -1209,6 +1321,7 @@
                 "summary": "Deletes a specific record in the permissionGroup table",
                 "parameters": [
                     {
+                    
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1234,6 +1347,11 @@
                 ],
                 "summary": "Retrieves records from the recordLevelPermission table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "limit",
                         "in": "query",
@@ -1282,6 +1400,13 @@
                     "recordLevelPermission operations"
                 ],
                 "summary": "Creates a record in the recordLevelPermission table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1314,6 +1439,13 @@
                     "recordLevelPermission operations"
                 ],
                 "summary": "Bulk updates records in the recordLevelPermission table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1400,6 +1532,11 @@
                 "summary": "Gets a specific record from the recordLevelPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1435,6 +1572,11 @@
                 "summary": "Updates a specific record in the recordLevelPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1467,6 +1609,11 @@
                 ],
                 "summary": "Partially update a specific entry in the recordLevelPermission table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -1501,6 +1648,11 @@
                 "summary": "Deletes a specific record in the recordLevelPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1526,6 +1678,11 @@
                 ],
                 "summary": "Retrieves records from the groupLevelPermission table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "limit",
                         "in": "query",
@@ -1574,6 +1731,13 @@
                     "groupLevelPermission operations"
                 ],
                 "summary": "Creates a record in the groupLevelPermission table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1606,6 +1770,13 @@
                     "groupLevelPermission operations"
                 ],
                 "summary": "Bulk updates records in the groupLevelPermission table",
+                "parameters":[
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1692,6 +1863,11 @@
                 "summary": "Gets a specific record from the groupLevelPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1727,6 +1903,11 @@
                 "summary": "Updates a specific record in the groupLevelPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1760,6 +1941,11 @@
                 "summary": "Partially update a specific entry in the groupLevelPermission table",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The record id."
@@ -1792,6 +1978,11 @@
                 ],
                 "summary": "Deletes a specific record in the groupLevelPermission table",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "header",
+                        "description":"Placeholder for where userId is pulled from. In a production app userId would be pulled from an auth token/session"
+                    },
                     {
                         "name": "id",
                         "in": "path",

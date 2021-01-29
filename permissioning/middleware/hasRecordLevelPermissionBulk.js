@@ -4,20 +4,27 @@ const recordLevelPermissionService = dependencyInjector.inject('recordLevelPermi
 
 
 function hasRecordLevelPermission(tableName, operation){
-    const operationValidation = Joi.alternatives().try('get', 'update', 'del').validate(operation);
+    const operationValidation = Joi.alternatives().try('get', 'modify', 'del').validate(operation);
     if(operationValidation.error){
-        throw new Error('Improper operation value passed into hasRecordLevelPermission. Must be get, update, or del.')
+        throw new Error('Improper operation value passed into hasRecordLevelPermission. Must be get, modify, or del.')
     }
 
     return async function(req, res, next){
         try{
-            const {userId} = req.headers;
+            const {userid} = req.headers;
 
             const queryResults = await Promise.all(
                 req.body.map(record => {
+                    let recordId;
+                    if(typeof record === 'object'){
+                        recordId = record.id;
+                    }
+                    else{
+                        recordId = record;
+                    }
                     return recordLevelPermissionService.runRecordLevelPermissionQuery({
-                        userId,
-                        recordId: record.id,
+                        userId:userid,
+                        recordId,
                         tableName,
                         operation
                     });

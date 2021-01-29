@@ -58,7 +58,7 @@
     async function runGroupLevelPermissionQuery(queryObject){
         const validateGroupLevelPermisionQueryObject = Joi.object({
             userId: Joi.string(),
-            groupId: Joi.integer().positive().required(),
+            groupId: Joi.number().integer().positive().required(),
             tableName: Joi.string().required(),
             operation: Joi.alternatives().try('get', 'post').required()
         });

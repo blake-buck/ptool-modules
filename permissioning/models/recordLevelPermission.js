@@ -287,7 +287,7 @@
             (SELECT (${selectGroupPermissions}) > 0)
             OR
             (SELECT (${selectUserPermissions}) > 0)
-        );
+        ) as hasPermission;
         `
 
         return new Promise((resolve, reject) => {
@@ -298,7 +298,7 @@
                     if(err){
                         return reject(err);
                     }
-                    return resolve(!!result);
+                    return resolve(!!result.hasPermission);
                 }
             )
         })

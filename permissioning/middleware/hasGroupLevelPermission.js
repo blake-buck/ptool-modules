@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector');
 const groupLevelPermissionService = dependencyInjector.inject('groupLevelPermissionService');
 
@@ -9,7 +10,7 @@ function hasGroupLevelPermission(tableName, operation){
 
     return async function(req, res, next){
         try{
-            const {userId} = req.headers;
+            const {userid} = req.headers;
             let groupId;
             if(operation === 'get'){
                 if(typeof req.params.groupId === 'object'){
@@ -18,7 +19,7 @@ function hasGroupLevelPermission(tableName, operation){
                     const results = await Promise.all(
                         groupIds.map(groupId => {
                             return groupLevelPermissionService.runGroupLevelPermissionQuery({
-                                userId, 
+                                userId:userid, 
                                 groupId, 
                                 tableName, 
                                 operation
@@ -37,18 +38,17 @@ function hasGroupLevelPermission(tableName, operation){
                 }
             }
             if(operation === 'post'){
-                const {groupId} = req.body;
-                this.groupId = groupId;
+                groupId = req.body.groupId;
             }
 
             const hasPermission = await groupLevelPermissionService.runGroupLevelPermissionQuery({
-                userId, 
+                userId:userid, 
                 groupId, 
                 tableName, 
                 operation
             });
             if(!hasPermission){
-                throw new Error('User does not have permission to perform action.');
+                throw new Error('User does not have permission to perform action at the group level.');
             }
             next();
         }
