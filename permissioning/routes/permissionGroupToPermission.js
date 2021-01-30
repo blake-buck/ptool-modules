@@ -5,19 +5,57 @@
     const dependencyInjector = require('../dependency-injector.js');
     const permissionGroupToPermissionController = dependencyInjector.inject('permissionGroupToPermissionController');
 
-    router.get('/permissionGroupToPermission', permissionGroupToPermissionController.getPermissionGroupToPermissions);
-    router.get('/permissionGroupToPermission/:id', permissionGroupToPermissionController.getSpecificPermissionGroupToPermission);
+    const {hasPermission} = require('../middleware/middleware');
 
-    router.post('/permissionGroupToPermission', permissionGroupToPermissionController.postPermissionGroupToPermission);
+    router.get(
+        '/permissionGroupToPermission', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_GET'),
+        permissionGroupToPermissionController.getPermissionGroupToPermissions
+    );
+    router.get(
+        '/permissionGroupToPermission/:id', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_GET'),
+        permissionGroupToPermissionController.getSpecificPermissionGroupToPermission
+    );
 
-    router.put('/permissionGroupToPermission', permissionGroupToPermissionController.updatePermissionGroupToPermissions);
-    router.put('/permissionGroupToPermission/:id', permissionGroupToPermissionController.updateSpecificPermissionGroupToPermission);
+    router.post(
+        '/permissionGroupToPermission', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_POST'),
+        permissionGroupToPermissionController.postPermissionGroupToPermission
+    );
+
+    router.put(
+        '/permissionGroupToPermission', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_MODIFY'),
+        permissionGroupToPermissionController.updatePermissionGroupToPermissions
+    );
+    router.put(
+        '/permissionGroupToPermission/:id', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_MODIFY'),
+        permissionGroupToPermissionController.updateSpecificPermissionGroupToPermission
+    );
     
-    router.patch('/permissionGroupToPermission', permissionGroupToPermissionController.patchPermissionGroupToPermissions);
-    router.patch('/permissionGroupToPermission/:id', permissionGroupToPermissionController.patchSpecificPermissionGroupToPermission);
+    router.patch(
+        '/permissionGroupToPermission', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_MODIFY'),
+        permissionGroupToPermissionController.patchPermissionGroupToPermissions
+    );
+    router.patch(
+        '/permissionGroupToPermission/:id', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_MODIFY'),
+        permissionGroupToPermissionController.patchSpecificPermissionGroupToPermission
+    );
 
-    router.delete('/permissionGroupToPermission', permissionGroupToPermissionController.deletePermissionGroupToPermissions);
-    router.delete('/permissionGroupToPermission/:id', permissionGroupToPermissionController.deleteSpecificPermissionGroupToPermission);
+    router.delete(
+        '/permissionGroupToPermission', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_DELETE'),
+        permissionGroupToPermissionController.deletePermissionGroupToPermissions
+    );
+    router.delete(
+        '/permissionGroupToPermission/:id', 
+        hasPermission('PERMISSION_GROUP_TO_PERMISSION_DELETE'),
+        permissionGroupToPermissionController.deleteSpecificPermissionGroupToPermission
+    );
 
     module.exports = router;
     

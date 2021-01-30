@@ -4,18 +4,56 @@ const router = express.Router();
 const dependencyInjector = require('../dependency-injector.js');
 const permissionGroupToUserController = dependencyInjector.inject('permissionGroupToUserController');
 
-router.get('/permissionGroupToUser', permissionGroupToUserController.getPermissionGroupToUsers);
-router.get('/permissionGroupToUser/:id', permissionGroupToUserController.getSpecificPermissionGroupToUser);
+const {hasPermission} = require('../middleware/middleware');
 
-router.post('/permissionGroupToUser', permissionGroupToUserController.postPermissionGroupToUser);
+router.get(
+    '/permissionGroupToUser', 
+    hasPermission('PERMISSION_GROUP_TO_USER_GET'),
+    permissionGroupToUserController.getPermissionGroupToUsers
+);
+router.get(
+    '/permissionGroupToUser/:id', 
+    hasPermission('PERMISSION_GROUP_TO_USER_GET'),
+    permissionGroupToUserController.getSpecificPermissionGroupToUser
+);
 
-router.put('/permissionGroupToUser', permissionGroupToUserController.updatePermissionGroupToUsers);
-router.put('/permissionGroupToUser/:id', permissionGroupToUserController.updateSpecificPermissionGroupToUser);
+router.post(
+    '/permissionGroupToUser', 
+    hasPermission('PERMISSION_GROUP_TO_USER_POST'),
+    permissionGroupToUserController.postPermissionGroupToUser
+);
 
-router.patch('/permissionGroupToUser', permissionGroupToUserController.patchPermissionGroupToUsers);
-router.patch('/permissionGroupToUser/:id', permissionGroupToUserController.patchSpecificPermissionGroupToUser);
+router.put(
+    '/permissionGroupToUser', 
+    hasPermission('PERMISSION_GROUP_TO_USER_MODIFY'),
+    permissionGroupToUserController.updatePermissionGroupToUsers
+);
+router.put(
+    '/permissionGroupToUser/:id', 
+    hasPermission('PERMISSION_GROUP_TO_USER_MODIFY'),
+    permissionGroupToUserController.updateSpecificPermissionGroupToUser
+);
 
-router.delete('/permissionGroupToUser', permissionGroupToUserController.deletePermissionGroupToUsers);
-router.delete('/permissionGroupToUser/:id', permissionGroupToUserController.deleteSpecificPermissionGroupToUser);
+router.patch(
+    '/permissionGroupToUser', 
+    hasPermission('PERMISSION_GROUP_TO_USER_MODIFY'),
+    permissionGroupToUserController.patchPermissionGroupToUsers
+);
+router.patch(
+    '/permissionGroupToUser/:id', 
+    hasPermission('PERMISSION_GROUP_TO_USER_MODIFY'),
+    permissionGroupToUserController.patchSpecificPermissionGroupToUser
+);
+
+router.delete(
+    '/permissionGroupToUser', 
+    hasPermission('PERMISSION_GROUP_TO_USER_DELETE'),
+    permissionGroupToUserController.deletePermissionGroupToUsers
+);
+router.delete(
+    '/permissionGroupToUser/:id', 
+    hasPermission('PERMISSION_GROUP_TO_USER_DELETE'),
+    permissionGroupToUserController.deleteSpecificPermissionGroupToUser
+);
 
 module.exports = router;

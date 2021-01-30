@@ -5,19 +5,57 @@
     const dependencyInjector = require('../dependency-injector.js');
     const recordLevelPermissionController = dependencyInjector.inject('recordLevelPermissionController');
 
-    router.get('/recordLevelPermission', recordLevelPermissionController.getRecordLevelPermissions);
-    router.get('/recordLevelPermission/:id', recordLevelPermissionController.getSpecificRecordLevelPermission);
-
-    router.post('/recordLevelPermission', recordLevelPermissionController.postRecordLevelPermission);
-
-    router.put('/recordLevelPermission', recordLevelPermissionController.updateRecordLevelPermissions);
-    router.put('/recordLevelPermission/:id', recordLevelPermissionController.updateSpecificRecordLevelPermission);
+    const {hasPermission} = require('../middleware/middleware');
     
-    router.patch('/recordLevelPermission', recordLevelPermissionController.patchRecordLevelPermissions);
-    router.patch('/recordLevelPermission/:id', recordLevelPermissionController.patchSpecificRecordLevelPermission);
+    router.get(
+        '/recordLevelPermission', 
+        hasPermission('RECORD_LEVEL_PERMISSION_GET'),
+        recordLevelPermissionController.getRecordLevelPermissions
+    );
+    router.get(
+        '/recordLevelPermission/:id', 
+        hasPermission('RECORD_LEVEL_PERMISSION_GET'),
+        recordLevelPermissionController.getSpecificRecordLevelPermission
+    );
 
-    router.delete('/recordLevelPermission', recordLevelPermissionController.deleteRecordLevelPermissions);
-    router.delete('/recordLevelPermission/:id', recordLevelPermissionController.deleteSpecificRecordLevelPermission);
+    router.post(
+        '/recordLevelPermission', 
+        hasPermission('RECORD_LEVEL_PERMISSION_POST'),
+        recordLevelPermissionController.postRecordLevelPermission
+    );
+
+    router.put(
+        '/recordLevelPermission', 
+        hasPermission('RECORD_LEVEL_PERMISSION_MODIFY'),
+        recordLevelPermissionController.updateRecordLevelPermissions
+    );
+    router.put(
+        '/recordLevelPermission/:id', 
+        hasPermission('RECORD_LEVEL_PERMISSION_MODIFY'),
+        recordLevelPermissionController.updateSpecificRecordLevelPermission
+    );
+    
+    router.patch(
+        '/recordLevelPermission', 
+        hasPermission('RECORD_LEVEL_PERMISSION_MODIFY'),
+        recordLevelPermissionController.patchRecordLevelPermissions
+    );
+    router.patch(
+        '/recordLevelPermission/:id', 
+        hasPermission('RECORD_LEVEL_PERMISSION_MODIFY'),
+        recordLevelPermissionController.patchSpecificRecordLevelPermission
+    );
+
+    router.delete(
+        '/recordLevelPermission', 
+        hasPermission('RECORD_LEVEL_PERMISSION_DELETE'),
+        recordLevelPermissionController.deleteRecordLevelPermissions
+    );
+    router.delete(
+        '/recordLevelPermission/:id', 
+        hasPermission('RECORD_LEVEL_PERMISSION_DELETE'),
+        recordLevelPermissionController.deleteSpecificRecordLevelPermission
+    );
 
     module.exports = router;
     

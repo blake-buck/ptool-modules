@@ -20,6 +20,16 @@ INSERT OR REPLACE INTO permission VALUES(14, 'PERMISSION_GROUP_TO_USER_POST', 'G
 INSERT OR REPLACE INTO permission VALUES(15, 'PERMISSION_GROUP_TO_USER_MODIFY', 'Grants user ability to put/patch group to user links');
 INSERT OR REPLACE INTO permission VALUES(16, 'PERMISSION_GROUP_TO_USER_DELETE', 'Grants user ability to delete group to user links');
 
+INSERT OR REPLACE INTO permission VALUES(17, 'RECORD_LEVEL_PERMISSION_GET', 'Grants user ability to get record level permissions');
+INSERT OR REPLACE INTO permission VALUES(18, 'RECORD_LEVEL_PERMISSION_POST', 'Grants user ability to post record level permissions');
+INSERT OR REPLACE INTO permission VALUES(19, 'RECORD_LEVEL_PERMISSION_MODIFY', 'Grants user ability to put/patch record level permissions');
+INSERT OR REPLACE INTO permission VALUES(20, 'RECORD_LEVEL_PERMISSION_DELETE', 'Grants user ability to delete record level permissions');
+
+INSERT OR REPLACE INTO permission VALUES(21, 'GROUP_LEVEL_PERMISSION_GET', 'Grants user ability to get group level permissions');
+INSERT OR REPLACE INTO permission VALUES(22, 'GROUP_LEVEL_PERMISSION_POST', 'Grants user ability to post group level permissions');
+INSERT OR REPLACE INTO permission VALUES(23, 'GROUP_LEVEL_PERMISSION_MODIFY', 'Grants user ability to put/patch group level permissions');
+INSERT OR REPLACE INTO permission VALUES(24, 'GROUP_LEVEL_PERMISSION_DELETE', 'Grants user ability to delete group level permissions');
+
 CREATE TABLE IF NOT EXISTS permissionGroup(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
 INSERT OR REPLACE INTO permissionGroup VALUES(1, 'root', 'Permission to do everything. The key that unlocks all doors.');
 

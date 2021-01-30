@@ -5,19 +5,57 @@
     const dependencyInjector = require('../dependency-injector.js');
     const permissionController = dependencyInjector.inject('permissionController');
 
-    router.get('/permission', permissionController.getPermissions);
-    router.get('/permission/:id', permissionController.getSpecificPermission);
+    const {hasPermission} = require('../middleware/middleware');
 
-    router.post('/permission', permissionController.postPermission);
+    router.get(
+        '/permission', 
+        hasPermission('PERMISSION_GET'),
+        permissionController.getPermissions
+    );
+    router.get(
+        '/permission/:id', 
+        hasPermission('PERMISSION_GET'),
+        permissionController.getSpecificPermission
+    );
 
-    router.put('/permission', permissionController.updatePermissions);
-    router.put('/permission/:id', permissionController.updateSpecificPermission);
+    router.post(
+        '/permission', 
+        hasPermission('PERMISSION_POST'),
+        permissionController.postPermission
+    );
+
+    router.put(
+        '/permission', 
+        hasPermission('PERMISSION_MODIFY'),
+        permissionController.updatePermissions
+    );
+    router.put(
+        '/permission/:id', 
+        hasPermission('PERMISSION_MODIFY'),
+        permissionController.updateSpecificPermission
+    );
     
-    router.patch('/permission', permissionController.patchPermissions);
-    router.patch('/permission/:id', permissionController.patchSpecificPermission);
+    router.patch(
+        '/permission', 
+        hasPermission('PERMISSION_MODIFY'),
+        permissionController.patchPermissions
+    );
+    router.patch(
+        '/permission/:id', 
+        hasPermission('PERMISSION_MODIFY'),
+        permissionController.patchSpecificPermission
+    );
 
-    router.delete('/permission', permissionController.deletePermissions);
-    router.delete('/permission/:id', permissionController.deleteSpecificPermission);
+    router.delete(
+        '/permission', 
+        hasPermission('PERMISSION_DELETE'),
+        permissionController.deletePermissions
+    );
+    router.delete(
+        '/permission/:id', 
+        hasPermission('PERMISSION_DELETE'),
+        permissionController.deleteSpecificPermission
+    );
 
     module.exports = router;
     
