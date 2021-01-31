@@ -1,103 +1,265 @@
+    const dependencyInjector = require('../dependency-injector.js');
+    const express = require('express');
+    const request = require('supertest');
+    dependencyInjector.register('recordLevelPermissionService', () => ({}));
+    dependencyInjector.register('permissionGroupToUserModel', () => ({}));
+    dependencyInjector.register('permissionGroupToPermissionModel', () => ({}));
+    dependencyInjector.register('permissionModel', () => ({}));
+    dependencyInjector.register('groupLevelPermissionService', () => ({}));
+    dependencyInjector.register('permissionGroupToPermissionService', () => ({}));
+    const {initializeSqlite} = require('../initialization');
 
+    initializeSqlite(':memory:');
+    dependencyInjector.register('permissionGroupToUserModel', require('../models/permissionGroupToUser'));
+    dependencyInjector.register('permissionModel', require('../models/permission'));
+    dependencyInjector.register('permissionGroupToUserService', require('../services/permissionGroupToUser'));
+    dependencyInjector.register('permissionService', require('../services/permission'));
+    dependencyInjector.register('permissionGroupToUserController', require('../controllers/permissionGroupToUser'));
 
-    describe('permissionGroupToUser model tests ', () => {
-        it('should work', () => expect(true).toBe(true));
-        // it('getPermissionGroupToUser should return two records', async (done) => {
-        //     let records = await permissionGroupToUserModels.getPermissionGroupToUsers({limit:10, offset: 0}, 'id,userId,groupId');
-        //     expect(records.length).toBe(2);
+    const permissionGroupToUserRouter = require('./permissionGroupToUser');
 
-        //     done();
-        // });
+    describe('permissionGroupToUser route tests ', () => {
+        
+        beforeEach(async () => {
+            await new Promise((resolve, reject) => {
+                const createPermissionsAndUserQuery = `
+                CREATE TABLE permission(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+                INSERT INTO permission VALUES (1, 'PERMISSION_GROUP_TO_USER_GET', 'PLACEHOLD');
+                INSERT INTO permission VALUES (2, 'PERMISSION_GROUP_TO_USER_POST', 'PLACEHOLD');
+                INSERT INTO permission VALUES (3, 'PERMISSION_GROUP_TO_USER_MODIFY', 'PLACEHOLD');
+                INSERT INTO permission VALUES (4, 'PERMISSION_GROUP_TO_USER_DELETE', 'PLACEHOLD');
+                CREATE TABLE permissionGroup(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+                INSERT INTO permissionGroup VALUES (1, 'root', 'placehold');
+                CREATE TABLE permissionGroupToPermission(id INTEGER PRIMARY KEY, groupId INTEGER, permissionId INTEGER);
+                INSERT INTO permissionGroupToPermission VALUES (1, 1, 1);
+                INSERT INTO permissionGroupToPermission VALUES (2, 1, 2);
+                INSERT INTO permissionGroupToPermission VALUES (3, 1, 3);
+                INSERT INTO permissionGroupToPermission VALUES (4, 1, 4);
+                CREATE TABLE permissionGroupToUser(id INTEGER PRIMARY KEY, userId TEXT, groupId INTEGER);
+                INSERT INTO permissionGroupToUser VALUES (1, 'root-user', 1);
+                `
+                dependencyInjector.dependencies.sqlite.exec(createPermissionsAndUserQuery, (err) => {
+                    if(err){
+                        reject(err);
+                    }
+                    else{
+                        resolve(true);
+                    }
+                });
+            });
+        });
+        
+        afterEach(async () => {
+            await new Promise((resolve, reject) => {
+                const dropPermissionTables = `
+                DROP TABLE permission;
+                DROP TABLE permissionGroup;
+                DROP TABLE permissionGroupToPermission;
+                DROP TABLE permissionGroupToUser;
+                `;
+                dependencyInjector.dependencies.sqlite.exec(dropPermissionTables, (err) => {
+                    if(err){
+                        reject(err);
+                    }
+                    else{
+                        resolve(true);
+                    }
+                });
+            });
+        });
 
-        // it('getSpecificPermissionGroupToUser should return a singular record', async (done) => {
-        //     let record = await permissionGroupToUserModels.getSpecificPermissionGroupToUser(1, 'id,userId,groupId');
-        //     expect(record).toBeTruthy();
-        //     expect(record.id).toBeTruthy();
+        const app = express();
+        app.use(express.json());
+        app.use(permissionGroupToUserRouter);
 
-        //     done();
-        // });
+        it('GET - /permissionGroupToUser', async (done) => {
+            request(app)
+                .get('/permissionGroupToUser')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send({})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+                    expect(res.body).toBeTruthy();
+                    done();
+                });
+        });
 
-        // it('postPermissionGroupToUser should return an object with an id', async (done) => {
-        //     let result = await permissionGroupToUserModels.postPermissionGroupToUser({"userId":"string","groupId":0});
-        //     expect(result).toBeTruthy();
-        //     expect(result.id).toBeTruthy();
+        it('POST - /permissionGroupToUser', async (done) => {
+            request(app)
+                .post('/permissionGroupToUser')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send({"groupId":0,"userId":'string'})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
-        //     done();
-        // });
+        it('PUT - /permissionGroupToUser', async (done) => {
+            request(app)
+                .put('/permissionGroupToUser')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send([{"id":1,"groupId":0,"userId":'string'}])
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
-        // it('updatePermissionGroupToUsers should update records', async (done) => {
-        //     let result = await permissionGroupToUserModels.updatePermissionGroupToUsers([{"id":1,"userId":"string","groupId":0}]);
-        //     expect(result).toBeTruthy();
+        it('PATCH - /permissionGroupToUser', async (done) => {
+            request(app)
+                .patch('/permissionGroupToUser')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send([{"id":1,"groupId":0,"userId":'string'}])
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
-        //     dependencyInjector.dependencies.sqlite.get('SELECT * FROM permissionGroupToUser WHERE id=1', (err, row) => {
-        //         const oldRecord = JSON.stringify({"id":2,"userId":"stringa","groupId":1});
-        //         const updatedRecord = JSON.stringify(row);
+        it('DELETE - /permissionGroupToUser', async (done) => {
+            request(app)
+                .delete('/permissionGroupToUser')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send([1,2])
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
+    
 
-        //         expect(oldRecord === updatedRecord).toBe(false);
-        //         done();
-        //     })
+    
+        it('GET - /permissionGroupToUser/:id', async (done) => {
+            request(app)
+                .get('/permissionGroupToUser/1')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send({})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
-        // });
+        it('PUT - /permissionGroupToUser/:id', async (done) => {
+            request(app)
+                .put('/permissionGroupToUser/1')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send({"id":1,"groupId":0,"userId":'string'})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
-        // it('updateSpecificPermissionGroupToUser should update a specific record', async (done) => {
-        //     let result = await permissionGroupToUserModels.updateSpecificPermissionGroupToUser({"id":2,"userId":"stringa","groupId":1});
-        //     expect(result).toBeTruthy();
+        it('PATCH - /permissionGroupToUser/:id', async (done) => {
+            request(app)
+                .patch('/permissionGroupToUser/1')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send({"groupId":0,"userId":'string'})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
-        //     dependencyInjector.dependencies.sqlite.get('SELECT * FROM permissionGroupToUser WHERE id=1', (err, row) => {
-        //         const oldRecord = JSON.stringify({"id":2,"userId":"stringa","groupId":1});
-        //         const updatedRecord = JSON.stringify(row);
-
-        //         expect(oldRecord === updatedRecord).toBe(false);
-        //         done();
-        //     })
-        // });
-
-        // it('patchPermissionGroupToUsers should update records', async (done) => {
-        //     let result = await permissionGroupToUserModels.patchPermissionGroupToUsers([{"id":1,"userId":"string","groupId":0}]);
-        //     expect(result).toBeTruthy();
-
-        //     dependencyInjector.dependencies.sqlite.get('SELECT * FROM permissionGroupToUser WHERE id=1', (err, row) => {
-        //         const oldRecord = JSON.stringify({"id":2,"userId":"stringa","groupId":1});
-        //         const updatedRecord = JSON.stringify(row);
-
-        //         expect(oldRecord === updatedRecord).toBe(false);
-        //         done();
-        //     })
-
-        // });
-
-        // it('patchSpecificPermissionGroupToUser should update a specific record', async (done) => {
-        //     let result = await permissionGroupToUserModels.patchSpecificPermissionGroupToUser(1, {"userId":"string","groupId":0});
-        //     expect(result).toBeTruthy();
-
-        //     dependencyInjector.dependencies.sqlite.get('SELECT * FROM permissionGroupToUser WHERE id=1', (err, row) => {
-        //         const oldRecord = JSON.stringify({"userId":"string","groupId":0});
-        //         const updatedRecord = JSON.stringify(row);
-
-        //         expect(oldRecord === updatedRecord).toBe(false);
-        //         done();
-        //     })
-        // });
-
-        // it('deletePermissionGroupToUsers should delete records', async (done) => {
-        //     let result = await permissionGroupToUserModels.deletePermissionGroupToUsers([1, 2]);
-        //     expect(result).toBeTruthy();
-
-        //     dependencyInjector.dependencies.sqlite.all('SELECT * FROM permissionGroupToUser', (err, result) => {
-        //         expect(result.length).toBe(0);
-        //         done();
-        //     })
-        // });
-
-        // it('deleteSpecificPermissionGroupToUser should delete a specific record', async (done) => {
-        //     let result = await permissionGroupToUserModels.deleteSpecificPermissionGroupToUser(1);
-        //     expect(result).toBeTruthy();
-
-        //     dependencyInjector.dependencies.sqlite.all('SELECT * FROM permissionGroupToUser', (err, result) => {
-        //         expect(result.length).toBe(1);
-        //         done();
-        //     })
-        // })
+        it('DELETE - /permissionGroupToUser/:id', async (done) => {
+            request(app)
+                .delete('/permissionGroupToUser/1')
+                .set('Accept', 'application/json')
+                .set('userId', 'root-user')
+                .send({})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+    
+                    done();
+                });
+        });
 
     });
     

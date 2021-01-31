@@ -18,26 +18,28 @@
 
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE permission(id INTEGER PRIMARY KEY ASC, name TEXT UNIQUE, description TEXT);', (err) => {
+            const createPermissionsAndUserQuery = `
+            CREATE TABLE permission(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+            INSERT INTO permission VALUES (1, 'PERMISSION_GET', 'PLACEHOLD');
+            INSERT INTO permission VALUES (2, 'PERMISSION_POST', 'PLACEHOLD');
+            INSERT INTO permission VALUES (3, 'PERMISSION_MODIFY', 'PLACEHOLD');
+            INSERT INTO permission VALUES (4, 'PERMISSION_DELETE', 'PLACEHOLD');
+            CREATE TABLE permissionGroup(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+            INSERT INTO permissionGroup VALUES (1, 'root', 'placehold');
+            CREATE TABLE permissionGroupToPermission(id INTEGER PRIMARY KEY, groupId INTEGER, permissionId INTEGER);
+            INSERT INTO permissionGroupToPermission VALUES (1, 1, 1);
+            INSERT INTO permissionGroupToPermission VALUES (2, 1, 2);
+            INSERT INTO permissionGroupToPermission VALUES (3, 1, 3);
+            INSERT INTO permissionGroupToPermission VALUES (4, 1, 4);
+            CREATE TABLE permissionGroupToUser(id INTEGER PRIMARY KEY, userId TEXT, groupId INTEGER);
+            INSERT INTO permissionGroupToUser VALUES (1, 'root-user', 1);
+            `
+            dependencyInjector.dependencies.sqlite.exec(createPermissionsAndUserQuery, (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("TEST_POST", "string");', (err) => {
-                        if(err){
-                            reject(err);
-                        }
-                        else{
-                            dependencyInjector.dependencies.sqlite.run('INSERT INTO permission(name, description) VALUES("TEST_MODFIY", "string");', (err) => {
-                                if(err){
-                                    reject(err);
-                                }
-                                else{
-                                    resolve(true);
-                                }
-                            })
-                        }
-                    })
+                    resolve(true);
                 }
             })
         });
@@ -45,7 +47,13 @@
     
     afterEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('DROP TABLE permission', (err) => {
+            const dropPermissionTables = `
+            DROP TABLE permission;
+            DROP TABLE permissionGroup;
+            DROP TABLE permissionGroupToPermission;
+            DROP TABLE permissionGroupToUser;
+            `;
+            dependencyInjector.dependencies.sqlite.exec(dropPermissionTables, (err) => {
                 if(err){
                     reject(err);
                 }
@@ -66,6 +74,7 @@
             request(app)
                 .get('/permission')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send({})
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -84,6 +93,7 @@
             request(app)
                 .post('/permission')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send({"name":"TEST_GET","description":"string"})
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -104,6 +114,7 @@
             request(app)
                 .put('/permission')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send([{"id":1,"name":"string","description":"string"}])
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -124,6 +135,7 @@
             request(app)
                 .patch('/permission')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send([{"id":1,"name":"string","description":"string"}])
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -144,6 +156,7 @@
             request(app)
                 .delete('/permission')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send([1,2])
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -166,6 +179,7 @@
             request(app)
                 .get('/permission/1')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send({})
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -186,6 +200,7 @@
             request(app)
                 .put('/permission/1')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send({"id":1,"name":"string","description":"string"})
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -206,6 +221,7 @@
             request(app)
                 .patch('/permission/1')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send({"name":"string","description":"string"})
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -226,6 +242,7 @@
             request(app)
                 .delete('/permission/1')
                 .set('Accept', 'application/json')
+                .set('userId', 'root-user')
                 .send({})
                 .expect('Content-Type', /json/)
                 .expect(200)
