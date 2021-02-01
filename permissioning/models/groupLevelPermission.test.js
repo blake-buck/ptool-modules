@@ -13,26 +13,46 @@
     
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE groupLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, groupId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, post INTEGER);', (err) => {
+            const createPermissionsAndUserQuery = `
+            CREATE TABLE permission(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+            INSERT INTO permission VALUES (1, 'GROUP_LEVEL_PERMISSION_GET', 'PLACEHOLD');
+            INSERT INTO permission VALUES (2, 'GROUP_LEVEL_PERMISSION_POST', 'PLACEHOLD');
+            INSERT INTO permission VALUES (3, 'GROUP_LEVEL_PERMISSION_MODIFY', 'PLACEHOLD');
+            INSERT INTO permission VALUES (4, 'GROUP_LEVEL_PERMISSION_DELETE', 'PLACEHOLD');
+            CREATE TABLE permissionGroup(id INTEGER PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+            INSERT INTO permissionGroup VALUES (1, 'root', 'placehold');
+            CREATE TABLE permissionGroupToPermission(id INTEGER PRIMARY KEY, groupId INTEGER, permissionId INTEGER);
+            INSERT INTO permissionGroupToPermission VALUES (1, 1, 1);
+            INSERT INTO permissionGroupToPermission VALUES (2, 1, 2);
+            INSERT INTO permissionGroupToPermission VALUES (3, 1, 3);
+            INSERT INTO permissionGroupToPermission VALUES (4, 1, 4);
+            CREATE TABLE permissionGroupToUser(id INTEGER PRIMARY KEY, userId TEXT, groupId INTEGER);
+            INSERT INTO permissionGroupToUser VALUES (1, 'root-user', 1);
+            `
+            dependencyInjector.dependencies.sqlite.exec(createPermissionsAndUserQuery, (err) => {
+                if(err){
+                    console.error(err)
+                    reject(err);
+                }
+                else{
+                    resolve(true);
+                }
+            })
+        });
+
+        
+        await new Promise((resolve, reject) => {
+            const groupLevelPermissionQuery = `
+            CREATE TABLE groupLevelPermission(id INTEGER PRIMARY KEY ASC, tableName TEXT, groupId INTEGER, permissionType TEXT, granteeId TEXT, get INTEGER, post INTEGER);
+            INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES("exampleTable", 1, "group", "1", 1, 1);
+            INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES("anotherExampleTable", 1, "user", "root-user", 1, 1);
+            `;
+            dependencyInjector.dependencies.sqlite.exec(groupLevelPermissionQuery, (err) => {
             if(err){
                 reject(err);
             }
             else{
-                dependencyInjector.dependencies.sqlite.run('INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES("string", 0, "string", "string", 0, 0);', (err) => {
-                    if(err){
-                        reject(err);
-                    }
-                    else{
-                        dependencyInjector.dependencies.sqlite.run('INSERT INTO groupLevelPermission(tableName, groupId, permissionType, granteeId, get, post) VALUES("string", 0, "string", "string", 0, 0);', (err) => {
-                            if(err){
-                                reject(err);
-                            }
-                            else{
-                                resolve(true);
-                            }
-                        })
-                    }
-                })
+                resolve(true);
             }
         })
         });
@@ -40,7 +60,13 @@
 
     afterEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('DROP TABLE groupLevelPermission', (err) => {
+            dependencyInjector.dependencies.sqlite.exec(`
+            DROP TABLE groupLevelPermission;
+            DROP TABLE permission;
+            DROP TABLE permissionGroup;
+            DROP TABLE permissionGroupToPermission;
+            DROP TABLE permissionGroupToUser;
+            `, (err) => {
                 if(err){
                     reject(err);
                 }
@@ -147,7 +173,28 @@
                 expect(result.length).toBe(1);
                 done();
             })
-        })
+        });
+
+        it('runGroupLevelPermissionQuery should return true for a user that does have permission to post to a group', async (done) => {
+            // userId, groupId, tableName, operation
+            let result = await groupLevelPermissionModels.runGroupLevelPermissionQuery('root-user', 1, 'exampleTable', 'post');
+            expect(result).toBeTruthy();
+
+            let resultTwo = await groupLevelPermissionModels.runGroupLevelPermissionQuery('root-user', 1, 'anotherExampleTable', 'post');
+            expect(resultTwo).toBeTruthy();
+
+            done();
+        });
+
+        it('runGroupLevelPermissionQuery should return false for a users that dont have permission to post to a group', async (done) => {
+            // userId, groupId, tableName, operation
+            let result = await groupLevelPermissionModels.runGroupLevelPermissionQuery('userWithoutPermission', 1, 'exampleTable', 'post');
+            expect(result).toBeFalsy();
+
+            let resultTwo = await groupLevelPermissionModels.runGroupLevelPermissionQuery('root-user', 1, 'tableWithoutPermission', 'post');
+            expect(resultTwo).toBeFalsy();
+            done();
+        });
 
     });
     

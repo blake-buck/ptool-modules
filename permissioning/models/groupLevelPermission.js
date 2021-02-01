@@ -274,7 +274,7 @@
         const selectUserPermissions =`
         SELECT COUNT(*)
         FROM groupLevelPermission as glp
-        WHERE glp.permissionType='group'
+        WHERE glp.permissionType='user'
         AND glp.tableName=$tableName
         AND glp.groupId=$groupId
         AND glp.${operation}=1
