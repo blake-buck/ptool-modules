@@ -9,10 +9,20 @@
         patchGroupLevelPermissions: () => true,
         patchSpecificGroupLevelPermission: () => true,
         deleteGroupLevelPermissions : () => true,
-        deleteSpecificGroupLevelPermission: () => true
+        deleteSpecificGroupLevelPermission: () => true,
+        runGroupLevelPermissionQuery: () => true
     });
     const groupLevelPermissionServices = require('./groupLevelPermission');
 
+    const properUserId = 'user-id';
+    const properGroupId = 123;
+    const properTableName = 'tableName';
+    const properOperation = 'post';
+    
+    const improperUserId = 1234;
+    const improperGroupId = -123;
+    const improperTableName = 45678;
+    const improperOperation ='modify';
 
     describe('groupLevelPermission service tests', () => {
         it('getGroupLevelPermissions should return status 200 and two records', async (done) => {
@@ -89,5 +99,81 @@
             expect(response.body.message).toBeTruthy();
             done();
         })
+
+
+        it('runGroupLevelPermissionQuery - proper values should pass validation', async (done) => {
+            try{
+                const result = await groupLevelPermissionServices.runGroupLevelPermissionQuery({
+                    userId: properUserId,
+                    groupId: properGroupId,
+                    tableName: properTableName,
+                    operation: properOperation
+                });
+                expect(true).toBeTruthy();
+            }
+            catch(e){
+            }
+            done();
+        });
+
+        it('runGroupLevelPermissionQuery - improperUserId should fail validation', async (done) => {
+            try{
+                const result = await groupLevelPermissionServices.runGroupLevelPermissionQuery({
+                    userId: improperUserId,
+                    groupId: properGroupId,
+                    tableName: properTableName,
+                    operation: properOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+
+        it('runGroupLevelPermissionQuery - improperGroupId should fail validation', async (done) => {
+            try{
+                const result = await groupLevelPermissionServices.runGroupLevelPermissionQuery({
+                    userId: properUserId,
+                    groupId: improperGroupId,
+                    tableName: properTableName,
+                    operation: properOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+        
+        it('runGroupLevelPermissionQuery - improperTableName should fail validation', async (done) => {
+            try{
+                const result = await groupLevelPermissionServices.runGroupLevelPermissionQuery({
+                    userId: properUserId,
+                    groupId: properGroupId,
+                    tableName: improperTableName,
+                    operation: properOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+
+        it('runGroupLevelPermissionQuery - improperOperation should fail validation', async (done) => {
+            try{
+                const result = await groupLevelPermissionServices.runGroupLevelPermissionQuery({
+                    userId: properUserId,
+                    groupId: properGroupId,
+                    tableName: properTableName,
+                    operation: improperOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
     })
     

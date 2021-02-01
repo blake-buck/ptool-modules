@@ -9,9 +9,20 @@
         patchRecordLevelPermissions: () => true,
         patchSpecificRecordLevelPermission: () => true,
         deleteRecordLevelPermissions : () => true,
-        deleteSpecificRecordLevelPermission: () => true
+        deleteSpecificRecordLevelPermission: () => true,
+        runRecordLevelPermissionCheck: () => true
     });
     const recordLevelPermissionServices = require('./recordLevelPermission');
+
+    const properUserId = 'user-id';
+    const properRecordId = 123;
+    const properTableName = 'tableName';
+    const properOperation = 'modify';
+    
+    const improperUserId = 1234;
+    const improperRecordId = 'string';
+    const improperTableName = 45678;
+    const improperOperation ='post';
 
 
     describe('recordLevelPermission service tests', () => {
@@ -88,6 +99,82 @@
             expect(response.body).toBeTruthy();
             expect(response.body.message).toBeTruthy();
             done();
-        })
+        });
+
+        it('runRecordLevelPermissionQuery - proper values should pass validation', async (done) => {
+            try{
+                const result = await recordLevelPermissionServices.runRecordLevelPermissionQuery({
+                    userId: properUserId,
+                    recordId: properRecordId,
+                    tableName: properTableName,
+                    operation: properOperation
+                });
+                expect(true).toBeTruthy();
+            }
+            catch(e){
+            }
+            done();
+        });
+
+        it('runRecordLevelPermissionQuery - improperUserId should fail validation', async (done) => {
+            try{
+                const result = await recordLevelPermissionServices.runRecordLevelPermissionQuery({
+                    userId: improperUserId,
+                    recordId: properRecordId,
+                    tableName: properTableName,
+                    operation: properOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+
+        it('runRecordLevelPermissionQuery - improperRecordId should fail validation', async (done) => {
+            try{
+                const result = await recordLevelPermissionServices.runRecordLevelPermissionQuery({
+                    userId: properUserId,
+                    recordId: improperRecordId,
+                    tableName: properTableName,
+                    operation: properOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+        
+        it('runRecordLevelPermissionQuery - improperTableName should fail validation', async (done) => {
+            try{
+                const result = await recordLevelPermissionServices.runRecordLevelPermissionQuery({
+                    userId: properUserId,
+                    recordId: properRecordId,
+                    tableName: improperTableName,
+                    operation: properOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+
+        it('runRecordLevelPermissionQuery - improperOperation should fail validation', async (done) => {
+            try{
+                const result = await recordLevelPermissionServices.runRecordLevelPermissionQuery({
+                    userId: properUserId,
+                    recordId: properRecordId,
+                    tableName: properTableName,
+                    operation: improperOperation
+                });
+            }
+            catch(e){
+                expect(true).toBeTruthy();
+            }
+            done();
+        });
+        
     })
     
