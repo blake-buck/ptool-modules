@@ -84,7 +84,6 @@ CREATE TABLE IF NOT EXISTS groupLevelPermission(
     id INTEGER PRIMARY KEY,
     tableName TEXT, 
     recordId INTEGER, 
-    groupId INTEGER,
     permissionType TEXT, 
     granteeId TEXT, 
     get INTEGER, 

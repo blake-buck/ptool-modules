@@ -82,7 +82,7 @@ const hasRecordLevelPermissionBulk = require('./hasRecordLevelPermissionBulk');
 function successHandler(req, res, next){
     res.status(200).end();
 }
-describe('hasPermission middleware tests', () => {
+describe('hasPermissionBulk middleware tests', () => {
     const app = express();
     app.use(express.json());
 
