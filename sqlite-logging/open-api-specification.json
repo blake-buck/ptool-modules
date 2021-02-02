@@ -1,0 +1,198 @@
+{
+    "paths": {
+        "/log": {
+            "get": {
+                "tags": [
+                    "log operations"
+                ],
+                "summary": "Retrieves records from the log table",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The index position to start returning records from."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    },
+                    {
+                        "name": "queryParameters",
+                        "description": "the ways in which one can filter the get query",
+                        "in": "query",
+                        "type": "object",
+                        "additionalProperties": true,
+                        "style": "form",
+                        "explode": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/logArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/logError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/logError"
+                    }
+                }
+            }
+        },
+        "/log/{id}": {
+            "get": {
+                "tags": [
+                    "log operations"
+                ],
+                "summary": "Gets a specific record from the log table",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The record id."
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma seperated list of record fields to return"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/log"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/logError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/logError"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "logOk": {
+                "description": "Standard OK response for the log routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "logError": {
+                "description": "Standard error for the log routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "log": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "hostName": {
+                        "type": "string"
+                    },
+                    "pid": {
+                        "type": "integer"
+                    },
+                    "level": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "fullBody": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "logMinusId": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "hostName": {
+                        "type": "string"
+                    },
+                    "pid": {
+                        "type": "integer"
+                    },
+                    "level": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "fullBody": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "logArray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/log"
+                }
+            }
+        }
+    }
+}
