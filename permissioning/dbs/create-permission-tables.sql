@@ -40,8 +40,6 @@ CREATE TABLE IF NOT EXISTS permissionGroupToUser(
     FOREIGN KEY(groupId) REFERENCES permissionGroup(id)
 );
 
-INSERT OR REPLACE INTO permissionGroupToUser VALUES (1, 'abc-root', 1);
-
 CREATE TABLE IF NOT EXISTS permissionGroupToPermission(
     id INTEGER PRIMARY KEY,
     groupId INTEGER,
@@ -83,7 +81,7 @@ CREATE TABLE IF NOT EXISTS recordLevelPermission(
 CREATE TABLE IF NOT EXISTS groupLevelPermission(
     id INTEGER PRIMARY KEY,
     tableName TEXT, 
-    recordId INTEGER, 
+    groupId INTEGER, 
     permissionType TEXT, 
     granteeId TEXT, 
     get INTEGER, 
