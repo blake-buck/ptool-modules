@@ -1,7 +1,7 @@
 
     const dependencyInjector = require('../dependency-injector.js');
-    const {initializeSqlite} = require('../initialization');
-    initializeSqlite(':memory:');
+    const {initializeLoggingSqlite} = require('../initialization');
+    initializeLoggingSqlite(':memory:');
     const logModels = require('./log');
     
     beforeEach(async () => {

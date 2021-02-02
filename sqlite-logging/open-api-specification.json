@@ -26,8 +26,10 @@
                         "name": "queryParameters",
                         "description": "the ways in which one can filter the get query",
                         "in": "query",
-                        "type": "object",
-                        "additionalProperties": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        },
                         "style": "form",
                         "explode": true
                     }

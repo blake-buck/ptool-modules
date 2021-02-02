@@ -33,10 +33,10 @@
                         "in": "query",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true,
-                            "style": "form",
-                            "explode": true
-                        }
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "responses": {
@@ -366,10 +366,10 @@
                         "in": "query",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true,
-                            "style": "form",
-                            "explode": true
-                        }
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "responses": {
@@ -699,10 +699,10 @@
                         "in": "query",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true,
-                            "style": "form",
-                            "explode": true
-                        }
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "responses": {
@@ -1046,10 +1046,10 @@
                         "in": "query",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true,
-                            "style": "form",
-                            "explode": true
-                        }
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "responses": {
@@ -1375,10 +1375,10 @@
                         "in": "query",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true,
-                            "style": "form",
-                            "explode": true
-                        }
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "responses": {
@@ -1708,10 +1708,10 @@
                         "in": "query",
                         "schema": {
                             "type": "object",
-                            "additionalProperties": true,
-                            "style": "form",
-                            "explode": true
-                        }
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "responses": {

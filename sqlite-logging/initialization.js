@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3');
 const {LOG_DATABASE_FILE} = require('./config');
 
 
-function initializeSqlite(dbFile){
+function initializeLoggingSqlite(dbFile){
     logger.info('Initializing Logging Sqlite...');
     const db = new sqlite3.Database(dbFile ? dbFile : LOG_DATABASE_FILE);
     db.serialize();
@@ -10,4 +10,4 @@ function initializeSqlite(dbFile){
     logger.info('Sqlite Logging initialized.');
 }
 
-module.exports.initializeLoggingSqlite = initializeSqlite;
+module.exports.initializeLoggingSqlite = initializeLoggingSqlite;

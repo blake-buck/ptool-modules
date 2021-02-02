@@ -3,9 +3,9 @@
     const express = require('express');
     const request = require('supertest');
 
-    const {initializeSqlite, initializeStandardMiddleware} = require('../initialization');
+    const {initializeLoggingSqlite, initializeStandardMiddleware} = require('../initialization');
 
-    initializeSqlite(':memory:');
+    initializeLoggingSqlite(':memory:');
     dependencyInjector.register('logModel', require('../models/log'));
     dependencyInjector.register('logService', require('../services/log'));
     dependencyInjector.register('logController', require('../controllers/log'));

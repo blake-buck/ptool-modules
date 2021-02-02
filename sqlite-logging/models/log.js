@@ -1,6 +1,6 @@
 
     const dependencyInjector = require('../dependency-injector.js');
-    const sqlite = dependencyInjector.inject('logSqlite');
+    const sqlite = dependencyInjector.inject('loggingSqlite');
 
     function buildEscapedQueryValuesObject(queryObj){
         const escapedQueryValues = {};
