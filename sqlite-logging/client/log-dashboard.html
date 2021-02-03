@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log dashboard</title>
+    </head>
+    <body>
+        <div id='sidebar'>
+            <button>Apply</button>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='log500Filter'>
+                <label for='log500Filter'>500</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='log403Filter'>
+                <label for='log403Filter'>403</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='log401Filter'>
+                <label for='log401Filter'>401</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='log400Filter'>
+                <label for='log400Filter'>400</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='log200Filter'>
+                <label for='log200Filter'>200</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='logInfoFilter'>
+                <label for='logInfoFilter'>Info</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='logWarnFilter'>
+                <label for='logWarnFilter'>Warn</label>
+            </div>
+            <div>
+                <input type='checkbox' data-parent='messageFilter' id='logErrorFilter'>
+                <label for='logErrorFilter'>Error</label>
+            </div>
+        </div>
+        <div id='main'>
+            <div id='query-header'>
+                <h3>Query Log Data</h3>
+                <button>Apply</button>
+                <div id='query-filters'>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='dateFilterCheckbox' /><label for='dateFilter'>Date Filter</label></span>
+                        <div for='dateFilterCheckbox' class='hidden'>
+                            <span>From <input data-parent='queryFilter' id='dateFromFilterInput' type='datetime' /></span>
+                            <span>to <input data-parent='queryFilter' id='dateToFilterInput' type='datetime' /> </span>
+                        </div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='nameFilterCheckbox' /><label for='nameFilterCheckbox'>Name Filter</label></span>
+                        <div for='nameFilterCheckbox' class='hidden'><input data-parent='queryFilter' id='nameFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='hostNameFilterCheckbox' /><label for='hostNameFilterCheckbox'>Host Name Filter</label></span>
+                        <div for='hostNameFilterCheckbox' class='hidden'><input data-parent='queryFilter' id='hostNameFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='pidFilterCheckbox' /><label for='pidFilterCheckbox'>Pid Filter</label></span>
+                        <div for='pidFilterCheckbox' class='hidden'><input data-parent='queryFilter' type='number' id='pidFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='levelFilterCheckbox' /><label for='levelFilterCheckbox'>Level Filter</label></span>
+                        <div for='levelFilterCheckbox' class='hidden'><input data-parent='queryFilter' type='number' id='levelFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='messageFilterCheckbox' /><label for='messageFilterCheckbox'>Message Filter</label></span>
+                        <div for='messageFilterCheckbox' class='hidden'><input data-parent='queryFilter' id='messageFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' type='checkbox' id='versionFilterCheckbox' /><label for='versionFilterCheckbox'>Version Filter</label></span>
+                        <div for='versionFilterCheckbox' class='hidden'><input data-parent='queryFilter' type='number' id='versionFilterInput' /></div>
+                    </div>
+                </div>
+            </div>
+            <div id='page-carousel'>
+                <button>Previous</button>
+                <span id='page-number-carousel'></span>
+                <button>Next</button>
+            </div>
+            <div id='log-grid'>
+                <div class='grid-row'>
+                    <div>Name</div>
+                    <div>Host Name</div>
+                    <div>Pid</div>
+                    <div>Level</div>
+                    <div>Message</div>
+                    <div>Time</div>
+                    <div>Version</div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+
+    <style>
+        body{
+            display:flex;
+        }
+        #sidebar {
+            width: 10%;
+            min-width: 150px;
+            max-width: 250px;
+        }
+
+        #query-header #query-filters{
+            display:flex;
+            flex-wrap: wrap;
+        }
+
+        #query-header .query-row{
+            margin-left:10px;
+            margin-right:10px;
+        }
+
+        #main #query-header h3{
+            margin-top:0px;
+        }
+        #main #page-carousel{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #main #log-grid .grid-row{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hidden{
+            display: none;
+        }
+    </style>
+
+    <script>
+        let state = {
+            messageFilter:{
+                log500Filter:false,
+                log403Filter:false,
+                log401Filter:false,
+                log400Filter:false,
+                log200Filter:false,
+                logInfoFilter:false,
+                logWarnFilter:false,
+                logErrorFilter:false,
+            },
+            queryCheckbox: {
+                dateFilter: false,
+                nameFilterCheckbox:false,
+                hostNameFilterCheckbox:false,
+                pidFilterCheckbox:false,
+                levelFilterCheckbox:false,
+                messageFilterCheckbox:false,
+                versionFilterCheckbox:false,
+            },
+            queryFilter: {
+                dateFromFilterInput:'',
+                dateToFilterInput:'',
+                nameFilterInput:'',
+                hostNameFilterInput:'',
+                pidFilterInput:'',
+                levelFilterInput:'',
+                messageFilterInput:'',
+                versionFilterInput:'',
+            },
+            // pageCarousel: {},
+            logs:[
+                {
+                    name:'lol',
+                    hostName:'abc',
+                    pid: 123,
+                    level: 500,
+                    message:'jeff ma',
+                    time: '2021-01-01',
+                    version: 0
+                }
+            ]
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            renderDashboardPart('messageFilter', state['messageFilter']);
+            renderDashboardPart('queryCheckbox', state['queryCheckbox']);
+            renderDashboardPart('queryFilter', state['queryFilter']);
+            renderLogs(state.logs);
+        });
+
+
+        document.onchange = (e) => {
+            const dataParent = e.target.getAttribute('data-parent');
+            const id = e.target.id;
+            if(dataParent && id){
+                // DOM interactions
+                if(dataParent === 'queryCheckbox'){
+                    document.querySelector(`div[for=${id}]`).classList.toggle('hidden');
+                }
+
+                // state changes
+                let endValue = e.target.value;
+                if(e.target.type === 'checkbox'){
+                    endValue = e.target.checked
+                }
+                if(e.target.type === 'number'){
+                    endValue = +endValue;
+                }
+
+                state[dataParent] = {
+                    ...state[dataParent],
+                    [id]: endValue
+                }
+                renderDashboardPart(dataParent, state[dataParent])
+            }
+        }
+
+        function renderDashboardPart(dataParent, stateContents){
+            const elementsToChange = document.querySelectorAll(`[data-parent=${dataParent}`);
+            elementsToChange.forEach((el) => {
+                let endValue = stateContents[el.id];
+                if(el.type === 'checkbox'){
+                    el.checked = endValue;
+                }
+                else{
+                    el.value = endValue;
+                }
+            });
+        }
+
+        function renderLogs(logs){
+            const grid = document.querySelector('#log-grid .grid-row')
+            logs.forEach(({name, hostName, pid, level, message, time, version}) => {
+                grid.insertAdjacentHTML('afterend', `
+                <div class='grid-row'>
+                    <div>${name}</div>
+                    <div>${hostName}</div>
+                    <div>${pid}</div>
+                    <div>${level}</div>
+                    <div>${message}</div>
+                    <div>${time}</div>
+                    <div>${version}</div>
+                </div>`)
+            })
+        }
+
+    </script>
+</html>
