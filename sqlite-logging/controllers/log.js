@@ -64,7 +64,34 @@
         return response.status(result.status).json(result.body);
     }
 
+    const getLogCountSchema = Joi.object().pattern(
+        Joi.alternatives().try(...validQueryKeys), 
+        Joi.alternatives().try(
+            Joi.string(), 
+            Joi.number(), 
+            Joi.boolean(),
+            Joi.object({
+                lt: Joi.alternatives().try(Joi.string(), Joi.number()),
+                gt: Joi.alternatives().try(Joi.string(), Joi.number()),
+                lte: Joi.alternatives().try(Joi.string(), Joi.number()),
+                gte: Joi.alternatives().try(Joi.string(), Joi.number()),
+                ne: Joi.alternatives().try(Joi.string(), Joi.number()),
+                like: Joi.string(),
+                in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+$/i), Joi.object({like: Joi.string()})),
+            })
+        )
+    );
+    async function getLogCount(request, response){
+        const validationResult = getLogCountSchema.validate(request.query);
+        if(validationResult.error){
+            throw new Error(validationResult.error);
+        }
+        const result = await logService.getLogCount(validationResult);
+        return response.status(result.status).json(result.body);
+    }
+
     module.exports = {
+        getLogCount: controllerWrapper(getLogCount),
         getLogs: controllerWrapper(getLogs),
         getSpecificLog: controllerWrapper(getSpecificLog)
     }

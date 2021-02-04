@@ -95,6 +95,27 @@
                     done();
                 });
         });
+
+        it('GET - /log/count', async (done) => {
+            request(app)
+                .get('/log/count')
+                .set('Accept', 'application/json')
+                .send({})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(async (err, res) => {
+                    if(err){
+                        console.error(err);
+                        console.log(res.error)
+                        done();
+                    }
+    
+                    expect(res.body).toBeTruthy();
+                    expect(res.body.count).toBe(2);
+    
+                    done();
+                });
+        })
     
     })
     

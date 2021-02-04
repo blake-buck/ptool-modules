@@ -1,5 +1,6 @@
 {
     "paths": {
+        
         "/log": {
             "get": {
                 "tags": [
@@ -40,6 +41,47 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/logArray"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/logError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/logError"
+                    }
+                }
+            }
+        },
+        "/log/count":{
+            "get": {
+                "tags": [
+                    "log operations"
+                ],
+                "summary": "Retrieves the total number of logs that match the query given",
+                "parameters": [
+                    {
+                        "name": "queryParameters",
+                        "description": "the ways in which one can filter the get query",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        },
+                        "style": "form",
+                        "explode": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "properties":{
+                                        "count":"integer"
+                                    }
                                 }
                             }
                         }

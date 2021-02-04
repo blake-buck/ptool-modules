@@ -73,9 +73,9 @@
                 
             </div>
             <div id='page-carousel'>
-                <button>Previous</button>
+                <button id='previousPage'>Previous</button>
                 <span id='page-number-carousel'></span>
-                <button>Next</button>
+                <button id='nextPage'>Next</button>
             </div>
             <div id='log-grid'>
                 <div>Level</div>
@@ -159,8 +159,8 @@
                 version:0,
             },
             // pageCarousel: {},
-            logs:[
-            ]
+            logs:[],
+            offset:0
         }
         window.addEventListener('DOMContentLoaded', async () => {
             renderDashboardPart('messageFilter', state['messageFilter']);
@@ -200,7 +200,18 @@
         }
         document.querySelector('button#applyFilter').addEventListener('click', async () => {
             renderLogs(await getLogs());
-        })
+        });
+        document.querySelector('button#previousPage').addEventListener('click', async () => {
+            state.offset -= 50;
+            if(state.offset < 0){
+                state.offset = 0;
+            }
+            renderLogs(await getLogs());
+        });
+        document.querySelector('button#nextPage').addEventListener('click', async () => {
+            state.offset += 50;
+            renderLogs(await getLogs());
+        });
 
         function renderDashboardPart(dataParent, stateContents){
             const elementsToChange = document.querySelectorAll(`[data-parent=${dataParent}`);
@@ -258,7 +269,7 @@
             }
 
             // &message[like]=Swagger
-            const request = await fetch(`http://localhost:9000/log?limit=50${query}`);
+            const request = await fetch(`http://localhost:9000/log?limit=50&offset=${state.offset}${query}`);
             if(request.status === 200){
                 return await request.json();
             }

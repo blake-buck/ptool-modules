@@ -4,6 +4,10 @@
 
     const standardLogger = require('../logger');
 
+    async function getLogCount(validationResult){
+        return {status: 200, body: {count: await logModel.getLogCount(validationResult.value)}}
+    }
+
     async function getLogs(validationResult){
         const paginationData = {limit, offset} = validationResult.value;
         const fieldData = validationResult.value.fields;
@@ -21,6 +25,7 @@
     }
 
     module.exports = {
+        getLogCount,
         getLogs,
         getSpecificLog
     }

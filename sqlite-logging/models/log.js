@@ -56,6 +56,28 @@
         }
     }
 
+    function getLogCount(queryObject){
+        const {
+            query,
+            escapedQueryValues
+        } = buildEscapedQueryValuesObject(queryObject);
+
+        return new Promise((resolve, reject) => {
+            sqlite.get(
+                `SELECT COUNT(*) as count from log ${query}`, 
+                escapedQueryValues,
+                (err, result) => {
+                    if(err){
+                        reject(err);
+                    }
+                    else{
+                        resolve(result.count);
+                    }
+                }
+            )
+        });
+    }
+
     function getLogs({limit, offset}, fieldData, queryObject){
         const {
             query,
@@ -99,6 +121,7 @@
 
 
     module.exports = {
+        getLogCount,
         getLogs,
         getSpecificLog
     }
