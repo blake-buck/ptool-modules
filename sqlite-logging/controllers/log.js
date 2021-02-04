@@ -17,7 +17,7 @@
         .object({
             limit: Joi.number().default(10),
             offset: Joi.number().default(0),
-            fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,name,hostName,pid,level,message,fullBody,time,version')
+            fields: Joi.string().pattern(/^[\w+,*]+[\w]$/i).default('id,name,hostName,pid,level,message,fullBody,time,version')
         })
         .pattern(
             Joi.alternatives().try(...validQueryKeys), 
@@ -32,7 +32,7 @@
                     gte: Joi.alternatives().try(Joi.string(), Joi.number()),
                     ne: Joi.alternatives().try(Joi.string(), Joi.number()),
                     like: Joi.string(),
-                    in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+$/i), Joi.object({like: Joi.string()})),
+                    in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+[\w]$/i), Joi.object({like: Joi.string()})),
                 })
             )
         );
@@ -48,7 +48,7 @@
     }
 
     const getSpecificLogSchema = Joi.object({
-        fields: Joi.string().pattern(/^[\w+,*]+$/i).default('id,name,hostName,pid,level,message,fullBody,time,version')
+        fields: Joi.string().pattern(/^[\w+,*]+[\w]$/i).default('id,name,hostName,pid,level,message,fullBody,time,version')
     })
     async function getSpecificLog(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
@@ -79,7 +79,7 @@
                 gte: Joi.alternatives().try(Joi.string(), Joi.number()),
                 ne: Joi.alternatives().try(Joi.string(), Joi.number()),
                 like: Joi.string(),
-                in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+$/i), Joi.object({like: Joi.string()})),
+                in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+[\w]$/i), Joi.object({like: Joi.string()})),
             })
         )
     );
