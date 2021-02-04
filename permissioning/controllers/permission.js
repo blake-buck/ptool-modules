@@ -5,6 +5,8 @@
     const dependencyInjector = require('../dependency-injector.js');
     const permissionService = dependencyInjector.inject('permissionService');
 
+    const {BadRequestError} = require('../constants/errors')
+    
     const validQueryKeys = 'id,name,description'.split(',');
 
     const specificParametersSchema = Joi.object({
@@ -38,7 +40,7 @@
     async function getPermissions(request, response){
         const validationResult = getPermissionsSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.getPermissions(validationResult);
@@ -51,11 +53,11 @@
     async function getSpecificPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
         const validationResult = getSpecificPermissionSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const fieldData = validationResult.value.fields;
@@ -71,7 +73,7 @@
     async function postPermission(request, response){
         const validationResult = postPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.postPermission(request.body);
@@ -82,7 +84,7 @@
     async function updatePermissions(request, response){
         const validationResult = updatePermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.updatePermissions(request.body);
@@ -93,12 +95,12 @@
     async function updateSpecificPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = updateSpecificPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.updateSpecificPermission(request.body);
@@ -109,7 +111,7 @@
     async function patchPermissions(request, response){
         const validationResult = patchPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.patchPermissions(request.body);
@@ -120,12 +122,12 @@
     async function patchSpecificPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = patchSpecificPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.patchSpecificPermission(request.params.id, request.body);
@@ -136,7 +138,7 @@
     async function deletePermissions(request, response){
         const validationResult = deletePermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionService.deletePermissions(request.body);
@@ -146,7 +148,7 @@
     async function deleteSpecificPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const result = await permissionService.deleteSpecificPermission(headerValidation.value.id);

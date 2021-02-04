@@ -5,6 +5,8 @@
     const dependencyInjector = require('../dependency-injector.js');
     const recordLevelPermissionService = dependencyInjector.inject('recordLevelPermissionService');
 
+    const {BadRequestError} = require('../constants/errors')
+    
     const validQueryKeys = 'id,tableName,recordId,permissionType,granteeId,get,modify,del'.split(',');
 
     const specificParametersSchema = Joi.object({
@@ -38,7 +40,7 @@
     async function getRecordLevelPermissions(request, response){
         const validationResult = getRecordLevelPermissionsSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.getRecordLevelPermissions(validationResult);
@@ -51,11 +53,11 @@
     async function getSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
         const validationResult = getSpecificRecordLevelPermissionSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const fieldData = validationResult.value.fields;
@@ -68,7 +70,7 @@
     async function postRecordLevelPermission(request, response){
         const validationResult = postRecordLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.postRecordLevelPermission(request.body);
@@ -79,7 +81,7 @@
     async function updateRecordLevelPermissions(request, response){
         const validationResult = updateRecordLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.updateRecordLevelPermissions(request.body);
@@ -90,12 +92,12 @@
     async function updateSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = updateSpecificRecordLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.updateSpecificRecordLevelPermission(request.body);
@@ -106,7 +108,7 @@
     async function patchRecordLevelPermissions(request, response){
         const validationResult = patchRecordLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.patchRecordLevelPermissions(request.body);
@@ -117,12 +119,12 @@
     async function patchSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = patchSpecificRecordLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.patchSpecificRecordLevelPermission(request.params.id, request.body);
@@ -133,7 +135,7 @@
     async function deleteRecordLevelPermissions(request, response){
         const validationResult = deleteRecordLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await recordLevelPermissionService.deleteRecordLevelPermissions(request.body);
@@ -143,7 +145,7 @@
     async function deleteSpecificRecordLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const result = await recordLevelPermissionService.deleteSpecificRecordLevelPermission(headerValidation.value.id);

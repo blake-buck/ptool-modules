@@ -4,6 +4,8 @@ const authenticationService = dependencyInjector.inject('authenticationService')
 const logger = require('../logger');
 const controllerWrapper = require('./controllerWrapper');
 
+const {BadRequestError} = require('../constants/errors')
+
 
 const requestHeadersSchema = Joi.object().pattern(
     Joi.string(), 
@@ -41,7 +43,7 @@ const registerSchema = Joi.object({
 async function register(request, response){
     const validationResult = registerSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
     const {username, password} = validationResult.value;
     const {body, status} = await authenticationService.register(username, password);
@@ -56,7 +58,7 @@ const loginSchema = Joi.object({
 async function login(request, response){
     const validationResult = loginSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
     const {username, password} = validationResult.value;
     const {body, status} = await authenticationService.login(username, password);
@@ -71,13 +73,13 @@ const changePasswordSchema = Joi.object({
 async function changePassword(request, response){
     const headerValidation = requestHeadersWithJwtSchema.validate(request.headers);
     if(headerValidation.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
     const {jwt} = headerValidation.value;
 
     const validationResult = changePasswordSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error)
+        throw new BadRequestError(validationResult.error)
     }
     const {previousPassword, proposedPassword} = validationResult.value;
     const {body, status} = await authenticationService.changePassword(previousPassword, proposedPassword, jwt);
@@ -91,7 +93,7 @@ const forgotPasswordSchema = Joi.object({
 async function forgotPassword(request, response){
     const validationResult = forgotPasswordSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error)
+        throw new BadRequestError(validationResult.error)
     }
     const {email} = validationResult.value;
     const {body, status} = await authenticationService.forgotPassword(email);
@@ -102,7 +104,7 @@ async function forgotPassword(request, response){
 async function deleteAccount(request, response){
     const validationResult = requestHeadersWithJwtSchema.validate(request.headers);
     if(validationResult.error){
-        throw new Error(validationResult.error)
+        throw new BadRequestError(validationResult.error)
     }
     const {jwt} = validationResult.value;
     const {body, status} = await authenticationService.deleteAccount(jwt);

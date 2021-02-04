@@ -24,6 +24,8 @@ function verifyJWT(token){
     })
 }
 
+const {UnAuthenticatedRequestError} = require('../constants/errors');
+
 // the actual middleware function
 async function isAuthenticated(req, res, next){
     const { jwt } = req.headers;
@@ -47,8 +49,7 @@ async function isAuthenticated(req, res, next){
     }
     catch(e){
         // if json web token is invalid, send a response
-        e.httpStatus = 403;
-        next(e);
+        next(new UnAuthenticatedRequestError(e.message));
     }
 
 }

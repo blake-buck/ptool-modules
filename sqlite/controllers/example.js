@@ -4,6 +4,8 @@ const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector.js');
 const exampleService = dependencyInjector.inject('exampleService');
 
+const {BadRequestError} = require('../constants/errors')
+
 const validQueryKeys = 'id,description,status'.split(',');
 
 const idParametersSchema = Joi.object({
@@ -36,7 +38,7 @@ const getExamplesSchema = Joi
 async function getExamples(request, response){
     const validationResult = getExamplesSchema.validate(request.query);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const result = await exampleService.getExamples(validationResult);
@@ -49,12 +51,12 @@ const getSpecificExampleSchema = Joi.object({
 async function getSpecificExample(request, response){
     const validationResult = getSpecificExampleSchema.validate(request.query);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const validateParams = idParametersSchema.validate(request.params);
     if(validateParams.error){
-        throw new Error(validateParams.error);
+        throw new BadRequestError(validateParams.error);
     }
 
     const fieldData = validationResult.value.fields;
@@ -70,7 +72,7 @@ const postExampleSchema = Joi.object({
 async function postExample(request, response){
     const validationResult = postExampleSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const result = await exampleService.postExample(request.body);
@@ -85,7 +87,7 @@ const updateExamplesSchema = Joi.array().items({
 async function updateExamples(request, response){
     const validationResult = updateExamplesSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const result = await exampleService.updateExamples(request.body);
@@ -100,12 +102,12 @@ const updateSpecificExampleSchema = Joi.object({
 async function updateSpecificExample(request, response){
     const validationResult = updateSpecificExampleSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const validateParams = idParametersSchema.validate(request.params);
     if(validateParams.error){
-        throw new Error(validateParams.error);
+        throw new BadRequestError(validateParams.error);
     }
 
     const result = await exampleService.updateSpecificExample(request.body);
@@ -120,7 +122,7 @@ const patchExamplesSchema = Joi.array().items({
 async function patchExamples(request, response){
     const validationResult = patchExamplesSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const result = await exampleService.patchExamples(request.body);
@@ -134,12 +136,12 @@ const patchSpecificExampleSchema = Joi.object({
 async function patchSpecificExample(request, response){
     const validateParams = idParametersSchema.validate(request.params);
     if(validateParams.error){
-        throw new Error(validateParams.error);
+        throw new BadRequestError(validateParams.error);
     }
 
     const validationResult = patchSpecificExampleSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
 
@@ -151,7 +153,7 @@ const deleteExamplesSchema = Joi.array().items(Joi.number());
 async function deleteExamples(request, response){
     const validationResult = deleteExamplesSchema.validate(request.body);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const result = await exampleService.deleteExamples(request.body);
@@ -164,7 +166,7 @@ const deleteSpecificExampleSchema = Joi.object({
 async function deleteSpecificExample(request, response){
     const validationResult = deleteSpecificExampleSchema.validate(request.params);
     if(validationResult.error){
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const result = await exampleService.deleteSpecificExample(validationResult.value.id);

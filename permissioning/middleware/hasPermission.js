@@ -2,6 +2,7 @@ const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector');
 const permissionModel = dependencyInjector.inject('permissionModel');
 const permissionService = dependencyInjector.inject('permissionService');
+const {UnAuthorizedRequestError, ServerError} = require('../constants/errors')
 
 function hasPermission(permissionName){
     // permissionNames are declared server side, so they dont _NEED_ to be treated as hostile input, but it pays to be consistent IMO
@@ -22,7 +23,7 @@ function hasPermission(permissionName){
                 );
 
                 if(!permissionNeededQuery.length){
-                    throw new Error('Permission not found');
+                    throw new ServerError('Permission not found');
                 }
             
                 permissionId = permissionNeededQuery[0].id;
@@ -36,7 +37,7 @@ function hasPermission(permissionName){
             })
 
             if(!hasPermission){
-                throw new Error('User doesn\'t have permission to perform this action');
+                throw new UnAuthorizedRequestError('User doesn\'t have permission to perform this action');
             }
 
             next();

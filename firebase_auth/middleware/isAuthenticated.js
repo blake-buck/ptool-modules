@@ -1,6 +1,6 @@
 const dependencyInjector = require('../dependency-injector');
 const firebaseAuth = dependencyInjector.inject('firebaseAuth');
-
+const {UnAuthenticatedRequestError} = require('../constants/errors')
 async function isAuthenticated(request, response, next){
     try{
         const {jwt} = request.headers;
@@ -8,8 +8,7 @@ async function isAuthenticated(request, response, next){
         next();
     }
     catch(e){
-        e.httpStatus = 401;
-        next(e);
+        next(new UnAuthenticatedRequestError(e.message));
     }
 }
 

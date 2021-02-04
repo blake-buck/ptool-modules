@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector');
 const recordLevelPermissionService = dependencyInjector.inject('recordLevelPermissionService');
-
+const {UnAuthorizedRequestError} = require('../constants/errors')
 
 function hasRecordLevelPermissionBulk(tableName, operation){
     const operationValidation = Joi.alternatives().try('get', 'modify', 'del').validate(operation);
@@ -13,6 +13,7 @@ function hasRecordLevelPermissionBulk(tableName, operation){
         try{
             const {userid} = req.headers;
 
+            // can upgrade this to instead throw an error the first time a false result is returned
             const queryResults = await Promise.all(
                 req.body.map(record => {
                     let recordId;
@@ -34,7 +35,7 @@ function hasRecordLevelPermissionBulk(tableName, operation){
             const hasPermission = queryResults.every((value) => value);
             
             if(!hasPermission){
-                throw new Error('User does not have record level permission to perform this action');
+                throw new UnAuthorizedRequestError('User does not have record level permission to perform this action');
             }
 
             next();

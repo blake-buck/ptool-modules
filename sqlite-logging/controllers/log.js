@@ -7,6 +7,8 @@
 
     const validQueryKeys = 'id,name,hostName,pid,level,message,fullBody,time,version'.split(',');
 
+    const {BadRequestError} = require('../constants/errors')
+    
     const specificParametersSchema = Joi.object({
         id: Joi.number().integer().required()
     })
@@ -38,7 +40,7 @@
     async function getLogs(request, response){
         const validationResult = getLogsSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await logService.getLogs(validationResult);
@@ -51,11 +53,11 @@
     async function getSpecificLog(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
         const validationResult = getSpecificLogSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const fieldData = validationResult.value.fields;
@@ -84,7 +86,7 @@
     async function getLogCount(request, response){
         const validationResult = getLogCountSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
         const result = await logService.getLogCount(validationResult);
         return response.status(result.status).json(result.body);

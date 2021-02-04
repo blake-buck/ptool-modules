@@ -2,6 +2,8 @@ const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector');
 const groupLevelPermissionService = dependencyInjector.inject('groupLevelPermissionService');
 
+const {UnAuthorizedRequestError} = require('../constants/errors')
+
 function hasGroupLevelPermission(tableName, operation){
     const operationValidation = Joi.alternatives().try('post').validate(operation);
     if(operationValidation.error){
@@ -20,7 +22,7 @@ function hasGroupLevelPermission(tableName, operation){
                 operation
             });
             if(!hasPermission){
-                throw new Error('User does not have permission to perform action at the group level.');
+                throw new UnAuthorizedRequestError('User does not have permission to perform action at the group level.');
             }
             next();
         }

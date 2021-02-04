@@ -5,6 +5,8 @@
     const dependencyInjector = require('../dependency-injector.js');
     const permissionGroupService = dependencyInjector.inject('permissionGroupService');
 
+    const {BadRequestError} = require('../constants/errors');
+
     const validQueryKeys = 'id,name,description'.split(',');
 
     const specificParametersSchema = Joi.object({
@@ -38,7 +40,7 @@
     async function getPermissionGroups(request, response){
         const validationResult = getPermissionGroupsSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.getPermissionGroups(validationResult);
@@ -51,11 +53,11 @@
     async function getSpecificPermissionGroup(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
         const validationResult = getSpecificPermissionGroupSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const fieldData = validationResult.value.fields;
@@ -68,7 +70,7 @@
     async function postPermissionGroup(request, response){
         const validationResult = postPermissionGroupSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.postPermissionGroup(request.body);
@@ -79,7 +81,7 @@
     async function updatePermissionGroups(request, response){
         const validationResult = updatePermissionGroupsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.updatePermissionGroups(request.body);
@@ -90,12 +92,12 @@
     async function updateSpecificPermissionGroup(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = updateSpecificPermissionGroupSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.updateSpecificPermissionGroup(request.body);
@@ -106,7 +108,7 @@
     async function patchPermissionGroups(request, response){
         const validationResult = patchPermissionGroupsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.patchPermissionGroups(request.body);
@@ -117,12 +119,12 @@
     async function patchSpecificPermissionGroup(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = patchSpecificPermissionGroupSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.patchSpecificPermissionGroup(request.params.id, request.body);
@@ -133,7 +135,7 @@
     async function deletePermissionGroups(request, response){
         const validationResult = deletePermissionGroupsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await permissionGroupService.deletePermissionGroups(request.body);
@@ -143,7 +145,7 @@
     async function deleteSpecificPermissionGroup(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const result = await permissionGroupService.deleteSpecificPermissionGroup(headerValidation.value.id);

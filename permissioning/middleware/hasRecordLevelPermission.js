@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const dependencyInjector = require('../dependency-injector');
 const recordLevelPermissionService = dependencyInjector.inject('recordLevelPermissionService');
+const {UnAuthorizedRequestError} = require('../constants/errors')
 
 
 function hasRecordLevelPermission(tableName, operation){
@@ -26,7 +27,7 @@ function hasRecordLevelPermission(tableName, operation){
             
 
             if(!hasPermission){
-                throw new Error('User does not have record level permission to perform this action');
+                throw new UnAuthorizedRequestError('User does not have record level permission to perform this action');
             }
 
             next();

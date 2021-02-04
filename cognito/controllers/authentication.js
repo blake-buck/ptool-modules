@@ -4,6 +4,8 @@ const authenticationService = dependencyInjector.inject('authenticationService')
 const logger = require('../logger');
 const controllerWrapper = require('./controllerWrapper');
 
+const {BadRequestError} = require('../constants/errors')
+
 const requestHeadersSchema = Joi.object().pattern(
     Joi.string(), 
     Joi.alternatives().try(
@@ -43,7 +45,7 @@ async function register(request, response){
     const validationResult = registerSchema.validate(request.body);
     if(validationResult.error){
         logger.error(validationResult.error);
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const {username, password} = validationResult.value;
@@ -63,19 +65,19 @@ async function login(request, response){
     const headerValidation = requestHeadersSchema.validate(request.headers);
     if(headerValidation.error){
         logger.error(headerValidation.error);
-        throw new Error(headerValidation.error);
+        throw new BadRequestError(headerValidation.error);
     }
 
     const ipValidation = ipSchema.validate(request.ip);
     if(ipValidation.error){
         logger.error(ipValidation.error);
-        throw new Error(ipValidation.error);
+        throw new BadRequestError(ipValidation.error);
     }
 
     const bodyValidation = loginSchema.validate(request.body);
     if(bodyValidation.error){
         logger.error(bodyValidation.error);
-        throw new Error(bodyValidation.error);
+        throw new BadRequestError(bodyValidation.error);
     }
 
     const {username, password} = bodyValidation.value;
@@ -98,19 +100,19 @@ async function refreshToken(request, response){
     const headerValidation = requestHeadersWithJwtSchema.validate(request.headers);
     if(headerValidation.error){
         logger.error(headerValidation.error);
-        throw new Error(headerValidation.error);
+        throw new BadRequestError(headerValidation.error);
     }
 
     const ipValidation = ipSchema.validate(request.ip);
     if(ipValidation.error){
         logger.error(ipValidation.error);
-        throw new Error(ipValidation.error);
+        throw new BadRequestError(ipValidation.error);
     }
 
     const bodyValidation = refreshSchema.validate(request.body);
     if(bodyValidation.error){
         logger.error(bodyValidation.error);
-        throw new Error(bodyValidation.error);
+        throw new BadRequestError(bodyValidation.error);
     }
 
     const {refresh} = bodyValidation.value;
@@ -129,13 +131,13 @@ async function changePassword(request, response){
     const headersValidation = requestHeadersWithJwtSchema.validate(request.headers);
     if(headersValidation.error){
         logger.error(headersValidation.error);
-        throw new Error(headersValidation.error);
+        throw new BadRequestError(headersValidation.error);
     }
 
     const bodyValidation = changePasswordSchema_body.validate(request.body);
     if(bodyValidation.error){
         logger.error(bodyValidation.error);
-        throw new Error(bodyValidation.error);
+        throw new BadRequestError(bodyValidation.error);
     }
 
     const {previousPassword, proposedPassword} = bodyValidation.value;
@@ -153,7 +155,7 @@ async function forgotPassword(request, response){
     const validationResult = forgotPasswordSchema.validate(request.body);
     if(validationResult.error){
         logger.error(validationResult.error);
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
     
     const {username} = validationResult.value;
@@ -173,7 +175,7 @@ async function confirmForgotPassword(request, response){
     const validationResult = confirmForgotPasswordSchema.validate(request.body);
     if(validationResult.error){
         logger.error(validationResult.error);
-        throw new Error(validationResult.error);
+        throw new BadRequestError(validationResult.error);
     }
 
     const {confirmationCode, username, password} = validationResult.value;
@@ -192,7 +194,7 @@ async function deleteAccount(request, response){
     const headersValidation = requestHeadersWithJwtSchema.validate(request.headers);
     if(headersValidation.error){
         logger.error(headersValidation.error);
-        throw new Error(headersValidation.error);
+        throw new BadRequestError(headersValidation.error);
     }
 
     const result = await authenticationService.deleteAccount(request.headers.jwt);

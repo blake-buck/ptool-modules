@@ -5,6 +5,8 @@
     const dependencyInjector = require('../dependency-injector.js');
     const groupLevelPermissionService = dependencyInjector.inject('groupLevelPermissionService');
 
+    const {BadRequestError} = require('../constants/errors')
+
     const validQueryKeys = 'id,tableName,groupId,permissionType,granteeId,get,post'.split(',');
 
     const specificParametersSchema = Joi.object({
@@ -38,7 +40,7 @@
     async function getGroupLevelPermissions(request, response){
         const validationResult = getGroupLevelPermissionsSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.getGroupLevelPermissions(validationResult);
@@ -51,11 +53,11 @@
     async function getSpecificGroupLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
         const validationResult = getSpecificGroupLevelPermissionSchema.validate(request.query);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const fieldData = validationResult.value.fields;
@@ -68,7 +70,7 @@
     async function postGroupLevelPermission(request, response){
         const validationResult = postGroupLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.postGroupLevelPermission(request.body);
@@ -79,7 +81,7 @@
     async function updateGroupLevelPermissions(request, response){
         const validationResult = updateGroupLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.updateGroupLevelPermissions(request.body);
@@ -90,12 +92,12 @@
     async function updateSpecificGroupLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = updateSpecificGroupLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.updateSpecificGroupLevelPermission(request.body);
@@ -106,7 +108,7 @@
     async function patchGroupLevelPermissions(request, response){
         const validationResult = patchGroupLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.patchGroupLevelPermissions(request.body);
@@ -117,12 +119,12 @@
     async function patchSpecificGroupLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const validationResult = patchSpecificGroupLevelPermissionSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.patchSpecificGroupLevelPermission(request.params.id, request.body);
@@ -133,7 +135,7 @@
     async function deleteGroupLevelPermissions(request, response){
         const validationResult = deleteGroupLevelPermissionsSchema.validate(request.body);
         if(validationResult.error){
-            throw new Error(validationResult.error);
+            throw new BadRequestError(validationResult.error);
         }
 
         const result = await groupLevelPermissionService.deleteGroupLevelPermissions(request.body);
@@ -143,7 +145,7 @@
     async function deleteSpecificGroupLevelPermission(request, response){
         const headerValidation = specificParametersSchema.validate(request.params);
         if(headerValidation.error){
-            throw new Error(headerValidation.error);
+            throw new BadRequestError(headerValidation.error);
         }
 
         const result = await groupLevelPermissionService.deleteSpecificGroupLevelPermission(headerValidation.value.id);
