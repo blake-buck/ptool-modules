@@ -59,4 +59,11 @@ standardLogger.addStream({
     stream: writeToLogDatabase
 })
 
+standardLogger.level("200", 200);
+standardLogger.level("400", 400);
+standardLogger.level("401", 401);
+standardLogger.level("403", 403);
+standardLogger.level("429", 429);
+standardLogger.level("500", 500);
+
 module.exports = standardLogger;
