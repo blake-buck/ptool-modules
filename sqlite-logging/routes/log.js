@@ -1,7 +1,7 @@
 
     const express = require('express');
     const router = express.Router();
-
+    
     const dependencyInjector = require('../dependency-injector.js');
     const logController = dependencyInjector.inject('logController');
 

@@ -1,4 +1,4 @@
 Run "npm i"
 fill out the LOG_DATABASE_FILE value in .env
 Add initializeLoggingSqlite to index.js
-Run the create-example-table.sql command in your development_database.db
+Add initializeLogDashboard to index.js

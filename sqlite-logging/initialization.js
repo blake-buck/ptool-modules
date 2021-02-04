@@ -10,4 +10,11 @@ function initializeLoggingSqlite(dbFile){
     logger.info('Sqlite Logging initialized.');
 }
 
+function initializeLogDashboard(app){
+    const express = require('express');
+
+    app.use('/log-dashboard', express.static('log-dashboard', {index:'log-dashboard.html'}));
+}
+
 module.exports.initializeLoggingSqlite = initializeLoggingSqlite;
+module.exports.initializeLogDashboard = initializeLogDashboard;

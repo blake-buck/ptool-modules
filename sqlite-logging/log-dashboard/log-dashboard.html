@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log dashboard</title>
+    </head>
+    <body>
+        <div id='main'>
+            <div id='query-header'>
+                <h3>Query Log Data</h3>
+                <button id='applyFilter'>Apply</button>
+                <div id='query-filters'>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='500' id='log500Filter'>
+                        <label for='log500Filter'>500</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='403' id='log403Filter'>
+                        <label for='log403Filter'>403</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='401' id='log401Filter'>
+                        <label for='log401Filter'>401</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='400' id='log400Filter'>
+                        <label for='log400Filter'>400</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='200' id='log200Filter'>
+                        <label for='log200Filter'>200</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='30' id='logInfoFilter'>
+                        <label for='logInfoFilter'>Info (30)</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='40' id='logWarnFilter'>
+                        <label for='logWarnFilter'>Warn (40)</label>
+                    </div>
+                    <div class='query-row'>
+                        <input type='checkbox' data-parent='messageFilter' data-key='50' id='logErrorFilter'>
+                        <label for='logErrorFilter'>Error (50)</label>
+                    </div>
+                </div>
+                <div id='query-filters'>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' data-key='message' type='checkbox' id='messageFilterCheckbox' /><label for='messageFilterCheckbox'>Message Filter</label></span>
+                        <div for='messageFilterCheckbox' class='hidden'><input data-parent='queryFilter' data-key='message' id='messageFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' data-key='time' type='checkbox' id='timeFilterCheckbox' /><label for='timeFilterCheckbox'>Time Filter</label></span>
+                        <div for='timeFilterCheckbox' class='hidden'>
+                            <input data-parent='queryFilter' data-key='time' id='timeFromFilterInput' />
+                        </div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' data-key='name' type='checkbox' id='nameFilterCheckbox' /><label for='nameFilterCheckbox'>Name Filter</label></span>
+                        <div for='nameFilterCheckbox' class='hidden'><input data-parent='queryFilter' data-key='name' id='nameFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' data-key='hostName' type='checkbox' id='hostNameFilterCheckbox' /><label for='hostNameFilterCheckbox'>Host Name Filter</label></span>
+                        <div for='hostNameFilterCheckbox' class='hidden'><input data-parent='queryFilter' data-key='hostName' id='hostNameFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' data-key='pid' type='checkbox' id='pidFilterCheckbox' /><label for='pidFilterCheckbox'>Pid Filter</label></span>
+                        <div for='pidFilterCheckbox' class='hidden'><input data-parent='queryFilter' data-key='pid' type='number' id='pidFilterInput' /></div>
+                    </div>
+                    <div class='query-row'>
+                        <span><input data-parent='queryCheckbox' data-key='version' type='checkbox' id='versionFilterCheckbox' /><label for='versionFilterCheckbox'>Version Filter</label></span>
+                        <div for='versionFilterCheckbox' class='hidden'><input data-parent='queryFilter' data-key='version' type='number' id='versionFilterInput' /></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div id='page-carousel'>
+                <button id='previousPage'>Previous</button>
+                <span id='page-number-carousel'>
+                    <span><b id='currentPage'>1</b> out of <b id='maxPages'>1</b></span>
+                </span>
+                <button id='nextPage'>Next</button>
+            </div>
+            <div id='log-grid'>
+                <div>Level</div>
+                <div>Message</div>
+                <div>Time</div>
+                <div>Name</div>
+                <div>Host Name</div>
+                <div>Pid</div>
+                <div>Version</div>
+            </div>
+        </div>
+    </body>
+
+    <style>
+        body{
+            display:flex;
+        }
+        #sidebar {
+            width: 10%;
+            min-width: 150px;
+            max-width: 250px;
+        }
+
+        #query-header #query-filters{
+            display:flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #query-header .query-row{
+            margin-left:10px;
+            margin-right:10px;
+        }
+
+        #main #query-header h3{
+            margin-top:0px;
+        }
+        #main #page-carousel{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #main #log-grid{
+            display: grid;
+            grid-template-columns: 1fr 8fr 3fr 2fr 3fr 1fr 1fr;
+            gap:10px;
+        }
+
+        .hidden{
+            display: none;
+        }
+    </style>
+
+    <script src='log-dashboard.js'></script>
+</html>
