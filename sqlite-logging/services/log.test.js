@@ -3,13 +3,7 @@
     dependencyInjector.register('logModel', {
         getLogs: () => [{id: 1}, {id: 2}],
         getSpecificLog: () => ({id: 1}),
-        postLog: () => ({id: 1}),
-        updateLogs: () => true,
-        updateSpecificLog: () => true,
-        patchLogs: () => true,
-        patchSpecificLog: () => true,
-        deleteLogs : () => true,
-        deleteSpecificLog: () => true
+        getLogCount: () => 2
     });
     const logServices = require('./log');
 
@@ -33,5 +27,13 @@
             done();
         });
         
+        it('getLogCount should return status 200 and an object with a count property', async (done) => {
+            let response = await logServices.getLogCount({});
+            expect(response.status).toBe(200);
+            expect(response.body).toBeTruthy();
+            expect(response.body.count).toBe(2);
+
+            done();
+        });
     })
     

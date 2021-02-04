@@ -14,17 +14,17 @@
 
     beforeEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('CREATE TABLE log(id INTEGER PRIMARY KEY ASC, name TEXT, hostName TEXT, pid INTEGER, level INTEGER, message TEXT, fullBody TEXT, time TEXT, version INTEGER);', (err) => {
+            dependencyInjector.dependencies.loggingSqlite.run('CREATE TABLE log(id INTEGER PRIMARY KEY ASC, name TEXT, hostName TEXT, pid INTEGER, level INTEGER, message TEXT, fullBody TEXT, time TEXT, version INTEGER);', (err) => {
                 if(err){
                     reject(err);
                 }
                 else{
-                    dependencyInjector.dependencies.sqlite.run('INSERT INTO log(name, hostName, pid, level, message, fullBody, time, version) VALUES("string", "string", 0, 0, "string", "string", "string", 0);', (err) => {
+                    dependencyInjector.dependencies.loggingSqlite.run('INSERT INTO log(name, hostName, pid, level, message, fullBody, time, version) VALUES("string", "string", 0, 0, "string", "string", "string", 0);', (err) => {
                         if(err){
                             reject(err);
                         }
                         else{
-                            dependencyInjector.dependencies.sqlite.run('INSERT INTO log(name, hostName, pid, level, message, fullBody, time, version) VALUES("string", "string", 0, 0, "string", "string", "string", 0);', (err) => {
+                            dependencyInjector.dependencies.loggingSqlite.run('INSERT INTO log(name, hostName, pid, level, message, fullBody, time, version) VALUES("string", "string", 0, 0, "string", "string", "string", 0);', (err) => {
                                 if(err){
                                     reject(err);
                                 }
@@ -41,7 +41,7 @@
     
     afterEach(async () => {
         await new Promise((resolve, reject) => {
-            dependencyInjector.dependencies.sqlite.run('DROP TABLE log', (err) => {
+            dependencyInjector.dependencies.loggingSqlite.run('DROP TABLE log', (err) => {
                 if(err){
                     reject(err);
                 }
