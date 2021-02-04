@@ -72,9 +72,9 @@
         app.use(express.json());
         app.use(permissionGroupToUserRouter);
 
-        it('GET - /permissionGroupToUser', async (done) => {
+        it('GET - /api/v1/permissionGroupToUser', async (done) => {
             request(app)
-                .get('/permissionGroupToUser')
+                .get('/api/v1/permissionGroupToUser')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -91,9 +91,9 @@
                 });
         });
 
-        it('POST - /permissionGroupToUser', async (done) => {
+        it('POST - /api/v1/permissionGroupToUser', async (done) => {
             request(app)
-                .post('/permissionGroupToUser')
+                .post('/api/v1/permissionGroupToUser')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"groupId":0,"userId":'string'})
@@ -112,9 +112,9 @@
                 });
         });
 
-        it('PUT - /permissionGroupToUser', async (done) => {
+        it('PUT - /api/v1/permissionGroupToUser', async (done) => {
             request(app)
-                .put('/permissionGroupToUser')
+                .put('/api/v1/permissionGroupToUser')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"groupId":0,"userId":'string'}])
@@ -133,9 +133,9 @@
                 });
         });
 
-        it('PATCH - /permissionGroupToUser', async (done) => {
+        it('PATCH - /api/v1/permissionGroupToUser', async (done) => {
             request(app)
-                .patch('/permissionGroupToUser')
+                .patch('/api/v1/permissionGroupToUser')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"groupId":0,"userId":'string'}])
@@ -154,9 +154,9 @@
                 });
         });
 
-        it('DELETE - /permissionGroupToUser', async (done) => {
+        it('DELETE - /api/v1/permissionGroupToUser', async (done) => {
             request(app)
-                .delete('/permissionGroupToUser')
+                .delete('/api/v1/permissionGroupToUser')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([1,2])
@@ -177,9 +177,9 @@
     
 
     
-        it('GET - /permissionGroupToUser/:id', async (done) => {
+        it('GET - /api/v1/permissionGroupToUser/:id', async (done) => {
             request(app)
-                .get('/permissionGroupToUser/1')
+                .get('/api/v1/permissionGroupToUser/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -198,9 +198,9 @@
                 });
         });
 
-        it('PUT - /permissionGroupToUser/:id', async (done) => {
+        it('PUT - /api/v1/permissionGroupToUser/:id', async (done) => {
             request(app)
-                .put('/permissionGroupToUser/1')
+                .put('/api/v1/permissionGroupToUser/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"id":1,"groupId":0,"userId":'string'})
@@ -219,9 +219,9 @@
                 });
         });
 
-        it('PATCH - /permissionGroupToUser/:id', async (done) => {
+        it('PATCH - /api/v1/permissionGroupToUser/:id', async (done) => {
             request(app)
-                .patch('/permissionGroupToUser/1')
+                .patch('/api/v1/permissionGroupToUser/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"groupId":0,"userId":'string'})
@@ -240,9 +240,9 @@
                 });
         });
 
-        it('DELETE - /permissionGroupToUser/:id', async (done) => {
+        it('DELETE - /api/v1/permissionGroupToUser/:id', async (done) => {
             request(app)
-                .delete('/permissionGroupToUser/1')
+                .delete('/api/v1/permissionGroupToUser/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})

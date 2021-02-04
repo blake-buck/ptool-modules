@@ -96,7 +96,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user has group-level post permission they get access to route', async (done) => {
         request(app)
-            .put('/test')
+            .put('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({groupId: 12345})
@@ -107,7 +107,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user does not have group-level post permission they dont get access to route', async (done) => {
         request(app)
-            .put('/test')
+            .put('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send({groupId: 12345})

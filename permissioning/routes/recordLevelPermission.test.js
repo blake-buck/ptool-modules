@@ -91,9 +91,9 @@
         app.use(recordLevelPermissionRouter);
 
 
-        it('GET - /recordLevelPermission', async (done) => {
+        it('GET - /api/v1/recordLevelPermission', async (done) => {
             request(app)
-                .get('/recordLevelPermission')
+                .get('/api/v1/recordLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -110,9 +110,9 @@
                 });
         });
 
-        it('POST - /recordLevelPermission', async (done) => {
+        it('POST - /api/v1/recordLevelPermission', async (done) => {
             request(app)
-                .post('/recordLevelPermission')
+                .post('/api/v1/recordLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0})
@@ -131,9 +131,9 @@
                 });
         });
 
-        it('PUT - /recordLevelPermission', async (done) => {
+        it('PUT - /api/v1/recordLevelPermission', async (done) => {
             request(app)
-                .put('/recordLevelPermission')
+                .put('/api/v1/recordLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}])
@@ -152,9 +152,9 @@
                 });
         });
 
-        it('PATCH - /recordLevelPermission', async (done) => {
+        it('PATCH - /api/v1/recordLevelPermission', async (done) => {
             request(app)
-                .patch('/recordLevelPermission')
+                .patch('/api/v1/recordLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0}])
@@ -173,9 +173,9 @@
                 });
         });
 
-        it('DELETE - /recordLevelPermission', async (done) => {
+        it('DELETE - /api/v1/recordLevelPermission', async (done) => {
             request(app)
-                .delete('/recordLevelPermission')
+                .delete('/api/v1/recordLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([1,2])
@@ -196,9 +196,9 @@
     
 
     
-        it('GET - /recordLevelPermission/:id', async (done) => {
+        it('GET - /api/v1/recordLevelPermission/:id', async (done) => {
             request(app)
-                .get('/recordLevelPermission/1')
+                .get('/api/v1/recordLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -217,9 +217,9 @@
                 });
         });
 
-        it('PUT - /recordLevelPermission/:id', async (done) => {
+        it('PUT - /api/v1/recordLevelPermission/:id', async (done) => {
             request(app)
-                .put('/recordLevelPermission/1')
+                .put('/api/v1/recordLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"id":1,"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0})
@@ -238,9 +238,9 @@
                 });
         });
 
-        it('PATCH - /recordLevelPermission/:id', async (done) => {
+        it('PATCH - /api/v1/recordLevelPermission/:id', async (done) => {
             request(app)
-                .patch('/recordLevelPermission/1')
+                .patch('/api/v1/recordLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"tableName":"string","recordId":0,"permissionType":"string","granteeId":"string","get":0,"modify":0,"del":0})
@@ -259,9 +259,9 @@
                 });
         });
 
-        it('DELETE - /recordLevelPermission/:id', async (done) => {
+        it('DELETE - /api/v1/recordLevelPermission/:id', async (done) => {
             request(app)
-                .delete('/recordLevelPermission/1')
+                .delete('/api/v1/recordLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})

@@ -110,7 +110,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user has record-level-permission modify permission they get access to route - put', async (done) => {
         request(app)
-            .put('/test')
+            .put('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send([{id: 12345}, {id:54321}])
@@ -121,7 +121,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user has record-level-permission modify permission they get access to route - patch', async (done) => {
         request(app)
-            .patch('/test')
+            .patch('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send([{id: 12345}, {id:54321}])
@@ -132,7 +132,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user has record-level-permission delete permission they get access to route', async (done) => {
         request(app)
-            .delete('/test')
+            .delete('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send([12345, 54321])
@@ -144,7 +144,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user does not have record-level-permission get permission they dont get access to route', async (done) => {
         request(app)
-            .get('/test')
+            .get('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send([{id: 12345}, {id:54321}])
@@ -155,7 +155,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user does not have record-level-permission modify permission they dont get access to route - put', async (done) => {
         request(app)
-            .put('/test')
+            .put('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send([{id: 12345}, {id:54321}])
@@ -166,7 +166,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user does not have record-level-permission modify permission they dont get access to route - patch', async (done) => {
         request(app)
-            .patch('/test')
+            .patch('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send([{id: 12345}, {id:54321}])
@@ -177,7 +177,7 @@ describe('hasPermissionBulk middleware tests', () => {
 
     it('if user does not have record-level-permission delete permission they dont get access to route', async (done) => {
         request(app)
-            .delete('/test')
+            .delete('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send([12345, 54321])

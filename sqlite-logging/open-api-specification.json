@@ -1,7 +1,7 @@
 {
     "paths": {
         
-        "/log": {
+        "/api/v1/log": {
             "get": {
                 "tags": [
                     "log operations"
@@ -54,7 +54,7 @@
                 }
             }
         },
-        "/log/count":{
+        "/api/v1/log/count":{
             "get": {
                 "tags": [
                     "log operations"
@@ -95,7 +95,7 @@
                 }
             }
         },
-        "/log/{id}": {
+        "/api/v1/log/{id}": {
             "get": {
                 "tags": [
                     "log operations"

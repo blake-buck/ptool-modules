@@ -58,9 +58,9 @@
         app.use(logRouter);
 
 
-        it('GET - /log', async (done) => {
+        it('GET - /api/v1/log', async (done) => {
             request(app)
-                .get('/log')
+                .get('/api/v1/log')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)
@@ -76,9 +76,9 @@
                 });
         });
 
-        it('GET - /log/:id', async (done) => {
+        it('GET - /api/v1/log/:id', async (done) => {
             request(app)
-                .get('/log/1')
+                .get('/api/v1/log/1')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)
@@ -96,9 +96,9 @@
                 });
         });
 
-        it('GET - /log/count', async (done) => {
+        it('GET - /api/v1/log/count', async (done) => {
             request(app)
-                .get('/log/count')
+                .get('/api/v1/log/count')
                 .set('Accept', 'application/json')
                 .send({})
                 .expect('Content-Type', /json/)

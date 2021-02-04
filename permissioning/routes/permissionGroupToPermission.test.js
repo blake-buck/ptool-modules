@@ -72,9 +72,9 @@
         app.use(permissionGroupToPermissionRouter);
 
 
-        it('GET - /permissionGroupToPermission', async (done) => {
+        it('GET - /api/v1/permissionGroupToPermission', async (done) => {
             request(app)
-                .get('/permissionGroupToPermission')
+                .get('/api/v1/permissionGroupToPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -91,9 +91,9 @@
                 });
         });
 
-        it('POST - /permissionGroupToPermission', async (done) => {
+        it('POST - /api/v1/permissionGroupToPermission', async (done) => {
             request(app)
-                .post('/permissionGroupToPermission')
+                .post('/api/v1/permissionGroupToPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"groupId":0,"permissionId":0})
@@ -112,9 +112,9 @@
                 });
         });
 
-        it('PUT - /permissionGroupToPermission', async (done) => {
+        it('PUT - /api/v1/permissionGroupToPermission', async (done) => {
             request(app)
-                .put('/permissionGroupToPermission')
+                .put('/api/v1/permissionGroupToPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"groupId":0,"permissionId":0}])
@@ -133,9 +133,9 @@
                 });
         });
 
-        it('PATCH - /permissionGroupToPermission', async (done) => {
+        it('PATCH - /api/v1/permissionGroupToPermission', async (done) => {
             request(app)
-                .patch('/permissionGroupToPermission')
+                .patch('/api/v1/permissionGroupToPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"groupId":0,"permissionId":0}])
@@ -154,9 +154,9 @@
                 });
         });
 
-        it('DELETE - /permissionGroupToPermission', async (done) => {
+        it('DELETE - /api/v1/permissionGroupToPermission', async (done) => {
             request(app)
-                .delete('/permissionGroupToPermission')
+                .delete('/api/v1/permissionGroupToPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([1,2])
@@ -177,9 +177,9 @@
     
 
     
-        it('GET - /permissionGroupToPermission/:id', async (done) => {
+        it('GET - /api/v1/permissionGroupToPermission/:id', async (done) => {
             request(app)
-                .get('/permissionGroupToPermission/1')
+                .get('/api/v1/permissionGroupToPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -198,9 +198,9 @@
                 });
         });
 
-        it('PUT - /permissionGroupToPermission/:id', async (done) => {
+        it('PUT - /api/v1/permissionGroupToPermission/:id', async (done) => {
             request(app)
-                .put('/permissionGroupToPermission/1')
+                .put('/api/v1/permissionGroupToPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"id":1,"groupId":0,"permissionId":0})
@@ -219,9 +219,9 @@
                 });
         });
 
-        it('PATCH - /permissionGroupToPermission/:id', async (done) => {
+        it('PATCH - /api/v1/permissionGroupToPermission/:id', async (done) => {
             request(app)
-                .patch('/permissionGroupToPermission/1')
+                .patch('/api/v1/permissionGroupToPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"groupId":0,"permissionId":0})
@@ -240,9 +240,9 @@
                 });
         });
 
-        it('DELETE - /permissionGroupToPermission/:id', async (done) => {
+        it('DELETE - /api/v1/permissionGroupToPermission/:id', async (done) => {
             request(app)
-                .delete('/permissionGroupToPermission/1')
+                .delete('/api/v1/permissionGroupToPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})

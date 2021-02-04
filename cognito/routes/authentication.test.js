@@ -32,7 +32,7 @@ describe('authentication route testing', () => {
 
     it('/register', async (done) => {
         request(app)
-            .post('/register')
+            .post('/api/v1/register')
             .set('Accept', 'application/json')
             .send({username, password})
             .expect('Content-Type', /json/)
@@ -58,7 +58,7 @@ describe('authentication route testing', () => {
 
     it('/login', async (done) => {
         request(app)
-            .post('/login')
+            .post('/api/v1/login')
             .set('Accept', 'application/json')
             .send({username, password})
             .expect('Content-Type', /json/)
@@ -76,7 +76,7 @@ describe('authentication route testing', () => {
 
     it('/refresh-token', async (done) => {
         request(app)
-            .post('/refresh-token')
+            .post('/api/v1/refresh-token')
             .set('Accept', 'application/json')
             .set('jwt', authenticationToken)
             .send({refresh})
@@ -93,7 +93,7 @@ describe('authentication route testing', () => {
 
     it('/change-password', async (done) => {
         request(app)
-            .post('/change-password')
+            .post('/api/v1/change-password')
             .set('Accept', 'application/json')
             .set('jwt', authenticationToken)
             .send({previousPassword: password, proposedPassword: 'temporaryPassword2@'})
@@ -110,7 +110,7 @@ describe('authentication route testing', () => {
 
     it('/forgot-password', async (done) => {
         request(app)
-            .post('/forgot-password')
+            .post('/api/v1/forgot-password')
             .set('Accept', 'application/json')
             .send({username})
             .expect('Content-Type', /json/)
@@ -147,7 +147,7 @@ describe('authentication route testing', () => {
         }).promise();
         authenticationToken=authResult.AuthenticationResult.AccessToken;
         request(app)
-            .post('/delete-account')
+            .post('/api/v1/delete-account')
             .set('Accept', 'application/json')
             .set('jwt', authenticationToken)
             .send({})

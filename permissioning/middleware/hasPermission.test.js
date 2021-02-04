@@ -109,7 +109,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user has get permission they get access to route', async (done) => {
         request(app)
-            .get('/test')
+            .get('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -120,7 +120,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user has post permission they get access to route', async (done) => {
         request(app)
-            .post('/test')
+            .post('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -131,7 +131,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user has modify permission they get access to route - put', async (done) => {
         request(app)
-            .put('/test')
+            .put('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -142,7 +142,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user has modify permission they get access to route - patch', async (done) => {
         request(app)
-            .patch('/test')
+            .patch('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -153,7 +153,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user has delete permission they get access to route', async (done) => {
         request(app)
-            .delete('/test')
+            .delete('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -165,7 +165,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user does not have get permission they dont get access to route', async (done) => {
         request(app)
-            .get('/test')
+            .get('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send({})
@@ -176,7 +176,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user does not have post permission they dont get access to route', async (done) => {
         request(app)
-            .post('/test')
+            .post('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send({})
@@ -187,7 +187,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user does not have modify permission they dont get access to route - put', async (done) => {
         request(app)
-            .put('/test')
+            .put('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send({})
@@ -198,7 +198,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user does not have modify permission they dont get access to route - patch', async (done) => {
         request(app)
-            .patch('/test')
+            .patch('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send({})
@@ -209,7 +209,7 @@ describe('hasPermission middleware tests', () => {
 
     it('if user does not have delete permission they dont get access to route', async (done) => {
         request(app)
-            .delete('/test')
+            .delete('/api/v1/test')
             .set('Accept', 'application/json')
             .set('userId', 'not-root-user')
             .send({})

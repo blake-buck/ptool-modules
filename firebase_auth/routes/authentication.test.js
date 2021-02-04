@@ -25,7 +25,7 @@ describe('Firebase authentication routes', () => {
 
     it('/register', async (done) => {
         request(app)
-            .post('/register')
+            .post('/api/v1/api/v1/register')
             .set('Accept', 'application/json')
             .send({username, password})
             .expect('Content-Type', /json/)
@@ -49,7 +49,7 @@ describe('Firebase authentication routes', () => {
 
     it('/login', async (done) => {
         request(app)
-            .post('/login')
+            .post('/api/v1/api/v1/login')
             .set('Accept', 'application/json')
             .send({username, password})
             .expect('Content-Type', /json/)
@@ -69,7 +69,7 @@ describe('Firebase authentication routes', () => {
 
     it('/change-password', async (done) => {
         request(app)
-            .post('/change-password')
+            .post('/api/v1/api/v1/change-password')
             .set('Accept', 'application/json')
             .set('jwt', jwt)
             .send({previousPassword, proposedPassword})
@@ -89,7 +89,7 @@ describe('Firebase authentication routes', () => {
 
     it('/forgot-password', async (done) => {
         request(app)
-            .post('/forgot-password')
+            .post('/api/v1/api/v1/forgot-password')
             .set('Accept', 'application/json')
             .send({email})
             .expect('Content-Type', /json/)
@@ -110,7 +110,7 @@ describe('Firebase authentication routes', () => {
     it('/delete-account', async (done) => {
         
         request(app)
-            .post('/login')
+            .post('/api/v1/api/v1/login')
             .set('Accept', 'application/json')
             .send({
                 username, 
@@ -127,7 +127,7 @@ describe('Firebase authentication routes', () => {
                     console.log(res.body)
 
                     request(app)
-                        .post('/delete-account')
+                        .post('/api/v1/api/v1/delete-account')
                         .set('Accept', 'application/json')
                         .set('jwt', res.body.jwt)
                         .send({})

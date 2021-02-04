@@ -293,7 +293,7 @@ describe('complete permission system test', () => {
     // get all on forumPost: root and lurker get 6 records returned, gardener-admin and gardener-user get the 3 gardener records, hunter-admin and hunter-user get the 3 hunter records
     it('root-user gets six records returned', async (done) => {
         request(app)
-            .get('/forumPost')
+            .get('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -307,7 +307,7 @@ describe('complete permission system test', () => {
 
     it('lurker-user gets six records returned', async (done) => {
         request(app)
-            .get('/forumPost')
+            .get('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'lurker-user')
             .send({})
@@ -322,7 +322,7 @@ describe('complete permission system test', () => {
 
     it('gardener-admin gets three records returned', async (done) => {
         request(app)
-            .get('/forumPost')
+            .get('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-admin')
             .send({})
@@ -336,7 +336,7 @@ describe('complete permission system test', () => {
 
     it('gardener-user gets three records returned', async (done) => {
         request(app)
-            .get('/forumPost')
+            .get('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-user')
             .send({})
@@ -350,7 +350,7 @@ describe('complete permission system test', () => {
 
     it('hunter-admin gets three records returned', async (done) => {
         request(app)
-            .get('/forumPost')
+            .get('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-admin')
             .send({})
@@ -364,7 +364,7 @@ describe('complete permission system test', () => {
 
     it('hunter-user gets three records returned', async (done) => {
         request(app)
-            .get('/forumPost')
+            .get('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-user')
             .send({})
@@ -378,7 +378,7 @@ describe('complete permission system test', () => {
     // get specific gardener group record: root, lurker, gardener-admin, and gardener-user can successfully get, hunter-admin and hunter-user cannot
     it('root-user can get specific gardener group record', async (done) => {
         request(app)
-            .get('/forumPost/1')
+            .get('/api/v1/forumPost/1')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -387,7 +387,7 @@ describe('complete permission system test', () => {
     })
     it('lurker-user can get specific gardener group record', async (done) => {
         request(app)
-            .get('/forumPost/1')
+            .get('/api/v1/forumPost/1')
             .set('Accept', 'application/json')
             .set('userId', 'lurker-user')
             .send({})
@@ -396,7 +396,7 @@ describe('complete permission system test', () => {
     })
     it('gardener-admin can get specific gardener group record', async (done) => {
         request(app)
-            .get('/forumPost/1')
+            .get('/api/v1/forumPost/1')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-admin')
             .send({})
@@ -405,7 +405,7 @@ describe('complete permission system test', () => {
     })
     it('gardener-user can get specific gardener group record', async (done) => {
         request(app)
-            .get('/forumPost/1')
+            .get('/api/v1/forumPost/1')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-user')
             .send({})
@@ -414,7 +414,7 @@ describe('complete permission system test', () => {
     })
     it('hunter-admin cant get specific gardener group record', async (done) => {
         request(app)
-            .get('/forumPost/1')
+            .get('/api/v1/forumPost/1')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-admin')
             .send({})
@@ -423,7 +423,7 @@ describe('complete permission system test', () => {
     })
     it('hunter-user cant get specific gardener group record', async (done) => {
         request(app)
-            .get('/forumPost/1')
+            .get('/api/v1/forumPost/1')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-user')
             .send({})
@@ -433,7 +433,7 @@ describe('complete permission system test', () => {
     // get specific hunter group record: root, lurker, hunter-admin, and hunter-user can successfully get, gardener-admin and gardener-user cannot
     it('root-user can get specific hunter group record', async (done) => {
         request(app)
-            .get('/forumPost/4')
+            .get('/api/v1/forumPost/4')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({})
@@ -442,7 +442,7 @@ describe('complete permission system test', () => {
     })
     it('lurker-user can get specific hunter group record', async (done) => {
         request(app)
-            .get('/forumPost/4')
+            .get('/api/v1/forumPost/4')
             .set('Accept', 'application/json')
             .set('userId', 'lurker-user')
             .send({})
@@ -451,7 +451,7 @@ describe('complete permission system test', () => {
     })
     it('gardener-admin cant get specific hunter group record', async (done) => {
         request(app)
-            .get('/forumPost/4')
+            .get('/api/v1/forumPost/4')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-admin')
             .send({})
@@ -460,7 +460,7 @@ describe('complete permission system test', () => {
     })
     it('gardener-user cant get specific hunter group record', async (done) => {
         request(app)
-            .get('/forumPost/4')
+            .get('/api/v1/forumPost/4')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-user')
             .send({})
@@ -469,7 +469,7 @@ describe('complete permission system test', () => {
     })
     it('hunter-admin can get specific hunter group record', async (done) => {
         request(app)
-            .get('/forumPost/4')
+            .get('/api/v1/forumPost/4')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-admin')
             .send({})
@@ -478,7 +478,7 @@ describe('complete permission system test', () => {
     })
     it('hunter-user can get specific hunter group record', async (done) => {
         request(app)
-            .get('/forumPost/4')
+            .get('/api/v1/forumPost/4')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-user')
             .send({})
@@ -490,7 +490,7 @@ describe('complete permission system test', () => {
     // gardenerGroup: root, gardener-admin, gardener-user can post successfully, hunter-admin, hunter-user, and lurker cannot
     it('root-user can post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({groupId: 4})
@@ -500,7 +500,7 @@ describe('complete permission system test', () => {
 
     it('lurker-user cant post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'lurker-user')
             .send({groupId: 4})
@@ -510,7 +510,7 @@ describe('complete permission system test', () => {
 
     it('gardener-admin can post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-admin')
             .send({groupId: 4})
@@ -520,7 +520,7 @@ describe('complete permission system test', () => {
 
     it('gardener-user can post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-user')
             .send({groupId: 4})
@@ -530,7 +530,7 @@ describe('complete permission system test', () => {
 
     it('hunter-admin cant post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-admin')
             .send({groupId: 4})
@@ -540,7 +540,7 @@ describe('complete permission system test', () => {
 
     it('hunter-user cant post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-user')
             .send({groupId: 4})
@@ -551,7 +551,7 @@ describe('complete permission system test', () => {
     // hunterGroup: root, hunter-admin, hunter-user can post successfully, gardener-admin, gardener-user, and lurker cannot
     it('root-user can post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'root-user')
             .send({groupId: 4})
@@ -561,7 +561,7 @@ describe('complete permission system test', () => {
 
     it('lurker-user cant post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'lurker-user')
             .send({groupId: 4})
@@ -571,7 +571,7 @@ describe('complete permission system test', () => {
 
     it('gardener-admin can post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-admin')
             .send({groupId: 4})
@@ -581,7 +581,7 @@ describe('complete permission system test', () => {
 
     it('gardener-user can post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'gardener-user')
             .send({groupId: 4})
@@ -591,7 +591,7 @@ describe('complete permission system test', () => {
 
     it('hunter-admin cant post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-admin')
             .send({groupId: 4})
@@ -601,7 +601,7 @@ describe('complete permission system test', () => {
 
     it('hunter-user cant post to garden group', async (done) => {
         request(app)
-            .post('/forumPost')
+            .post('/api/v1/forumPost')
             .set('Accept', 'application/json')
             .set('userId', 'hunter-user')
             .send({groupId: 4})

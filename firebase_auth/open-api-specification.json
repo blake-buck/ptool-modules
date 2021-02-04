@@ -1,6 +1,6 @@
 {
     "paths":{
-        "/register":{
+        "/api/v1/register":{
             "summary":"Sends an email verification link to the username provided.",
             "description":"Creates an unverified user.",
             "post":{
@@ -53,7 +53,7 @@
                 
             }
         },
-        "/login":{
+        "/api/v1/login":{
             "summary":"Logs a user in via email and password",
 
             "post":{
@@ -104,7 +104,7 @@
                 
             }
         },
-        "/change-password":{
+        "/api/v1/change-password":{
             "summary":"Changes the users password",
             
             "post":{
@@ -162,7 +162,7 @@
             
             
         },
-        "/forgot-password":{
+        "/api/v1/forgot-password":{
             "summary":"Sends an email to the user's email address containing a confirmation code.",
             "post":{
                 "tags":["authentication operations"],
@@ -209,7 +209,7 @@
             
         },
 
-        "/delete-account":{
+        "/api/v1/delete-account":{
             "summary":"Deletes the user from the Cognito Pool",
             "post":{
                 "tags":["authentication operations"],

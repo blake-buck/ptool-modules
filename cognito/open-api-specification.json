@@ -1,6 +1,6 @@
 {
     "paths":{
-        "/register":{
+        "/api/v1/register":{
             "summary":"Sends an email verification link to the username provided.",
             "description":"Creates an unverfied user in the user pool. Sends a link to the email address provided that when clicked verifies the user. A user must be verified in order to use the other authentication routes.",
             
@@ -54,7 +54,7 @@
                 
             }
         },
-        "/login":{
+        "/api/v1/login":{
             "summary":"Sends a login request to Cognito.",
 
             "post":{
@@ -132,7 +132,7 @@
             }
         },
         
-        "/refresh-token":{
+        "/api/v1/refresh-token":{
             "summary":"Returns a fresh Auth token",
             
             "post":{
@@ -191,7 +191,7 @@
             }
             
         },
-        "/change-password":{
+        "/api/v1/change-password":{
             "summary":"Changes the users password",
             "post":{
                 "tags":["authentication operations"],
@@ -238,7 +238,7 @@
             }
             
         },
-        "/forgot-password":{
+        "/api/v1/forgot-password":{
             "summary":"Sends an email to the user's email address containing a confirmation code.",
             "post":{
                 "tags":["authentication operations"],
@@ -293,7 +293,7 @@
             }
             
         },
-        "/forgot-password/confirm":{
+        "/api/v1/forgot-password/confirm":{
             "summary":"Resets the user's password to be one of their choosing.",
             "post":{
                 "tags":["authentication operations"],
@@ -336,7 +336,7 @@
             }
             
         },
-        "/delete-account":{
+        "/api/v1/delete-account":{
             "summary":"Deletes the user from the Cognito Pool",
             "post":{
                 "tags":["authentication operations"],

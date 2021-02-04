@@ -59,9 +59,9 @@ describe('example route tests', () => {
     initializeStandardMiddleware(app);
     app.use(exampleRouter);
 
-    it('GET - /example', async (done) => {
+    it('GET - /api/v1/example', async (done) => {
         request(app)
-            .get('/example')
+            .get('/api/v1/example')
             .set('Accept', 'application/json')
             .send({})
             .expect('Content-Type', /json/)
@@ -76,9 +76,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('POST - /example', async (done) => {
+    it('POST - /api/v1/example', async (done) => {
         request(app)
-            .post('/example')
+            .post('/api/v1/example')
             .set('Accept', 'application/json')
             .send({
                 description: 'description',
@@ -98,9 +98,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('PUT - /example', async (done) => {
+    it('PUT - /api/v1/example', async (done) => {
         request(app)
-            .put('/example')
+            .put('/api/v1/example')
             .set('Accept', 'application/json')
             .send([{
                 id: 1,
@@ -121,9 +121,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('PATCH - /example', async (done) => {
+    it('PATCH - /api/v1/example', async (done) => {
         request(app)
-            .patch('/example')
+            .patch('/api/v1/example')
             .set('Accept', 'application/json')
             .send([{
                 id: 1,
@@ -144,9 +144,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('DELETE - /example', async (done) => {
+    it('DELETE - /api/v1/example', async (done) => {
         request(app)
-            .delete('/example')
+            .delete('/api/v1/example')
             .set('Accept', 'application/json')
             .send([1,2])
             .expect('Content-Type', /json/)
@@ -165,9 +165,9 @@ describe('example route tests', () => {
     });
 
 
-    it('GET - /example/:id', async (done) => {
+    it('GET - /api/v1/example/:id', async (done) => {
         request(app)
-            .get('/example/1')
+            .get('/api/v1/example/1')
             .set('Accept', 'application/json')
             .send({})
             .expect('Content-Type', /json/)
@@ -184,9 +184,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('PUT - /example/:id', async (done) => {
+    it('PUT - /api/v1/example/:id', async (done) => {
         request(app)
-            .put('/example/1')
+            .put('/api/v1/example/1')
             .set('Accept', 'application/json')
             .send({
                 id:1,
@@ -207,9 +207,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('PATCH - /example/:id', async (done) => {
+    it('PATCH - /api/v1/example/:id', async (done) => {
         request(app)
-            .patch('/example/1')
+            .patch('/api/v1/example/1')
             .set('Accept', 'application/json')
             .send({
                 description:'1234 jeff',
@@ -229,9 +229,9 @@ describe('example route tests', () => {
                 done();
             });
     });
-    it('DELETE - /example/:id', async (done) => {
+    it('DELETE - /api/v1/example/:id', async (done) => {
         request(app)
-            .delete('/example/1')
+            .delete('/api/v1/example/1')
             .set('Accept', 'application/json')
             .send({})
             .expect('Content-Type', /json/)

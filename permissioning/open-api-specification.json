@@ -1,6 +1,6 @@
 {
     "paths":{
-        "/permissionGroupToPermission": {
+        "/api/v1/permissionGroupToPermission": {
             "get": {
                 "tags": [
                     "permissionGroupToPermission operations"
@@ -186,7 +186,7 @@
                 }
             }
         },
-        "/permissionGroupToPermission/{id}": {
+        "/api/v1/permissionGroupToPermission/{id}": {
             "get": {
                 "tags": [
                     "permissionGroupToPermission operations"
@@ -333,7 +333,7 @@
                 }
             }
         },
-        "/permissionGroupToUser": {
+        "/api/v1/permissionGroupToUser": {
             "get": {
                 "tags": [
                     "permissionGroupToUser operations"
@@ -519,7 +519,7 @@
                 }
             }
         },
-        "/permissionGroupToUser/{id}": {
+        "/api/v1/permissionGroupToUser/{id}": {
             "get": {
                 "tags": [
                     "permissionGroupToUser operations"
@@ -666,7 +666,7 @@
                 }
             }
         },
-        "/permission": {
+        "/api/v1/permission": {
             "get": {
                 "tags": [
                     "permission operations"
@@ -866,7 +866,7 @@
                 }
             }
         },
-        "/permission/{id}": {
+        "/api/v1/permission/{id}": {
             "get": {
                 "tags": [
                     "permission operations"
@@ -1013,7 +1013,7 @@
                 }
             }
         },
-        "/permissionGroup": {
+        "/api/v1/permissionGroup": {
             "get": {
                 "tags": [
                     "permissionGroup operations"
@@ -1199,7 +1199,7 @@
                 }
             }
         },
-        "/permissionGroup/{id}": {
+        "/api/v1/permissionGroup/{id}": {
             "get": {
                 "tags": [
                     "permissionGroup operations"
@@ -1342,7 +1342,7 @@
                 }
             }
         },
-        "/recordLevelPermission": {
+        "/api/v1/recordLevelPermission": {
             "get": {
                 "tags": [
                     "recordLevelPermission operations"
@@ -1528,7 +1528,7 @@
                 }
             }
         },
-        "/recordLevelPermission/{id}": {
+        "/api/v1/recordLevelPermission/{id}": {
             "get": {
                 "tags": [
                     "recordLevelPermission operations"
@@ -1675,7 +1675,7 @@
                 }
             }
         },
-        "/groupLevelPermission": {
+        "/api/v1/groupLevelPermission": {
             "get": {
                 "tags": [
                     "groupLevelPermission operations"
@@ -1861,7 +1861,7 @@
                 }
             }
         },
-        "/groupLevelPermission/{id}": {
+        "/api/v1/groupLevelPermission/{id}": {
             "get": {
                 "tags": [
                     "groupLevelPermission operations"

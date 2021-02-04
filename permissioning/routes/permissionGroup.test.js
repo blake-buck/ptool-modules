@@ -74,9 +74,9 @@
         app.use(permissionGroupRouter);
 
 
-        it('GET - /permissionGroup', async (done) => {
+        it('GET - /api/v1/permissionGroup', async (done) => {
             request(app)
-                .get('/permissionGroup')
+                .get('/api/v1/permissionGroup')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -93,9 +93,9 @@
                 });
         });
 
-        it('POST - /permissionGroup', async (done) => {
+        it('POST - /api/v1/permissionGroup', async (done) => {
             request(app)
-                .post('/permissionGroup')
+                .post('/api/v1/permissionGroup')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"name":"string","description":"string"})
@@ -114,9 +114,9 @@
                 });
         });
 
-        it('PUT - /permissionGroup', async (done) => {
+        it('PUT - /api/v1/permissionGroup', async (done) => {
             request(app)
-                .put('/permissionGroup')
+                .put('/api/v1/permissionGroup')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"name":"string","description":"string"}])
@@ -135,9 +135,9 @@
                 });
         });
 
-        it('PATCH - /permissionGroup', async (done) => {
+        it('PATCH - /api/v1/permissionGroup', async (done) => {
             request(app)
-                .patch('/permissionGroup')
+                .patch('/api/v1/permissionGroup')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"name":"string","description":"string"}])
@@ -156,9 +156,9 @@
                 });
         });
 
-        it('DELETE - /permissionGroup', async (done) => {
+        it('DELETE - /api/v1/permissionGroup', async (done) => {
             request(app)
-                .delete('/permissionGroup')
+                .delete('/api/v1/permissionGroup')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([1,2])
@@ -179,9 +179,9 @@
     
 
     
-        it('GET - /permissionGroup/:id', async (done) => {
+        it('GET - /api/v1/permissionGroup/:id', async (done) => {
             request(app)
-                .get('/permissionGroup/1')
+                .get('/api/v1/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -200,9 +200,9 @@
                 });
         });
 
-        it('PUT - /permissionGroup/:id', async (done) => {
+        it('PUT - /api/v1/permissionGroup/:id', async (done) => {
             request(app)
-                .put('/permissionGroup/1')
+                .put('/api/v1/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"id":1,"name":"string","description":"string"})
@@ -221,9 +221,9 @@
                 });
         });
 
-        it('PATCH - /permissionGroup/:id', async (done) => {
+        it('PATCH - /api/v1/permissionGroup/:id', async (done) => {
             request(app)
-                .patch('/permissionGroup/1')
+                .patch('/api/v1/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"name":"string","description":"string"})
@@ -242,9 +242,9 @@
                 });
         });
 
-        it('DELETE - /permissionGroup/:id', async (done) => {
+        it('DELETE - /api/v1/permissionGroup/:id', async (done) => {
             request(app)
-                .delete('/permissionGroup/1')
+                .delete('/api/v1/permissionGroup/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})

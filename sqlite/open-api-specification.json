@@ -1,6 +1,6 @@
 {
     "paths": {
-        "/example": {
+        "/api/v1/example": {
             "get": {
                 "tags":["example operations"],
                 "summary": "Get a paginated list of example records.",
@@ -160,7 +160,7 @@
                 }
             }
         },
-        "/example/{id}": {
+        "/api/v1/example/{id}": {
             "get": {
                 "tags":["example operations"],
                 "summary": "Returns a specific entry in the example table",

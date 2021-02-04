@@ -100,9 +100,9 @@
         app.use(groupLevelPermissionRouter);
 
 
-        it('GET - /groupLevelPermission', async (done) => {
+        it('GET - /api/v1/groupLevelPermission', async (done) => {
             request(app)
-                .get('/groupLevelPermission')
+                .get('/api/v1/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -121,9 +121,9 @@
                 });
         });
 
-        it('POST - /groupLevelPermission', async (done) => {
+        it('POST - /api/v1/groupLevelPermission', async (done) => {
             request(app)
-                .post('/groupLevelPermission')
+                .post('/api/v1/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0})
@@ -142,9 +142,9 @@
                 });
         });
 
-        it('PUT - /groupLevelPermission', async (done) => {
+        it('PUT - /api/v1/groupLevelPermission', async (done) => {
             request(app)
-                .put('/groupLevelPermission')
+                .put('/api/v1/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0}])
@@ -163,9 +163,9 @@
                 });
         });
 
-        it('PATCH - /groupLevelPermission', async (done) => {
+        it('PATCH - /api/v1/groupLevelPermission', async (done) => {
             request(app)
-                .patch('/groupLevelPermission')
+                .patch('/api/v1/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([{"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0}])
@@ -184,9 +184,9 @@
                 });
         });
 
-        it('DELETE - /groupLevelPermission', async (done) => {
+        it('DELETE - /api/v1/groupLevelPermission', async (done) => {
             request(app)
-                .delete('/groupLevelPermission')
+                .delete('/api/v1/groupLevelPermission')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send([1,2])
@@ -207,9 +207,9 @@
     
 
     
-        it('GET - /groupLevelPermission/:id', async (done) => {
+        it('GET - /api/v1/groupLevelPermission/:id', async (done) => {
             request(app)
-                .get('/groupLevelPermission/1')
+                .get('/api/v1/groupLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
@@ -228,9 +228,9 @@
                 });
         });
 
-        it('PUT - /groupLevelPermission/:id', async (done) => {
+        it('PUT - /api/v1/groupLevelPermission/:id', async (done) => {
             request(app)
-                .put('/groupLevelPermission/1')
+                .put('/api/v1/groupLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"id":1,"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0})
@@ -249,9 +249,9 @@
                 });
         });
 
-        it('PATCH - /groupLevelPermission/:id', async (done) => {
+        it('PATCH - /api/v1/groupLevelPermission/:id', async (done) => {
             request(app)
-                .patch('/groupLevelPermission/1')
+                .patch('/api/v1/groupLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({"tableName":"string","groupId":0,"permissionType":"string","granteeId":"string","get":0,"post":0})
@@ -270,9 +270,9 @@
                 });
         });
 
-        it('DELETE - /groupLevelPermission/:id', async (done) => {
+        it('DELETE - /api/v1/groupLevelPermission/:id', async (done) => {
             request(app)
-                .delete('/groupLevelPermission/1')
+                .delete('/api/v1/groupLevelPermission/1')
                 .set('Accept', 'application/json')
                 .set('userId', 'root-user')
                 .send({})
