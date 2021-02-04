@@ -74,7 +74,9 @@
             </div>
             <div id='page-carousel'>
                 <button id='previousPage'>Previous</button>
-                <span id='page-number-carousel'></span>
+                <span id='page-number-carousel'>
+                    <span><b id='currentPage'>1</b> out of <b id='maxPages'>1</b></span>
+                </span>
                 <button id='nextPage'>Next</button>
             </div>
             <div id='log-grid'>
@@ -160,7 +162,9 @@
             },
             // pageCarousel: {},
             logs:[],
-            offset:0
+            offset:0,
+            pages: 1,
+            currentPage: 1
         }
         window.addEventListener('DOMContentLoaded', async () => {
             renderDashboardPart('messageFilter', state['messageFilter']);
@@ -169,6 +173,10 @@
 
             const logs = await getLogs();
             renderLogs(logs);
+
+            const totalNumberOfLogs = await getTotalNumberOfLogs();
+            state.pages = Math.ceil(totalNumberOfLogs.count / 50);
+            renderPageCarousel();
         });
 
 
@@ -199,18 +207,34 @@
             }
         }
         document.querySelector('button#applyFilter').addEventListener('click', async () => {
+            state.offset = 0;
+            state.currentPage = 1;
+            state.pages = 1;
             renderLogs(await getLogs());
+
+            const totalNumberOfLogs = await getTotalNumberOfLogs();
+            state.pages = Math.ceil(totalNumberOfLogs.count / 50);
+            renderPageCarousel();
         });
         document.querySelector('button#previousPage').addEventListener('click', async () => {
-            state.offset -= 50;
-            if(state.offset < 0){
-                state.offset = 0;
+            if(state.currentPage !== 1){
+                state.currentPage--;
+                state.offset -= 50;
+                if(state.offset < 0){
+                    state.offset = 0;
+                }
+                renderLogs(await getLogs());
+                renderPageCarousel();
             }
-            renderLogs(await getLogs());
+            
         });
         document.querySelector('button#nextPage').addEventListener('click', async () => {
-            state.offset += 50;
-            renderLogs(await getLogs());
+            if(state.currentPage !== state.pages){
+                state.currentPage++;
+                state.offset += 50;
+                renderLogs(await getLogs());
+                renderPageCarousel();
+            }
         });
 
         function renderDashboardPart(dataParent, stateContents){
@@ -250,7 +274,12 @@
             })
         }
 
-        async function getLogs(){
+        function renderPageCarousel(){
+            document.querySelector('#page-number-carousel #currentPage').innerText = state.currentPage;
+            document.querySelector('#page-number-carousel #maxPages').innerText = state.pages;
+        }
+
+        function buildQuery(){
             let query='&level[in]=';
             for(const key in state.messageFilter){
                 if(state.messageFilter[key]){
@@ -264,9 +293,22 @@
                         query += `&${key}=${state.queryFilter[key]}` 
                         : 
                         query += `&${key}[like]=${state.queryFilter[key]}`;
-                    // query +=`&${key}[like]=${state.queryFilter[key]}`;
                 }
             }
+
+            return query;
+        }
+
+        async function getTotalNumberOfLogs(){
+            const query = buildQuery();
+            const request = await fetch(`http://localhost:9000/log/count?${query.slice(1)}`);
+            if(request.status === 200){
+                return await request.json();
+            }
+        }
+
+        async function getLogs(){
+            const query = buildQuery();
 
             // &message[like]=Swagger
             const request = await fetch(`http://localhost:9000/log?limit=50&offset=${state.offset}${query}`);
