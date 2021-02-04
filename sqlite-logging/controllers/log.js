@@ -32,7 +32,7 @@
                     gte: Joi.alternatives().try(Joi.string(), Joi.number()),
                     ne: Joi.alternatives().try(Joi.string(), Joi.number()),
                     like: Joi.string(),
-                    in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+[\w]$/i), Joi.object({like: Joi.string()})),
+                    in: Joi.alternatives().try( Joi.string().pattern(/^[\w+,*]+[\w]$/i), Joi.object({like: Joi.string()})),
                 })
             )
         );
@@ -79,7 +79,7 @@
                 gte: Joi.alternatives().try(Joi.string(), Joi.number()),
                 ne: Joi.alternatives().try(Joi.string(), Joi.number()),
                 like: Joi.string(),
-                in: Joi.alternatives().try(Joi.string().pattern(/^(d|d,)+$/), Joi.string().pattern(/^[\w+,*]+[\w]$/i), Joi.object({like: Joi.string()})),
+                in: Joi.alternatives().try( Joi.string().pattern(/^[\w+,*]+[\w]$/i), Joi.object({like: Joi.string()})),
             })
         )
     );
