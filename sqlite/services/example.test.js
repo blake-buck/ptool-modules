@@ -1,5 +1,5 @@
 const dependencyInjector = require('../dependency-injector.js');
-dependencyInjector.register('exampleModel', {
+dependencyInjector.register('exampleModel', () => ({
     getExamples: () => [
         {
             id: 2,
@@ -28,7 +28,7 @@ dependencyInjector.register('exampleModel', {
     patchSpecificExample: () => true,
     deleteExamples: () => true,
     deleteSpecificExample: () => true
-});
+}));
 const exampleServices = require('./example');
 
 describe('example service tests', () => {

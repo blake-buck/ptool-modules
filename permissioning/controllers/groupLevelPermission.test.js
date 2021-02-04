@@ -2,7 +2,7 @@
         const dependencyInjector = require('../dependency-injector.js');
         dependencyInjector.register(
             'groupLevelPermissionService', 
-            {
+            () => ({
                 getGroupLevelPermissions: () => true,
                 getSpecificGroupLevelPermission: () => true,
                 postGroupLevelPermission: () => true,
@@ -12,7 +12,7 @@
                 patchSpecificGroupLevelPermission: () => true,
                 deleteGroupLevelPermissions: () => true,
                 deleteSpecificGroupLevelPermission: () => true
-            }
+            })
         );
         const groupLevelPermissionControllers = require('./groupLevelPermission');
 

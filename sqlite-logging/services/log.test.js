@@ -1,10 +1,10 @@
 
     const dependencyInjector = require('../dependency-injector.js');
-    dependencyInjector.register('logModel', {
+    dependencyInjector.register('logModel', () => ({
         getLogs: () => [{id: 1}, {id: 2}],
         getSpecificLog: () => ({id: 1}),
         getLogCount: () => 2
-    });
+    }));
     const logServices = require('./log');
 
 

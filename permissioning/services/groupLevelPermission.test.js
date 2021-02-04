@@ -1,6 +1,6 @@
 
     const dependencyInjector = require('../dependency-injector.js');
-    dependencyInjector.register('groupLevelPermissionModel', {
+    dependencyInjector.register('groupLevelPermissionModel', () => ({
         getGroupLevelPermissions: () => [{id: 1}, {id: 2}],
         getSpecificGroupLevelPermission: () => ({id: 1}),
         postGroupLevelPermission: () => ({id: 1}),
@@ -11,7 +11,7 @@
         deleteGroupLevelPermissions : () => true,
         deleteSpecificGroupLevelPermission: () => true,
         runGroupLevelPermissionQuery: () => true
-    });
+    }));
     const groupLevelPermissionServices = require('./groupLevelPermission');
 
     const properUserId = 'user-id';

@@ -1,11 +1,11 @@
 const dependencyInjector = require('../dependency-injector');
-dependencyInjector.register('authenticationService', {
+dependencyInjector.register('authenticationService', () => ({
     register: () => true,
     login: () => true,
     changePassword: () => true,
     forgotPassword: () => true,
     deleteAccount: () => true
-});
+}));
 const authenticationControllers = require('./authentication');
 
 const mockResponse = () => {

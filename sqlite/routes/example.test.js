@@ -5,11 +5,11 @@ const {initializeSqlite, initializeStandardMiddleware} = require('../initializat
 
 initializeSqlite(':memory:');
 
-dependencyInjector.register('exampleModel', require('../models/example'));
+dependencyInjector.register('exampleModel', () => require('../models/example'));
 
-dependencyInjector.register('exampleService', require('../services/example'));
+dependencyInjector.register('exampleService', () => require('../services/example'));
 
-dependencyInjector.register('exampleController', require('../controllers/example'));
+dependencyInjector.register('exampleController', () => require('../controllers/example'));
 
 const exampleRouter = require('./example');
 

@@ -3,12 +3,12 @@ const dependencyInjector = require('../dependency-injector')
 
 const {initializeSqlite} = require('../initialization');
 initializeSqlite(':memory:');
-dependencyInjector.register('recordLevelPermissionModel', require('../models/recordLevelPermission'));
-dependencyInjector.register('permissionModel', require('../models/permission'))
-dependencyInjector.register('groupLevelPermissionModel', require('../models/groupLevelPermission'))
-dependencyInjector.register('recordLevelPermissionService', require('../services/recordLevelPermission'));
-dependencyInjector.register('permissionService', require('../services/permission'))
-dependencyInjector.register('groupLevelPermissionService', require('../services/groupLevelPermission'))
+dependencyInjector.register('recordLevelPermissionModel', () => require('../models/recordLevelPermission'));
+dependencyInjector.register('permissionModel', () => require('../models/permission'))
+dependencyInjector.register('groupLevelPermissionModel', () => require('../models/groupLevelPermission'))
+dependencyInjector.register('recordLevelPermissionService', () => require('../services/recordLevelPermission'));
+dependencyInjector.register('permissionService', () => require('../services/permission'))
+dependencyInjector.register('groupLevelPermissionService', () => require('../services/groupLevelPermission'))
 
 // a complete test of basic CRUD permissions as well as groupLevelPermissions + recordLevelPermissions
 // the basic premise is that there is a web forum that has two groups on it; hunters and gardeners who are always fueding (why they simply don't create seperate websites for themselves is irrelevant)

@@ -2,7 +2,7 @@
         const dependencyInjector = require('../dependency-injector.js');
         dependencyInjector.register(
             'logService', 
-            {
+            () => ({
                 getLogs: () => true,
                 getSpecificLog: () => true,
                 postLog: () => true,
@@ -12,7 +12,7 @@
                 patchSpecificLog: () => true,
                 deleteLogs: () => true,
                 deleteSpecificLog: () => true
-            }
+            })
         );
         const logControllers = require('./log');
 

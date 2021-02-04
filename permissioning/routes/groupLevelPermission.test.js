@@ -11,11 +11,11 @@
     const {initializeSqlite} = require('../initialization');
 
     initializeSqlite(':memory:');
-    dependencyInjector.register('permissionModel', require('../models/permission'));
-    dependencyInjector.register('groupLevelPermissionModel', require('../models/groupLevelPermission'));
-    dependencyInjector.register('permissionService', require('../services/permission'));
-    dependencyInjector.register('groupLevelPermissionService', require('../services/groupLevelPermission'));
-    dependencyInjector.register('groupLevelPermissionController', require('../controllers/groupLevelPermission'));
+    dependencyInjector.register('permissionModel', () => require('../models/permission'));
+    dependencyInjector.register('groupLevelPermissionModel', () => require('../models/groupLevelPermission'));
+    dependencyInjector.register('permissionService', () => require('../services/permission'));
+    dependencyInjector.register('groupLevelPermissionService', () => require('../services/groupLevelPermission'));
+    dependencyInjector.register('groupLevelPermissionController', () => require('../controllers/groupLevelPermission'));
 
     const groupLevelPermissionRouter = require('./groupLevelPermission');
 

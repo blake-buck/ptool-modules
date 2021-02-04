@@ -26,7 +26,7 @@ function initializeFirebaseAuth(){
         authDomain: FIREBASE_AUTH_DOMAIN
     });
     firebaseAuth.admin = firebaseAdmin.auth();
-    dependencyInjector.register('firebaseAuth', firebaseAuth);
+    dependencyInjector.register('firebaseAuth', () => firebaseAuth);
     logger.info('Firebase Auth initialized.');
 }
 

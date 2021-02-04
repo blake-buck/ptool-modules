@@ -3,8 +3,8 @@ const dependencyInjector = require('../dependency-injector');
 const {initializeCognito, initializeStandardMiddleware} = require('../initialization');
 
 initializeCognito();
-dependencyInjector.register('authenticationService', require('../services/authentication'));
-dependencyInjector.register('authenticationController', require('../controllers/authentication'));
+dependencyInjector.register('authenticationService', () => require('../services/authentication'));
+dependencyInjector.register('authenticationController', () => require('../controllers/authentication'));
 
 const request = require('supertest');
 const authRouter = require('./authentication.js');

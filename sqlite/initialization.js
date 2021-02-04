@@ -6,7 +6,7 @@ function initializeSqlite(dbFile){
     logger.info('Initializing Sqlite...');
     const db = new sqlite3.Database(dbFile ? dbFile : DATABASE_FILE);
     db.serialize();
-    dependencyInjector.register('sqlite', db);
+    dependencyInjector.register('sqlite', () => db);
     logger.info('Sqlite initialized.');
 }
 

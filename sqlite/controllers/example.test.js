@@ -1,6 +1,6 @@
 const dependencyInjector = require('../dependency-injector.js');
 
-dependencyInjector.register('exampleService', {
+dependencyInjector.register('exampleService', () => ({
     getExamples: () => true,
     getSpecificExample: () => true,
     postExample: () => true,
@@ -10,7 +10,7 @@ dependencyInjector.register('exampleService', {
     patchSpecificExample:  () => true,
     deleteExamples:  () => true,
     deleteSpecificExample:  () => true
-})
+}))
 const exampleControllers = require('./example');
 
 const mockResponse = () => {

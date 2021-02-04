@@ -11,7 +11,7 @@ function initializeCognito(){
     logger.info('Initializing Amazon Cognito...');
     dependencyInjector.register(
         'cognito', 
-        new CognitoIdentityServiceProvider({
+        () => new CognitoIdentityServiceProvider({
             secretAccessKey: AWS_SECRET_ACCESS_KEY, 
             accessKeyId: AWS_ACCESS_KEY_ID, 
             region: AWS_REGION

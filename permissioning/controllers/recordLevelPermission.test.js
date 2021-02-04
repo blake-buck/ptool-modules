@@ -2,7 +2,7 @@
         const dependencyInjector = require('../dependency-injector.js');
         dependencyInjector.register(
             'recordLevelPermissionService', 
-            {
+            () => ({
                 getRecordLevelPermissions: () => true,
                 getSpecificRecordLevelPermission: () => true,
                 postRecordLevelPermission: () => true,
@@ -12,7 +12,7 @@
                 patchSpecificRecordLevelPermission: () => true,
                 deleteRecordLevelPermissions: () => true,
                 deleteSpecificRecordLevelPermission: () => true
-            }
+            })
         );
         const recordLevelPermissionControllers = require('./recordLevelPermission');
 

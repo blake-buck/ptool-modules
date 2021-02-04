@@ -6,9 +6,9 @@
     const {initializeLoggingSqlite, initializeStandardMiddleware} = require('../initialization');
 
     initializeLoggingSqlite(':memory:');
-    dependencyInjector.register('logModel', require('../models/log'));
-    dependencyInjector.register('logService', require('../services/log'));
-    dependencyInjector.register('logController', require('../controllers/log'));
+    dependencyInjector.register('logModel', () => require('../models/log'));
+    dependencyInjector.register('logService', () => require('../services/log'));
+    dependencyInjector.register('logController', () => require('../controllers/log'));
 
     const logRouter = require('./log');
 

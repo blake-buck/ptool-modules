@@ -1,6 +1,6 @@
 
     const dependencyInjector = require('../dependency-injector.js');
-    dependencyInjector.register('permissionGroupToPermissionModel', {
+    dependencyInjector.register('permissionGroupToPermissionModel', () => ({
         getPermissionGroupToPermissions: () => [{id: 1}, {id: 2}],
         getSpecificPermissionGroupToPermission: () => ({id: 1}),
         postPermissionGroupToPermission: () => ({id: 1}),
@@ -10,7 +10,7 @@
         patchSpecificPermissionGroupToPermission: () => true,
         deletePermissionGroupToPermissions : () => true,
         deleteSpecificPermissionGroupToPermission: () => true
-    });
+    }));
     const permissionGroupToPermissionServices = require('./permissionGroupToPermission');
 
 

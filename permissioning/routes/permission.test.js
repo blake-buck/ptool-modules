@@ -10,9 +10,9 @@
     const {initializeSqlite} = require('../initialization');
 
     initializeSqlite(':memory:');
-    dependencyInjector.register('permissionModel', require('../models/permission'));
-    dependencyInjector.register('permissionService', require('../services/permission'));
-    dependencyInjector.register('permissionController', require('../controllers/permission'));
+    dependencyInjector.register('permissionModel', () => require('../models/permission'));
+    dependencyInjector.register('permissionService', () => require('../services/permission'));
+    dependencyInjector.register('permissionController', () => require('../controllers/permission'));
 
     const permissionRouter = require('./permission');
 

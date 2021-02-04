@@ -11,11 +11,11 @@
     const {initializeSqlite} = require('../initialization');
 
     initializeSqlite(':memory:');
-    dependencyInjector.register('recordLevelPermissionModel', require('../models/recordLevelPermission'));
-    dependencyInjector.register('permissionModel', require('../models/permission'));
-    dependencyInjector.register('recordLevelPermissionService', require('../services/recordLevelPermission'));
-    dependencyInjector.register('permissionService', require('../services/permission'));
-    dependencyInjector.register('recordLevelPermissionController', require('../controllers/recordLevelPermission'));
+    dependencyInjector.register('recordLevelPermissionModel', () => require('../models/recordLevelPermission'));
+    dependencyInjector.register('permissionModel', () => require('../models/permission'));
+    dependencyInjector.register('recordLevelPermissionService', () => require('../services/recordLevelPermission'));
+    dependencyInjector.register('permissionService', () => require('../services/permission'));
+    dependencyInjector.register('recordLevelPermissionController', () => require('../controllers/recordLevelPermission'));
 
     const recordLevelPermissionRouter = require('./recordLevelPermission');
 

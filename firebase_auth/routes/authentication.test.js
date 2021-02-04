@@ -5,8 +5,8 @@ const dependencyInjector = require('../dependency-injector.js');
 
 const {initializeFirebaseAuth, initializeStandardMiddleware} = require('../initialization');
 initializeFirebaseAuth();
-dependencyInjector.register('authenticationService', require('../services/authentication.js'));
-dependencyInjector.register('authenticationController', require('../controllers/authentication.js'));
+dependencyInjector.register('authenticationService', () => require('../services/authentication.js'));
+dependencyInjector.register('authenticationController', () => require('../controllers/authentication.js'));
 
 const authenticationRouter = require('./authentication');
 

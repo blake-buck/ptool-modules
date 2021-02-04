@@ -1,6 +1,6 @@
 
     const dependencyInjector = require('../dependency-injector.js');
-    dependencyInjector.register('recordLevelPermissionModel', {
+    dependencyInjector.register('recordLevelPermissionModel', () => ({
         getRecordLevelPermissions: () => [{id: 1}, {id: 2}],
         getSpecificRecordLevelPermission: () => ({id: 1}),
         postRecordLevelPermission: () => ({id: 1}),
@@ -11,7 +11,7 @@
         deleteRecordLevelPermissions : () => true,
         deleteSpecificRecordLevelPermission: () => true,
         runRecordLevelPermissionCheck: () => true
-    });
+    }));
     const recordLevelPermissionServices = require('./recordLevelPermission');
 
     const properUserId = 'user-id';

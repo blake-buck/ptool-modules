@@ -2,7 +2,7 @@
         const dependencyInjector = require('../dependency-injector.js');
         dependencyInjector.register(
             'permissionService', 
-            {
+            () => ({
                 getPermissions: () => true,
                 getSpecificPermission: () => true,
                 postPermission: () => true,
@@ -12,7 +12,7 @@
                 patchSpecificPermission: () => true,
                 deletePermissions: () => true,
                 deleteSpecificPermission: () => true
-            }
+            })
         );
         const permissionControllers = require('./permission');
 
