@@ -109,15 +109,9 @@
             
             "post":{
                 "tags":["authentication operations"],
-                "parameters":[
-                    {
-                        "name": "jwt",
-                        "in": "header",
-                        "schema": {
-                            "type":"string"
-                        }
-                    }
-                ],
+                "security":{
+                    "jwt":[]
+                },
                 "requestBody":{
                     "content":{
                         "application/json":{
@@ -219,15 +213,9 @@
             "summary":"Deletes the user from the Cognito Pool",
             "post":{
                 "tags":["authentication operations"],
-                "parameters":[
-                    {
-                        "name": "jwt",
-                        "in": "header",
-                        "schema": {
-                            "type":"string"
-                        }
-                    }
-                ],
+                "security":{
+                    "jwt":[]
+                },
                 "requestBody":{
                     "application/json":{
                         "schema":{}
@@ -280,6 +268,15 @@
                         }
                     }
                 }
+            }
+        },
+        "schemas":{},
+        "securitySchemes":{
+            "jwt": {
+                "type": "apiKey",
+                "name": "jwt",
+                "description":"The AccessToken returned from successful firebase authentications",
+                "in": "header"
             }
         }
     },
