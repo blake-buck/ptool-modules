@@ -4,27 +4,19 @@ const router = express.Router();
 const dependencyInjector = require('../dependency-injector');
 const fileUploadController = dependencyInjector.inject('fileUploadController')
 
-router.use('/upload', () => {
-    router.get('/buckets', fileUploadController.listBuckets)
-    router.get('/bucket/:bucketId', fileUploadController.getBucket);
-    router.post('/bucket', fileUploadController.createBucket);
-    router.put('/bucket/:bucketId', fileUploadController.putBucket);
-    router.delete('/bucket/:bucketId', fileUploadController.deleteBucket);
+const bucketRouter = express.Router();
+bucketRouter.get('/buckets', fileUploadController.listBuckets)
+bucketRouter.get('/bucket/:bucketId', fileUploadController.getBucket);
+bucketRouter.post('/bucket', fileUploadController.createBucket);
+bucketRouter.put('/bucket/:bucketId', fileUploadController.putBucket);
+bucketRouter.delete('/bucket/:bucketId', fileUploadController.deleteBucket);
 
-    router.get('/bucket/:bucketId/objects', fileUploadController.listObjectsInBucket);
-    router.get('/bucket/:bucketId/object/:objectKey', fileUploadController.getObject);
-    router.put('/bucket/:bucketId:/object/:objectKey', fileUploadController.putObject);
-    router.delete('/bucket/:bucketId/object/:objectKey', fileUploadController.deleteObject);
-});
+const objectRouter = express.Router();
+objectRouter.get('/bucket/:bucketId/objects', fileUploadController.listObjectsInBucket);
+objectRouter.get('/bucket/:bucketId/object/:objectKey', fileUploadController.getObject);
+objectRouter.put('/bucket/:bucketId/object/:objectKey', fileUploadController.putObject);
+objectRouter.delete('/bucket/:bucketId/object/:objectKey', fileUploadController.deleteObject);
 
-
-
-
-
-
-
-
-
-
-
+router.use('/upload', bucketRouter);
+router.use('/upload', objectRouter);
 module.exports = router;

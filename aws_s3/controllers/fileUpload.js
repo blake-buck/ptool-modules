@@ -3,8 +3,10 @@ const controllerWrapper = require('./controllerWrapper.js');
 const dependencyInjector = require('../dependency-injector');
 const fileUploadService = dependencyInjector.inject('fileUploadService');
 
-async function listBuckets(){
 
+async function listBuckets(request, response){
+    const {status, body} = await fileUploadService.listBuckets();
+    response.status(status).json(body);
 }
 
 async function getBucket(){

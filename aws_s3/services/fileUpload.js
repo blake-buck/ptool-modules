@@ -6,10 +6,11 @@ const {
     PutObjectCommand,
     DeleteObjectCommand
 } = require('@aws-sdk/client-s3');
+const dependencyInjector = require('../dependency-injector');
 const s3Client = dependencyInjector.inject('s3Client');
 
 async function listBuckets(){
-
+    return {status: 200, body: await s3Client.send(new ListBucketsCommand({}))};
 }
 
 async function getBucket(){

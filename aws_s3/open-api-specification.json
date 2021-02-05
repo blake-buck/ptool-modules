@@ -1,5 +1,30 @@
 {
-    "paths":{},
+    "paths":{
+        "/api/v1/upload/buckets":{
+            
+            "get":{
+                "tags":["Amazon S3 Operations"],
+                "summary":"Returns a list of all buckets owned by the IAM user configured for the server.",
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
     "components":{
         "responses":{},
         "schemas":{},

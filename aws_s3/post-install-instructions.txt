@@ -1,0 +1,5 @@
+**IMPORTANT**: Permissioning consists of an AWS IAM user for the server; this means that every bucket & object is subject to updating/deletion, and every bucket & object will be returned on a query. You will need to implement your own permissioning, application or AWS side, to prevent every user from being able to view/edit/delete every other users file uploads.
+
+Run "npm i"
+Add initializeS3 to index.js
+Fill out the environment variables in dotenv

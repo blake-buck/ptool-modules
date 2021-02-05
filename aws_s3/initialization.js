@@ -1,4 +1,4 @@
-async function intitializeS3(){
+function initializeS3(){
     const { S3Client } = require("@aws-sdk/client-s3");
     const {AWS_REGION, AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID} = require('./config');
 
@@ -10,4 +10,4 @@ async function intitializeS3(){
     dependencyInjector.register('s3Client', () => s3);
 }
 
-module.exports.intitializeS3 = intitializeS3;
+module.exports.initializeS3 = initializeS3;
