@@ -91,7 +91,7 @@
                     {
                         "name": "bucketId",
                         "in": "path",
-                        "description": "The bucketId id."
+                        "description": "The bucket id."
                     },
                     {
                         "name": "limit",
@@ -121,12 +121,279 @@
                         }
                     }
                 }
+            },
+            "delete":{
+                "tags":[
+                    "Amazon S3 Operations"
+                ],
+                "summary":"Deletes a list of the provided object keys in the provided bucket",
+                "parameters":[
+                    {
+                        "name": "bucketId",
+                        "in": "path",
+                        "description": "The bucket id."
+                    }
+                ],
+                "requestBody":{
+                    "application/json":{
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "objectKeysToDelete":{
+                                            "type":"array",
+                                            "items":{
+                                                "type":"string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/v1/upload/bucket/{bucketId}/object/{objectKey}":{
-            "get":{},
-            "put":{},
-            "delete":{}
+            "get":{
+                "tags":["Amazon S3 Operations"],
+                "parameters":[
+                    {
+                        "name":"bucketId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"objectKey",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "tags":["Amazon S3 Operations"],
+                "parameters":[
+                    {
+                        "name":"bucketId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"objectKey",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "application/json":{
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "base64":{
+                                            "description":"The base64 encoded data of the object to create/replace. Note: if you're using a data url, you will need to remove the \"data:...,\" section from it. ", 
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Amazon S3 Operations"],
+                "parameters":[
+                    {
+                        "name":"bucketId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"objectKey",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload/bucket/{bucketId}/object/{objectKey}/url/get":{
+            "get":{
+                "tags":["Amazon S3 Operations"],
+                "description":"Returns a url that can be used to download the specified resource",
+                "parameters":[
+                    {
+                        "name":"bucketId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"objectKey",
+                        "in":"path"
+                    },
+                    {
+                        "name":"expiration",
+                        "description":"The number of seconds the returned URL will be valid for",
+                        "in":"query"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "url":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload/bucket/{bucketId}/object/{objectKey}/url/put":{
+            "get":{
+                "tags":["Amazon S3 Operations"],
+                "description":"Returns a url that can be used to create/replace the specified resource",
+                "parameters":[
+                    {
+                        "name":"bucketId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"objectKey",
+                        "in":"path"
+                    },
+                    {
+                        "name":"expiration",
+                        "description":"The number of seconds the returned URL will be valid for",
+                        "in":"query"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "url":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload/bucket/{bucketId}/object/{objectKey}/url/delete":{
+            "get":{
+                "tags":["Amazon S3 Operations"],
+                "description":"Returns a url that can be used to delete the specified resource",
+                "parameters":[
+                    {
+                        "name":"bucketId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"objectKey",
+                        "in":"path"
+                    },
+                    {
+                        "name":"expiration",
+                        "description":"The number of seconds the returned URL will be valid for",
+                        "in":"query"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "url":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components":{
