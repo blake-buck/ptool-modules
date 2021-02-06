@@ -28,20 +28,35 @@
                 "tags":["Amazon S3 Operations"],
                 "summary":"Creates a S3 bucket with the provided name and location",
                 "requestBody":{
-                    "application/json":{
-                        "content": {
-                            "application/json": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "bucketId":{
+                                        "description":"The name/key of the bucket", 
+                                        "type":"string"
+                                    },
+                                    "location":{
+                                        "type":"string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
                                 "schema":{
                                     "type":"object",
                                     "properties":{
-                                        "bucketId":{
-                                            "description":"The name/key of the bucket", 
-                                            "type":"string"
-                                        },
-                                        "location":{
+                                        "message":{
                                             "type":"string"
                                         }
-                                    }
+                                     }
                                 }
                             }
                         }
@@ -135,17 +150,15 @@
                     }
                 ],
                 "requestBody":{
-                    "application/json":{
-                        "content": {
-                            "application/json": {
-                                "schema":{
-                                    "type":"object",
-                                    "properties":{
-                                        "objectKeysToDelete":{
-                                            "type":"array",
-                                            "items":{
-                                                "type":"string"
-                                            }
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "objectKeysToDelete":{
+                                        "type":"array",
+                                        "items":{
+                                            "type":"string"
                                         }
                                     }
                                 }
@@ -216,16 +229,14 @@
                     }
                 ],
                 "requestBody":{
-                    "application/json":{
-                        "content": {
-                            "application/json": {
-                                "schema":{
-                                    "type":"object",
-                                    "properties":{
-                                        "base64":{
-                                            "description":"The base64 encoded data of the object to create/replace. Note: if you're using a data url, you will need to remove the \"data:...,\" section from it. ", 
-                                            "type":"string"
-                                        }
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "base64":{
+                                        "description":"The base64 encoded data of the object to create/replace. Note: if you're using a data url, you will need to remove the \"data:...,\" section from it. ", 
+                                        "type":"string"
                                     }
                                 }
                             }
