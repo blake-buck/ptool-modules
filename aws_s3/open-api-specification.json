@@ -26,7 +26,7 @@
         "/api/v1/upload/bucket":{
             "post":{
                 "tags":["Amazon S3 Operations"],
-                "summary":"Creates a S3 bucket with the provided name and location",
+                "summary":"Creates a S3 bucket with the provided name and location. Note: Bucket names need to be unique - you're competing for S3 names with every AWS user",
                 "requestBody":{
                     "content": {
                         "application/json": {

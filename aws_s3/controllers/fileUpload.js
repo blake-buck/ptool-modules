@@ -56,7 +56,7 @@ async function listObjectsInBucket(request, response){
         throw new BadRequestError(validationResult.error);
     }
 
-    const queryValidationResult = listObjectsInBucketQueryValidation(request.query);
+    const queryValidationResult = listObjectsInBucketQueryValidation.validate(request.query);
     if(queryValidationResult.error){
         throw new BadRequestError(validationResult.error);
     }
@@ -195,8 +195,8 @@ async function getPresignedUrlForObjectPut(request, response){
     }
 
     const {status, body} = await fileUploadService.getPresignedUrlForObjectPut({
-        ...paramValidation.error,
-        ...queryValidation.error
+        ...paramValidation.value,
+        ...queryValidation.value
     });
 
     response.status(status).json(body);

@@ -103,7 +103,6 @@ async function putObject(requestObj){
 
 async function getPresignedUrlForObjectPut(requestObj){
     const {bucketId, objectKey, expiration} = requestObj;
-
     return {
         status: 200,
         body: {
@@ -137,7 +136,7 @@ async function deleteObjectsBulk(requestObj){
         new DeleteObjectsCommand({
             Bucket: bucketId,
             Delete:{
-                Objects:objectKeysToDelete.map((key) => ({key}))
+                Objects:objectKeysToDelete.map((key) => ({Key: key}))
             }
         })
     )};
