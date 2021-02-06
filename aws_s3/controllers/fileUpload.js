@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const {BadRequestError} = require('../constants/errors');
 const controllerWrapper = require('./controllerWrapper.js');
 const dependencyInjector = require('../dependency-injector');
 const fileUploadService = dependencyInjector.inject('fileUploadService');
@@ -13,31 +14,56 @@ async function getBucket(){
 
 }
 
-async function createBucket(){
+const createBucketSchema = Joi.object({
+    bucketId: Joi.string(),
+    location: Joi.string().default('us-east-2')
+})
+async function createBucket(request, response){
+    const validationResult = createBucketSchema.validate(request.body);
+    if(validationResult.error){
+        throw new BadRequestError(validationResult.error);
+    }
 
+    const {status, body} = await fileUploadService.createBucket(validationResult.value);
+    response.status(status).json(body);
 }
 
 async function putBucket(){
 
 }
 
-async function deleteBucket(){
+const deleteBucketParameterValidation = Joi.object({bucketId: Joi.string()});
+async function deleteBucket(request, response){
+    const validationResult = deleteBucketParameterValidation.validate(request.params);
+    if(validationResult.error){
+        throw new BadRequestError(validationResult.error);
+    }
 
+    const {status, body} = await fileUploadService.deleteBucket(request.params.bucketId)
+
+    response.status(status).json(body);
 }
 
-async function listObjectsInBucket(){
+const listObjectsInBucketParameterValidation = Joi.object({bucketId: Joi.string()});
+async function listObjectsInBucket(request, response){
+    const validationResult = listObjectsInBucketParameterValidation.validate(request.params);
+    if(validationResult.error){
+        throw new BadRequestError(validationResult.error);
+    }
 
+    const {status, body} = await fileUploadService.listObjectsInBucket(validationResult.value);
+    response.status(status).json(body);
 }
 
-async function getObject(){
+async function getObject(request, response){
     
 }
 
-async function putObject(){
+async function putObject(request, response){
 
 }
 
-async function deleteObject(){
+async function deleteObject(request, response){
 
 }
 

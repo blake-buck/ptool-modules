@@ -1,7 +1,6 @@
 {
     "paths":{
         "/api/v1/upload/buckets":{
-            
             "get":{
                 "tags":["Amazon S3 Operations"],
                 "summary":"Returns a list of all buckets owned by the IAM user configured for the server.",
@@ -23,6 +22,111 @@
                     }
                 }
             }
+        },
+        "/api/v1/upload/bucket":{
+            "post":{
+                "tags":["Amazon S3 Operations"],
+                "summary":"Creates a S3 bucket with the provided name and location",
+                "requestBody":{
+                    "application/json":{
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "bucketId":{
+                                            "description":"The name/key of the bucket", 
+                                            "type":"string"
+                                        },
+                                        "location":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload/bucket/{bucketId}":{
+            "delete":{
+                "tags":[
+                    "Amazon S3 Operations"
+                ],
+                "summary":"Deletes the bucket with the provided name",
+                "parameters":[
+                    {
+                        "name": "bucketId",
+                        "in": "path",
+                        "description": "The bucketId id."
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload/bucket/{bucketId}/objects":{
+            "get":{
+                "tags":[
+                    "Amazon S3 Operations"
+                ],
+                "summary":"Returns a list of the objects in the provided bucket",
+                "parameters":[
+                    {
+                        "name": "bucketId",
+                        "in": "path",
+                        "description": "The bucketId id."
+                    },
+                    {
+                        "name": "limit",
+                        "in":"query",
+                        "description":"The maximum number of object keys to return"
+                    },
+                    {
+                        "name": "afterKey",
+                        "in":"query",
+                        "description":"If included, start returning objects from after this specific key"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload/bucket/{bucketId}/object/{objectKey}":{
+            "get":{},
+            "put":{},
+            "delete":{}
         }
     },
     "components":{
