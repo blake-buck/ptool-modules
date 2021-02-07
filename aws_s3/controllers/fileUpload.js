@@ -10,10 +10,6 @@ async function listBuckets(request, response){
     response.status(status).json(body);
 }
 
-async function getBucket(){
-
-}
-
 const createBucketSchema = Joi.object({
     bucketId: Joi.string(),
     location: Joi.string().default('us-east-2')
@@ -26,10 +22,6 @@ async function createBucket(request, response){
 
     const {status, body} = await fileUploadService.createBucket(validationResult.value);
     response.status(status).json(body);
-}
-
-async function putBucket(){
-
 }
 
 const deleteBucketParameterValidation = Joi.object({bucketId: Joi.string()});
@@ -219,9 +211,7 @@ async function getPresignedUrlForObjectDelete(request, response){
 
 module.exports = {
     listBuckets: controllerWrapper(listBuckets),
-    getBucket: controllerWrapper(getBucket),
     createBucket: controllerWrapper(createBucket),
-    putBucket: controllerWrapper(putBucket),
     deleteBucket: controllerWrapper(deleteBucket),
     listObjectsInBucket: controllerWrapper(listObjectsInBucket),
     getObject: controllerWrapper(getObject),

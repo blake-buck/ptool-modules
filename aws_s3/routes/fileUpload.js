@@ -6,9 +6,7 @@ const fileUploadController = dependencyInjector.inject('fileUploadController')
 
 const bucketRouter = express.Router();
 bucketRouter.get('/buckets', fileUploadController.listBuckets)
-bucketRouter.get('/bucket/:bucketId', fileUploadController.getBucket);
 bucketRouter.post('/bucket', fileUploadController.createBucket);
-bucketRouter.put('/bucket/:bucketId', fileUploadController.putBucket);
 bucketRouter.delete('/bucket/:bucketId', fileUploadController.deleteBucket);
 
 const objectRouter = express.Router();

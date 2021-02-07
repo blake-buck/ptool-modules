@@ -13,50 +13,48 @@ const s3Client = dependencyInjector.inject('s3Client');
 const getPresignedUrl = dependencyInjector.inject('s3GetPresignedUrl');
 
 async function listBuckets(){
-    return {status: 200, body: await s3Client.send(new ListBucketsCommand({}))};
-}
-
-async function getBucket(){
-    return {status: 200, body: {}};
+    const response = await s3Client.send(new ListBucketsCommand({}));
+    return {status: 200, body: response.Buckets ? response.Buckets : []};
 }
 
 async function createBucket(requestObj){
     const {bucketId, location} = requestObj;
+    const response = await s3Client.send(
+        new CreateBucketCommand({
+            Bucket: bucketId,
+            CreateBucketConfiguration: {
+                LocationConstraint: location
+            }
+        })
+    );
+
     return {
         status: 200, 
-        body: await s3Client.send(
-            new CreateBucketCommand({
-                Bucket: bucketId,
-                CreateBucketConfiguration: {
-                    LocationConstraint: location
-                }
-            })
-        )
+        body: {message: `Bucket ${bucketId} created successfully`, bucketId}
     };
 }
 
-async function putBucket(){
-    return {status: 200, body: {}};
-}
-
 async function deleteBucket(bucketId){
-    return {status: 200, body: await s3Client.send(
+    await s3Client.send(
         new DeleteBucketCommand({
             Bucket: bucketId
         })
-    )};
+    )
+    return {status: 200, body: {message: `Bucket ${bucketId} deleted successfully`}};
 }
 
 async function listObjectsInBucket(requestObj){
     const {bucketId, limit, startAfter, prefix} = requestObj;
-    return {status: 200, body: await s3Client.send(
+    const response = await s3Client.send(
         new ListObjectsV2Command({
             Bucket: bucketId, 
             MaxKeys: limit,
             StartAfter: startAfter,
             Prefix: prefix
         })
-    )};
+    );
+
+    return {status: 200, body: response.Contents ? response.Contents : []};
 }
 
 async function getObject(requestObj){
@@ -92,13 +90,14 @@ async function getPresignedUrlForObjectGet(requestObj){
 async function putObject(requestObj){
     const {bucketId, objectKey, base64} = requestObj;
     const body = Buffer.from(base64, 'base64');
-    return {status: 200, body: await s3Client.send(
+    await s3Client.send(
         new PutObjectCommand({
             Bucket: bucketId,
             Key: objectKey,
             Body: body
         })
-    )};
+    )
+    return {status: 200, body: {message: `Object ${objectKey} put successfully`, objectKey}};
 }
 
 async function getPresignedUrlForObjectPut(requestObj){
@@ -122,24 +121,26 @@ async function getPresignedUrlForObjectPut(requestObj){
 
 async function deleteObject(requestObj){
     const {bucketId, objectKey} = requestObj;
-    return {status: 200, body: await s3Client.send(
+    await s3Client.send(
         new DeleteObjectCommand({
             Bucket: bucketId,
             Key: objectKey
         })
-    )};
+    )
+    return {status: 200, body: {message:`Object ${objectKey} deleted successfully`, objectKey}};
 }
 
 async function deleteObjectsBulk(requestObj){
     const {bucketId, objectKeysToDelete} = requestObj;
-    return {status: 200, body: await s3Client.send(
+    await s3Client.send(
         new DeleteObjectsCommand({
             Bucket: bucketId,
             Delete:{
                 Objects:objectKeysToDelete.map((key) => ({Key: key}))
             }
         })
-    )};
+    )
+    return {status: 200, body: {message: 'Objects deleted successfully'}};
 }
 
 async function getPresignedUrlForObjectDelete(requestObj){
@@ -166,9 +167,7 @@ async function getPresignedUrlForObjectDelete(requestObj){
 
 module.exports = {
     listBuckets,
-    getBucket,
     createBucket,
-    putBucket,
     deleteBucket,
     listObjectsInBucket,
     getObject,
