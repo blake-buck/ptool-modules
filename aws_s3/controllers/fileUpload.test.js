@@ -13,7 +13,7 @@ dependencyInjector.register('fileUploadService', () => ({
     getPresignedUrlForObjectDelete: () => true
 }));
 
-const fileUploadController = require('./fileUploadController');
+const fileUploadController = require('./fileUpload');
 
 const mockResponse = () => {
     const res = {};

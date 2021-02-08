@@ -1,13 +1,12 @@
-const dependencyInjector = require('../depndency-injector');
+const {initializeS3} = require('../initialization');
+initializeS3();
+const fileUploadService = require('./fileUpload.js');
 
 describe('fileUpload service tests', () => {
-    const {initializeS3} = require('../initialization');
-    initializeS3();
-    const fileUploadService = require('./fileUpload');
-
+   
     const bucketId = `super${Math.random().toFixed(5)}random${Math.random().toFixed(5)}`;
     const objectKey = 'textDocument.txt';
-    const base64 = '';
+    const base64 = 'YmxhaA==';
     const expiration = 500;
 
     it('listBuckets() is functional', async (done) => {
