@@ -3,20 +3,24 @@ const request = require('supertest');
 const express = require('express');
 
 const {initializeS3} = require('../initialization');
-    initializeS3();
-    dependencyInjector.register('fileUploadService', () => require('../services/fileUpload'));
-    dependencyInjector.register('fileUploadController', () => require('../controllers/fileUpload'));
-    const fileUploadRouter = require('./fileUpload.js');
+initializeS3();
+dependencyInjector.register('fileUploadService', () => require('../services/fileUpload'));
+dependencyInjector.register('fileUploadController', () => require('../controllers/fileUpload'));
+const fileUploadRouter = require('./fileUpload.js');
+
+const bucketName = `super${Math.random().toFixed(5)}random${Math.random().toFixed(5)}`;
+const objectKey = 'textDocument.txt';
+const base64 = 'YmxhaA==';
+
+afterAll(async () => {
+    const fileUploadService = dependencyInjector.inject('fileUploadService');
+    await fileUploadService.deleteBucket(bucketName);
+});
 
 describe('fileUpload route tests', () => {
-    
     const app = express();
     app.use(express.json());
     app.use(fileUploadRouter);
-
-    const bucketName = `super${Math.random().toFixed(5)}random${Math.random().toFixed(5)}`;
-    const objectKey = 'textDocument.txt';
-    const base64 = 'YmxhaA==';
 
     it('GET - /buckets', async (done) => {
         request(app)
@@ -79,20 +83,6 @@ describe('fileUpload route tests', () => {
             .expect(200, done);
     })
 
-    it('DELETE - /bucket/:bucketId/objects', async (done) => {
-        request(app)
-            .delete(`/upload/bucket/${bucketName}/objects`)
-            .set('Accept', 'application/json')
-            .send({objectKeysToDelete:[]})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end((err, response) => {
-                if(err) console.log(err);
-                console.log(response.body)
-                done();
-            });
-    })
-
     it('PUT - /bucket/:bucketId/object/:objectKey', async (done) => {
         request(app)
             .put(`/upload/bucket/${bucketName}/object/${objectKey}`)
@@ -121,27 +111,6 @@ describe('fileUpload route tests', () => {
             });
     })
 
-    it('DELETE - /bucket/:bucketId/object/:objectKey', async (done) => {
-        request(app)
-            .delete(`/upload/bucket/${bucketName}/object/${objectKey}`)
-            .set('Accept', 'application/json')
-            .send({})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(async (err, response) => {
-                if(err) console.log(err);
-                console.log(response.body)
-
-                await dependencyInjector.dependencies.fileUploadService.putObject({
-                    bucketId: bucketName,
-                    objectKey,
-                    base64
-                })
-
-                done();
-            })
-    })
-
 
     it('GET - /bucket/:bucketId/object/:objectKey/url/get', async (done) => {
         request(app)
@@ -168,5 +137,41 @@ describe('fileUpload route tests', () => {
             .send({})
             .expect('Content-Type', /json/)
             .expect(200, done);
+    })
+
+
+    it('DELETE - /bucket/:bucketId/object/:objectKey', async (done) => {
+        request(app)
+            .delete(`/bucket/${bucketName}/object/${objectKey}`)
+            .set('Accept', 'application/json')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(async (err, response) => {
+                if(err) console.log(err);
+                console.log(response.body)
+
+                await dependencyInjector.dependencies.fileUploadService.putObject({
+                    bucketId: bucketName,
+                    objectKey,
+                    base64
+                })
+
+                done();
+            })
+    })
+
+    it('DELETE - /bucket/:bucketId/objects', async (done) => {
+        request(app)
+            .delete(`/upload/bucket/${bucketName}/objects`)
+            .set('Accept', 'application/json')
+            .send({objectKeysToDelete:[ objectKey ]})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, response) => {
+                if(err) console.log(err);
+                console.log(response.body)
+                done();
+            });
     })
 })

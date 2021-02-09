@@ -2,12 +2,18 @@ const {initializeS3} = require('../initialization');
 initializeS3();
 const fileUploadService = require('./fileUpload.js');
 
+const bucketId = `super${Math.random().toFixed(5)}random${Math.random().toFixed(5)}`;
+const objectKey = 'textDocument.txt';
+const base64 = 'YmxhaA==';
+const expiration = 500;
+
+afterAll(async () => {
+    await fileUploadService.deleteBucket(bucketId);
+});
+
 describe('fileUpload service tests', () => {
    
-    const bucketId = `super${Math.random().toFixed(5)}random${Math.random().toFixed(5)}`;
-    const objectKey = 'textDocument.txt';
-    const base64 = 'YmxhaA==';
-    const expiration = 500;
+    
 
     it('listBuckets() is functional', async (done) => {
         const result = await fileUploadService.listBuckets();
@@ -69,10 +75,16 @@ describe('fileUpload service tests', () => {
         done();
     })
 
-    
-    
     it('getPresignedUrlForObjectPut() is functional', async (done) => {
         const result = await fileUploadService.getPresignedUrlForObjectPut({bucketId, objectKey, expiration});
+        expect(result.status).toBe(200);
+        expect(result.body).toBeTruthy();
+        expect(result.body.url).toBeTruthy();
+        done();
+    })
+
+    it('getPresignedUrlForObjectDelete() is functional', async (done) => {
+        const result = await fileUploadService.getPresignedUrlForObjectDelete({bucketId, objectKey, expiration});
         expect(result.status).toBe(200);
         expect(result.body).toBeTruthy();
         expect(result.body.url).toBeTruthy();
@@ -95,12 +107,6 @@ describe('fileUpload service tests', () => {
         done();
     })
     
-    it('getPresignedUrlForObjectDelete() is functional', async (done) => {
-        const result = await fileUploadService.getPresignedUrlForObjectDelete({bucketId, objectKey, expiration});
-        expect(result.status).toBe(200);
-        expect(result.body).toBeTruthy();
-        expect(result.body.url).toBeTruthy();
-        done();
-    })
+    
 
 })
