@@ -1,0 +1,1 @@
+**IMPORTANT**: File/bucket permissioning is not configured out of the box; this means that every bucket & object is subject to updating/deletion, and every bucket & object will be returned on a query. You will need to implement your own permissioning, application or firebase side, to prevent every user from being able to view/edit/delete every other users file uploads.
