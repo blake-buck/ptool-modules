@@ -19,13 +19,13 @@ function initializeFirebaseStorage(){
         messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
         appId: FIREBASE_APP_ID
     })
-    firebaseStorage.client = firebaseClient.auth();
+    firebaseStorage.client = firebaseClient;
 
     firebaseAdmin.initializeApp({
         credential: firebaseAdmin.credential.cert(require('./credentials.json')),
         storageBucket: FIREBASE_STORAGE_BUCKET
     });
-    firebaseStorage.admin = firebaseAdmin.auth();
+    firebaseStorage.admin = firebaseAdmin.storage();
     dependencyInjector.register('firebaseStorage', () => firebaseStorage);
     logger.info('Firebase storage initialized.');
 }

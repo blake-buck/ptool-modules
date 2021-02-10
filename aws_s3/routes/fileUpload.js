@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const dependencyInjector = require('../dependency-injector');
-const fileUploadController = dependencyInjector.inject('fileUploadController')
+const fileUploadController = dependencyInjector.inject('fileUploadController');
 
 const bucketRouter = express.Router();
 bucketRouter.get('/buckets', fileUploadController.listBuckets)

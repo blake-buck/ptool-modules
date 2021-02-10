@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const {BadRequestError} = require('../constants/errors');
-const controllerWrapper = require('./controllerWrapper.js.js');
+const controllerWrapper = require('./controllerWrapper.js');
 const dependencyInjector = require('../dependency-injector');
 const fileUploadService = dependencyInjector.inject('fileUploadService');
 
