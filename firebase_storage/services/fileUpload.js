@@ -1,6 +1,8 @@
 const Joi = require('joi');
 const {BadRequestError} = require('../constants/errors');
 
+const {Readable} = require('stream');
+
 const dependencyInjector = require('../dependency-injector');
 const firebaseStorage = dependencyInjector.inject('firebaseStorage');
 
@@ -68,7 +70,23 @@ async function putFile(requestObj){
         base64
     } = validationResult.value;
 
-    return await firebaseStorage.client.ref(fileKey).putString(base64, 'base64')
+    const writableStream = firebaseStorage.admin.bucket().file(fileKey).createWritableStream();
+    
+    return await new Promise((resolve, reject) => {
+        new Readable({
+            read(){
+                this.push(Buffer.from(base64, 'base64'));
+                this.push(null);
+            }
+        })
+        .pipe(writableStream)
+        .on('error', (err) => {
+            reject(err)
+        })
+        .on('finish', () => {
+            resolve();
+        });
+    })
 }
 
 const deleteFileValidation = Joi.object({
@@ -83,7 +101,7 @@ async function deleteFile(requestObj){
         fileKey
     } = validationResult.value;
 
-    return await firebaseStorage.client.ref(fileKey).delete();
+    return await firebaseStorage.admin.bucket().file(fileKey).delete();
 }
 
 const deleteFilesBulkValidation = Joi.object({
