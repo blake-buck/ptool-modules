@@ -7,9 +7,9 @@ const fileUploadController = dependencyInjector.inject('fileUploadController');
 router.get('/upload/files', fileUploadController.listFiles);
 router.get('/upload/file/:fileKey', fileUploadController.getFile);
 
-router.get('/upload/file/:fileKey/upload/get', fileUploadController.getPresignedUrlForObjectGet);
-router.get('/upload/file/:fileKey/upload/put', fileUploadController.getPresignedUrlForObjectPut);
-router.get('/upload/file/:fileKey/upload/delete', fileUploadController.getPresignedUrlForObjectDelete);
+router.get('/upload/file/:fileKey/url/get', fileUploadController.getPresignedUrlForObjectGet);
+router.get('/upload/file/:fileKey/url/put', fileUploadController.getPresignedUrlForObjectPut);
+router.get('/upload/file/:fileKey/url/delete', fileUploadController.getPresignedUrlForObjectDelete);
 
 router.put('/upload/file/:fileKey', fileUploadController.putFile);
 

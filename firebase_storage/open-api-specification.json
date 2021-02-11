@@ -56,13 +56,6 @@
                     "Firebase Storage Operations"
                 ],
                 "summary":"Deletes a list of the provided object keys in the provided bucket",
-                "parameters":[
-                    {
-                        "name": "bucketId",
-                        "in": "path",
-                        "description": "The bucket id."
-                    }
-                ],
                 "requestBody":{
                     "content": {
                         "application/json": {

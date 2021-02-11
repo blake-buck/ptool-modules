@@ -70,7 +70,7 @@ async function putFile(requestObj){
         base64
     } = validationResult.value;
 
-    const writableStream = firebaseStorage.admin.bucket().file(fileKey).createWritableStream();
+    const writableStream = firebaseStorage.admin.bucket().file(fileKey).createWriteStream();
     
     return await new Promise((resolve, reject) => {
         new Readable({
@@ -133,10 +133,9 @@ async function getPresignedUrlForObjectGet(requestObj){
         expires
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().getSignedUrl({
-        fileKey,
-        expires,
-        action: 'get'
+    return await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
+        expires: Date.now() + expires,
+        action: 'read'
     });
 }
 
@@ -155,9 +154,8 @@ async function getPresignedUrlForObjectPut(requestObj){
         expires
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().getSignedUrl({
-        fileKey,
-        expires,
+    return await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
+        expires: Date.now() + expires,
         action: 'write'
     });
 }
@@ -177,9 +175,8 @@ async function getPresignedUrlForObjectDelete(requestObj){
         expires
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().getSignedUrl({
-        fileKey,
-        expires,
+    return await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
+        expires: Date.now() + expires,
         action: 'delete'
     });
 }
