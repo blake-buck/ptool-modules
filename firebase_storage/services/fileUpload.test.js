@@ -1,10 +1,49 @@
-const dependencyInjector = require('../dependency-injector');
-const fileUploadService = require('./fileUpload');
-const {initializeFirebaseStorage} = require('../initialization');
+const {Readable} = require('stream');
 
+const dependencyInjector = require('../dependency-injector');
+const {initializeFirebaseStorage} = require('../initialization');
 initializeFirebaseStorage();
 
-describe('fileUpload service validation tests', () => {
+
+const fileKey = `superRandomFileName.txt`;
+const anotherFileKey = `anotherSuperRandomFileName.txt`;
+const base64 = 'YmxhaA==';
+const deleteTestFile = async (fileKey) => {
+    const file = await dependencyInjector.dependencies['firebaseStorage'].admin.bucket().file(fileKey)
+    if((await file.exists())[0]){
+        await file.delete();
+    }
+}
+const putTestFile = async () => {
+    const writableStream = await dependencyInjector.dependencies['firebaseStorage'].admin.bucket().file(fileKey).createWriteStream();
+    
+    await new Promise((resolve, reject) => {
+        new Readable({
+            read(){
+                this.push(Buffer.from(base64, 'base64'));
+                this.push(null);
+            }
+        })
+        .pipe(writableStream)
+        .on('error', (err) => {
+            reject(err)
+        })
+        .on('finish', () => {
+            resolve();
+        });
+    })
+}
+beforeAll(async () => {
+    await putTestFile();
+});
+
+afterAll(async () => {
+    await deleteTestFile(fileKey);
+    await deleteTestFile(anotherFileKey);
+})
+const fileUploadService = require('./fileUpload');
+
+describe('fileUpload service tests', () => {
     const properDelimiter = 'abc';
     const properStartOffset = 'jeff';
     const properEndOffset = 'One';
@@ -245,46 +284,7 @@ describe('fileUpload service validation tests', () => {
         done();
     });
 
-})
 
-
-const fileKey = `superRandomFileName${Math.random().toFixed(5)}.txt`;
-const anotherFileKey = `anotherSuperRandomFileName${Math.random().toFixed(5)}.txt`;
-const base64 = 'YmxhaA==';
-
-const putTestFile = async () => {
-    const writableStream = await dependencyInjector.dependencies['firebaseStorage'].admin.bucket().file(fileKey).createWriteStream();
-    
-    await new Promise((resolve, reject) => {
-        new Readable({
-            read(){
-                this.push(Buffer.from(base64, 'base64'));
-                this.push(null);
-            }
-        })
-        .pipe(writableStream)
-        .on('error', (err) => {
-            reject(err)
-        })
-        .on('finish', () => {
-            resolve();
-        });
-    })
-}
-
-const deleteTestFile = async (fileKey) => {
-    await dependencyInjector.dependencies['firebaseStorage'].admin.bucket().file(fileKey).delete();
-}
-beforeAll(async () => {
-    await putTestFile();
-});
-
-afterAll(async () => {
-    await deleteTestFile(fileKey);
-    await deleteTestFile(anotherFileKey);
-})
-
-describe('fileUpload service functionality tests', () => {
     it('fileUploadService - listFiles are functional', async (done) => {
         try{
             const result = await fileUploadService.listFiles({})
@@ -304,17 +304,6 @@ describe('fileUpload service functionality tests', () => {
             const result = await fileUploadService.getFile({fileKey});
             expect(result).toBeTruthy();
             expect(result.name).toBe(fileKey);
-        }
-        catch(e){
-            console.error(e);
-        }
-        done();
-    });
-
-    it('fileUploadService - putFile is functional', async (done) => {
-        try{
-            const result = await fileUploadService.putFile({fileKey:anotherFileKey, base64});
-            expect(result).toBeTruthy();
         }
         catch(e){
             console.error(e);
@@ -393,4 +382,5 @@ describe('fileUpload service functionality tests', () => {
         }
         done();
     })
+
 })
