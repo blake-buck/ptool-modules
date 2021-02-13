@@ -52,8 +52,8 @@ async function getFile(requestObj){
     if(!file.exists()){
         throw new BadRequestError('File not found.');
     }
-
-    return file.download();
+    const result = file.download();
+    return result[0];
 }
 
 const putFileValidation = Joi.object({
@@ -84,7 +84,7 @@ async function putFile(requestObj){
             reject(err)
         })
         .on('finish', () => {
-            resolve();
+            resolve(true);
         });
     })
 }
@@ -101,7 +101,8 @@ async function deleteFile(requestObj){
         fileKey
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().file(fileKey).delete();
+    const result = await firebaseStorage.admin.bucket().file(fileKey).delete();
+    return result[0];
 }
 
 const deleteFilesBulkValidation = Joi.object({
@@ -133,10 +134,11 @@ async function getPresignedUrlForObjectGet(requestObj){
         expires
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
+    const result = await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
         expires: Date.now() + expires,
         action: 'read'
     });
+    return result[0];
 }
 
 const getPresignedUrlForObjectPutValidation = Joi.object({
@@ -154,10 +156,12 @@ async function getPresignedUrlForObjectPut(requestObj){
         expires
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
+    const result = await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
         expires: Date.now() + expires,
         action: 'write'
     });
+
+    return result[0];
 }
 
 const getPresignedUrlForObjectDeleteValidation = Joi.object({
@@ -175,10 +179,12 @@ async function getPresignedUrlForObjectDelete(requestObj){
         expires
     } = validationResult.value;
 
-    return await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
+    const result = await firebaseStorage.admin.bucket().file(fileKey).getSignedUrl({
         expires: Date.now() + expires,
         action: 'delete'
     });
+
+    return result[0];
 }
 
 
