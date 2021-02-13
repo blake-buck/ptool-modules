@@ -53,7 +53,7 @@ async function getFile(requestObj){
         throw new BadRequestError('File not found.');
     }
     const result = file.download();
-    return result[0];
+    return result;
 }
 
 const putFileValidation = Joi.object({

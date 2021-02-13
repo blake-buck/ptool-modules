@@ -34,10 +34,12 @@ const putTestFile = async () => {
     })
 }
 beforeAll(async () => {
+    console.log('BEFORE ALL')
     await putTestFile();
 });
 
 afterAll(async () => {
+    console.log('AFTER ALL')
     await deleteTestFile(fileKey);
     await deleteTestFile(anotherFileKey);
 })
@@ -361,7 +363,7 @@ describe('fileUpload service tests', () => {
             expect(result).toBeTruthy();
 
             const deletedFileExists = await dependencyInjector.dependencies['firebaseStorage'].admin.bucket().file(anotherFileKey).exists();
-            expect(deletedFileExists).toBeFalsy();
+            expect(deletedFileExists[0]).toBeFalsy();
         }
         catch(e){
             console.error(e);
@@ -375,7 +377,7 @@ describe('fileUpload service tests', () => {
             expect(result).toBeTruthy();
             
             const deletedFileExists = await dependencyInjector.dependencies['firebaseStorage'].admin.bucket().file(fileKey).exists();
-            expect(deletedFileExists).toBeFalsy();
+            expect(deletedFileExists[0]).toBeFalsy();
         }
         catch(e){
             console.error(e);
