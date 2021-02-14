@@ -47,17 +47,36 @@
                         }
                     },
                     "400":{
-
+                        "$ref":"#/components/responses/EmailError"
                     },
                     "500":{
-
+                        "$ref":"#/components/responses/EmailError"
                     }
                 }
             }
         }
     },
     "components": {
-        "responses": {},
+        "responses": {
+            "EmailError": {
+                "description": "File Upload Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "schemas": {}
     }
 }
