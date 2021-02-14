@@ -4,19 +4,47 @@
             "post":{
                 "tags":["Email Operations"],
                 "summary":"Use this route to send an email to various parties",
-                "parameters":[],
                 "requestBody":{
                     "content":{
                         "application/json": {
                             "schema":{
-                                "type":"object"
+                                "type":"object",
+                                "properties":{
+                                    "from":{
+                                        "type":"string"
+                                    },
+                                    "to":{
+                                        "type":"string"
+                                    },
+                                    "subject":{
+                                        "type":"string"
+                                    },
+                                    "text":{
+                                        "type":"string"
+                                    },
+                                    "html":{
+                                        "type":"string"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses":{
                     "200":{
-
+                        "description": "Successful request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "message":{
+                                            "type":"string"
+                                        }
+                                     }
+                                }
+                            }
+                        }
                     },
                     "400":{
 

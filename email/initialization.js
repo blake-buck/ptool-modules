@@ -1,5 +1,5 @@
 function initializeNodeMailer(){
-    standardLogger.info('Initializing Nodemailer...');
+    logger.info('Initializing Nodemailer...');
     const nodeMailer = require('nodemailer');
     const {
         EMAIL_HOST,
@@ -10,18 +10,19 @@ function initializeNodeMailer(){
 
     dependencyInjector.register(
         'emailTransport', 
-        nodeMailer.createTransport({
+        () => nodeMailer.createTransport({
+            pool:true,
             host:EMAIL_HOST,
             port:EMAIL_PORT,
             secure:true,
             auth:{
                 user:EMAIL_AUTH_USERNAME,
-                password:EMAIL_AUTH_PASSWORD
+                pass:EMAIL_AUTH_PASSWORD
             }
         })
     )
 
-    standardLogger.info('Nodemailer initialized...');
+    logger.info('Nodemailer initialized...');
 }
 
 module.exports.initializeNodeMailer = initializeNodeMailer;
