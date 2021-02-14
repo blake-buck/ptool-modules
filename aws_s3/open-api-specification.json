@@ -19,6 +19,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -60,6 +66,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -92,6 +104,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -134,6 +152,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             },
@@ -181,6 +205,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -213,6 +243,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             },
@@ -258,6 +294,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             },
@@ -288,6 +330,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -326,6 +374,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -364,6 +418,12 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
@@ -402,13 +462,38 @@
                                 }
                             }
                         }
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/FileUploadError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/FileUploadError"
                     }
                 }
             }
         }
     },
     "components":{
-        "responses":{},
+        "responses":{
+            "FileUploadError": {
+                "description": "File Upload Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "schemas":{},
         "securitySchemes":{}
     },
