@@ -5,3 +5,4 @@ If necessary, configure your nodemailer transport to use OAuth2 instead of usern
 
 You'll need to setup a method of unsubscribing users from your list - otherwise you can get in legal trouble.
 Further more, for large amounts of emails, you're going to want to implement some type of queuing system.
+Tests don't actually send emails by default; you'll need to change testing if you want to test your SMTP host.
