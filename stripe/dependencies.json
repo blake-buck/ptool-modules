@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "stripe":"8.135.0"
+    },
+    "devDependecies": {}
+}
