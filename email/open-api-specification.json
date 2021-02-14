@@ -1,1 +1,35 @@
-{"paths":{}, "components":{"responses":{}, "schemas":{}}}
+{
+    "paths": {
+        "/api/v1/email":{
+            "post":{
+                "tags":["Email Operations"],
+                "summary":"Use this route to send an email to various parties",
+                "parameters":[],
+                "requestBody":{
+                    "content":{
+                        "application/json": {
+                            "schema":{
+                                "type":"object"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+
+                    },
+                    "400":{
+
+                    },
+                    "500":{
+
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {},
+        "schemas": {}
+    }
+}

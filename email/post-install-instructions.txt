@@ -1,0 +1,7 @@
+Run "npm install"
+Fill out values in .env file
+Add initializeNodeMailer to index.js
+If necessary, configure your nodemailer transport to use OAuth2 instead of username/password authentication
+
+You'll need to setup a method of unsubscribing users from your list - otherwise you can get in legal trouble.
+Further more, for large amounts of emails, you're going to want to implement some type of queuing system.
