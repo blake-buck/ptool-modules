@@ -1,7 +1,873 @@
 {
-    "paths": {},
+    "paths": {
+        "/api/v1/stripe/customers":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Return a list of customers from Stripe",
+                "parameters":[
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email keys to filter customer by"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The number of records to return from the call."
+                    },
+                    {
+                        "name": "startingAfter",
+                        "in": "query",
+                        "description": "Start returning objects from after this key"
+                    },
+                    {
+                        "name": "created",
+                        "description": "Filter records by creation date",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "gt":{
+                                    "type":"string"
+                                },
+                                "gte":{
+                                    "type":"string"
+                                },
+                                "lt":{
+                                    "type":"string"
+                                },
+                                "lte":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/customer":{
+            "post":{
+                "tags":["Stripe Operations"],
+                "summary":"Create a customer in Stripe",
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "description":{
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "phone":{
+                                        "type":"integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/customer/{customerId}":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Return a specific customer from Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "put":{
+                "tags":["Stripe Operations"],
+                "summary":"Update a specific customer in Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "description":{
+                                        "type":"string"
+                                    },
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "phone":{
+                                        "type":"integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Stripe Operations"],
+                "summary":"Delete a specific customer in Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/stripe/cards":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Return a list of customer payment cards from Stripe",
+                "parameters":[],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/card":{
+            "post":{
+                "tags":["Stripe Operations"],
+                "summary":"Create a payment card for a customer in Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "source":{
+                                        "type":"object",
+                                        "properties":{
+                                            "number":{
+                                                "type":"string"
+                                            },
+                                            "expirationMonth":{
+                                                "type":"string"
+                                            },
+                                            "expirationYear":{
+                                                "type":"string"
+                                            },
+                                            "cvc":{
+                                                "type":"string"
+                                            },
+                                            "name":{
+                                                "type":"string"
+                                            },
+                                            "addressLineOne":{
+                                                "type":"string"
+                                            },
+                                            "addressLineTwo":{
+                                                "type":"string"
+                                            },
+                                            "city":{
+                                                "type":"string"
+                                            },
+                                            "state":{
+                                                "type":"string"
+                                            },
+                                            "zip":{
+                                                "type":"string"
+                                            },
+                                            "country":{
+                                                "type":"string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/card/{cardId}":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Get a specific payment card in Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"cardId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "put":{
+                "tags":["Stripe Operations"],
+                "summary":"Update a specific payment card in Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"cardId",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "source":{
+                                        "type":"object",
+                                        "properties":{
+                                            "number":{
+                                                "type":"string"
+                                            },
+                                            "expirationMonth":{
+                                                "type":"string"
+                                            },
+                                            "expirationYear":{
+                                                "type":"string"
+                                            },
+                                            "cvc":{
+                                                "type":"string"
+                                            },
+                                            "name":{
+                                                "type":"string"
+                                            },
+                                            "addressLineOne":{
+                                                "type":"string"
+                                            },
+                                            "addressLineTwo":{
+                                                "type":"string"
+                                            },
+                                            "city":{
+                                                "type":"string"
+                                            },
+                                            "state":{
+                                                "type":"string"
+                                            },
+                                            "zip":{
+                                                "type":"string"
+                                            },
+                                            "country":{
+                                                "type":"string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Stripe Operations"],
+                "summary":"Delete a specific payment card in Stripe",
+                "parameters":[
+                    {
+                        "name":"customerId",
+                        "in":"path"
+                    },
+                    {
+                        "name":"cardId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/stripe/prices":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Return a list of price objects from Stripe",
+                "parameters":[
+                    {
+                        "name":"active",
+                        "in":"query",
+                        "type":"boolean"
+                    },
+                    {
+                        "name":"currency",
+                        "in":"query"
+                    },
+                    {
+                        "name":"productId",
+                        "in":"query"
+                    },
+                    {
+                        "name":"limit",
+                        "in":"query",
+                        "type":"integer"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/price":{
+            "post":{
+                "tags":["Stripe Operations"],
+                "summary":"Create a price object in Stripe",
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "source":{
+                                        "type":"object",
+                                        "properties":{
+                                            "currency":{
+                                                "type":"string"
+                                            },
+                                            "unitAmount":{
+                                                "type":"integer"
+                                            },
+                                            "productId":{
+                                                "type":"string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/price/{priceId}":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Return a specific price object in Stripe",
+                "parameters":[
+                    {
+                        "name":"priceId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "put":{
+                "tags":["Stripe Operations"],
+                "summary":"Update a specific price object in Stripe",
+                "parameters":[
+                    {
+                        "name":"priceId",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "source":{
+                                        "type":"object",
+                                        "properties":{
+                                            "active":{
+                                                "type":"boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Stripe Operations"],
+                "summary":"Delete a specific price object in Stripe",
+                "parameters":[
+                    {
+                        "name":"priceId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/stripe/subscriptions":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Get a list of subscription objects from Stripe",
+                "parameters":[
+                    {
+                        "name":"customer",
+                        "in":"query"
+                    },
+                    {
+                        "name":"priceId",
+                        "in":"query"
+                    },
+                    {
+                        "name":"status",
+                        "in":"query"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/subscription":{
+            "post":{
+                "tags":["Stripe Operations"],
+                "summary":"Create a subscription object in Stripe",
+                "parameters":[],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "customerId":{
+                                        "type":"string"
+                                    },
+                                    "items":{
+                                        "type":"array",
+                                        "items":{
+                                            "type":"object",
+                                            "properties":{
+                                                "price":{
+                                                    "type":"string"
+                                                },
+                                                "quantity":{
+                                                    "type":"integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/subscription/{subscriptionId}":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Get a specific subscription object in Stripe",
+                "parameters":[
+                    {
+                        "name":"subscriptionId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "put":{
+                "tags":["Stripe Operations"],
+                "summary":"Update a specific subscription object in Stripe",
+                "parameters":[
+                    {
+                        "name":"subscriptionId",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "items":{
+                                        "type":"array",
+                                        "items":{
+                                            "type":"object",
+                                            "properties":{
+                                                "price":{
+                                                    "type":"string"
+                                                },
+                                                "quantity":{
+                                                    "type":"integer"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cancelAtEndOfCurrentPeriod":{
+                                        "type":"boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Stripe Operations"],
+                "summary":"Delete a specific subscription object in Stripe",
+                "parameters":[
+                    {
+                        "name":"subscriptionId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/stripe/products":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Get a list of product objects from Stripe",
+                "parameters":[
+                    {
+                        "name":"active",
+                        "in":"query",
+                        "type":"boolean"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/product":{
+            "post":{
+                "tags":["Stripe Operations"],
+                "summary":"Create a product object in Stripe",
+                "requestBody":{},
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        },
+        "/api/v1/stripe/product/{productId}":{
+            "get":{
+                "tags":["Stripe Operations"],
+                "summary":"Get a specific product object from Stripe",
+                "parameters":[
+                    {
+                        "name":"productId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "put":{
+                "tags":["Stripe Operations"],
+                "summary":"Update a specific product object from Stripe",
+                "parameters":[
+                    {
+                        "name":"productId",
+                        "in":"path"
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "cancelAtEndOfCurrentPeriod":{
+                                        "type":"string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Stripe Operations"],
+                "summary":"Delete a specific product object from Stripe",
+                "parameters":[
+                    {
+                        "name":"productId",
+                        "in":"path"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/StripeOk"
+                    },
+                    "400":{
+                        "$ref":"#/components/responses/StripeError"
+                    },
+                    "500":{
+                        "$ref":"#/components/responses/StripeError"
+                    }
+                }
+            }
+        }
+    },
     "components": {
-        "responses": {},
+        "responses": {
+            "StripeOk": {
+                "description": "Standard OK response for the stripe routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "StripeError": {
+                "description": "Standard error for the stripe routes",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "schemas": {}
     }
 }
