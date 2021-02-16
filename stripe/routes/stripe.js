@@ -10,11 +10,10 @@ router.post('/stripe/customer', stripeController.createCustomer);
 router.put('/stripe/customer/:customerId', stripeController.updateSpecificCustomer);
 router.delete('/stripe/customer/:customerId', stripeController.deleteSpecificCustomer);
 
-router.get('/stripe/cards', stripeController.getCards);
-router.get('/stripe/card/:cardId', stripeController.getSpecificCard);
-router.post('/stripe/card', stripeController.createCard);
-router.put('/stripe/card/:cardId', stripeController.updateSpecificCard);
-router.delete('/stripe/card/:cardId', stripeController.deleteSpecificCard);
+router.get('/stripe/customer/:customerId/card/:cardId', stripeController.getSpecificCard);
+router.post('/stripe/customer/:customerId/card', stripeController.createCard);
+router.put('/stripe/customer/:customerId/card/:cardId', stripeController.updateSpecificCard);
+router.delete('/stripe/customer/:customerId/card/:cardId', stripeController.deleteSpecificCard);
 
 router.get('/stripe/subscriptions', stripeController.getSubscriptions);
 router.get('/stripe/subscription/:subscriptionId', stripeController.getSpecificSubscription);

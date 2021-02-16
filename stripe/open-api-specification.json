@@ -179,22 +179,7 @@
             }
         },
 
-        "/api/v1/stripe/cards":{
-            "get":{
-                "tags":["Stripe Operations"],
-                "summary":"Return a list of customer payment cards from Stripe",
-                "parameters":[],
-                "responses":{
-                    "400":{
-                        "$ref":"#/components/responses/StripeError"
-                    },
-                    "500":{
-                        "$ref":"#/components/responses/StripeError"
-                    }
-                }
-            }
-        },
-        "/api/v1/stripe/card":{
+        "/api/v1/stripe/customer/{customerId}/card":{
             "post":{
                 "tags":["Stripe Operations"],
                 "summary":"Create a payment card for a customer in Stripe",
@@ -266,7 +251,7 @@
                 }
             }
         },
-        "/api/v1/stripe/card/{cardId}":{
+        "/api/v1/stripe/customer/{customerId}/card/{cardId}":{
             "get":{
                 "tags":["Stripe Operations"],
                 "summary":"Get a specific payment card in Stripe",
