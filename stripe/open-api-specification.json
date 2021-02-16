@@ -44,6 +44,35 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "object": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items":{
+                                                "schema":{
+                                                    "$ref":"#/components/schemas/StripeCustomerObject"
+                                                }
+                                               
+                                            }
+                                        },
+                                        "has_more":{
+                                            "type":"boolean"
+                                        },
+                                        "url":{
+                                            "type":"string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -58,31 +87,23 @@
                 "tags":["Stripe Operations"],
                 "summary":"Create a customer in Stripe",
                 "requestBody":{
-                    "content": {
-                        "application/json": {
+                    "content":{
+                        "application/json":{
                             "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "description":{
-                                        "type":"string"
-                                    },
-                                    "email":{
-                                        "type":"string"
-                                    },
-                                    "name":{
-                                        "type":"string"
-                                    },
-                                    "phone":{
-                                        "type":"integer"
-                                    }
-                                }
+                                "$ref":"#/components/schemas/StripeCustomerObjectMinusId"
                             }
                         }
                     }
                 },
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/StripeOk"
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeCustomerObject"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
@@ -104,6 +125,9 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "$ref":"#/components/schemas/StripeCustomerObject"
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -125,21 +149,7 @@
                     "content": {
                         "application/json": {
                             "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "description":{
-                                        "type":"string"
-                                    },
-                                    "email":{
-                                        "type":"string"
-                                    },
-                                    "name":{
-                                        "type":"string"
-                                    },
-                                    "phone":{
-                                        "type":"integer"
-                                    }
-                                }
+                                "$ref":"#/components/schemas/StripeCustomerObjectMinusId"
                             }
                         }
                     }
@@ -193,54 +203,20 @@
                     "content": {
                         "application/json": {
                             "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "source":{
-                                        "type":"object",
-                                        "properties":{
-                                            "number":{
-                                                "type":"string"
-                                            },
-                                            "expirationMonth":{
-                                                "type":"string"
-                                            },
-                                            "expirationYear":{
-                                                "type":"string"
-                                            },
-                                            "cvc":{
-                                                "type":"string"
-                                            },
-                                            "name":{
-                                                "type":"string"
-                                            },
-                                            "addressLineOne":{
-                                                "type":"string"
-                                            },
-                                            "addressLineTwo":{
-                                                "type":"string"
-                                            },
-                                            "city":{
-                                                "type":"string"
-                                            },
-                                            "state":{
-                                                "type":"string"
-                                            },
-                                            "zip":{
-                                                "type":"string"
-                                            },
-                                            "country":{
-                                                "type":"string"
-                                            }
-                                        }
-                                    }
-                                }
+                                "$ref":"#/components/schemas/StripeCardObject"
                             }
                         }
                     }
                 },
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/StripeOk"
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeCardObjectReturned"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
@@ -266,6 +242,15 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeCardObjectReturned"
+                                }
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -400,6 +385,19 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content": {
+                            "application/json": {
+                                "type":"array",
+                                "items":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/StripePriceObjectReturned"
+                                    }
+                                }
+                                
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -417,30 +415,20 @@
                     "content": {
                         "application/json": {
                             "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "source":{
-                                        "type":"object",
-                                        "properties":{
-                                            "currency":{
-                                                "type":"string"
-                                            },
-                                            "unitAmount":{
-                                                "type":"integer"
-                                            },
-                                            "productId":{
-                                                "type":"string"
-                                            }
-                                        }
-                                    }
-                                }
+                                "$ref":"#/components/schemas/StripePriceObjectReturned"
                             }
                         }
                     }
                 },
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/StripeOk"
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripePriceObjectReturned"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
@@ -462,6 +450,15 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripePriceObjectReturned"
+                                }
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -552,6 +549,19 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/StripeSubscriptionObjectReturned"
+                                    }
+                                }
+                                
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -596,7 +606,13 @@
                 },
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/StripeOk"
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeSubscriptionObjectReturned"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
@@ -618,6 +634,15 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeSubscriptionObjectReturned"
+                                }
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -710,6 +735,19 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/StripeProductObjectReturned"
+                                    }
+                                }
+                                
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -723,10 +761,32 @@
             "post":{
                 "tags":["Stripe Operations"],
                 "summary":"Create a product object in Stripe",
-                "requestBody":{},
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "name":{
+                                        "type":"string"
+                                    },
+                                    "description":{
+                                        "type":"string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/StripeOk"
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeProductObjectReturned"
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
@@ -748,6 +808,15 @@
                     }
                 ],
                 "responses":{
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/StripeProductObjectReturned"
+                                }
+                            }
+                        }
+                    },
                     "400":{
                         "$ref":"#/components/responses/StripeError"
                     },
@@ -853,6 +922,187 @@
                 }
             }
         },
-        "schemas": {}
+        "schemas": {
+            "StripeCustomerObject":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "description":{
+                        "type":"string"
+                    },
+                    "email":{
+                        "type":"string"
+                    },
+                    "name":{
+                        "type":"string"
+                    },
+                    "phone":{
+                        "type":"integer"
+                    }
+                }
+            },
+            "StripeCustomerObjectMinusId":{
+                "type":"object",
+                "properties":{
+                    "description":{
+                        "type":"string"
+                    },
+                    "email":{
+                        "type":"string"
+                    },
+                    "name":{
+                        "type":"string"
+                    },
+                    "phone":{
+                        "type":"integer"
+                    }
+                }
+            },
+            "StripeCardObject":{
+                "type":"object",
+                "properties":{
+                    "source":{
+                        "type":"object",
+                        "properties":{
+                            "number":{
+                                "type":"string"
+                            },
+                            "expirationMonth":{
+                                "type":"string"
+                            },
+                            "expirationYear":{
+                                "type":"string"
+                            },
+                            "cvc":{
+                                "type":"string"
+                            },
+                            "name":{
+                                "type":"string"
+                            },
+                            "addressLineOne":{
+                                "type":"string"
+                            },
+                            "addressLineTwo":{
+                                "type":"string"
+                            },
+                            "city":{
+                                "type":"string"
+                            },
+                            "state":{
+                                "type":"string"
+                            },
+                            "zip":{
+                                "type":"string"
+                            },
+                            "country":{
+                                "type":"string"
+                            }
+                        }
+                    }
+                }
+            },
+            "StripeCardObjectReturned":{
+                "type":"object",
+                "properties":{
+                    "customer":{
+                        "type":"string"
+                    },
+                    "name":{
+                        "type":"string"
+                    },
+                    "exp_month":{
+                        "type":"integer"
+                    },
+                    "exp_year":{
+                        "type":"integer"
+                    },
+                    "address_line1":{
+                        "type":"string"
+                    },
+                    "address_line2":{
+                        "type":"string"
+                    },
+                    "address_city":{
+                        "type":"string"
+                    },
+                    "address_state":{
+                        "type":"string"
+                    },
+                    "address_zip":{
+                        "type":"string"
+                    },
+                    "address_country":{
+                        "type":"string"
+                    },
+                    "last4":{
+                        "type":"integer"
+                    }
+                }
+            },
+            "StripePriceObjectReturned":{
+                "type":"object",
+                "properties":{
+                    "currency":{
+                        "type":"string"
+                    },
+                    "unit_amount":{
+                        "type":"integer"
+                    },
+                    "product_id":{
+                        "type":"string"
+                    }
+                }
+            },
+            "StripeSubscriptionObjectReturned":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "customer":{
+                        "type":"string"
+                    },
+                    "status":{
+                        "type":"string"
+                    },
+                    "items":{
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "id":{
+                                    "type":"string"
+                                },
+                                "active":{
+                                    "type":"boolean"
+                                },
+                                "quantity":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "StripeProductObjectReturned":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "name":{
+                        "type":"string"
+                    },
+                    "description":{
+                        "type":"string"
+                    },
+                    "active":{
+                        "type":"boolean"
+                    }
+                }
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ async function getSpecificCustomer(request, response){
 
 async function createCustomer(request, response){
     const result = await stripeService.createCustomer(request.body);
-    response.status(200).json({message: 'Customer record created'});
+    response.status(200).json(result);
 }
 
 async function updateSpecificCustomer(request, response){
@@ -32,7 +32,7 @@ async function deleteSpecificCustomer(request, response){
 
 async function createCard(request, response){
     const result = await stripeService.createCard(request.body);
-    response.status(200).json({message: 'Card record created'})
+    response.status(200).json(result)
 }
 
 async function getSpecificCard(request, response){
@@ -65,7 +65,7 @@ async function getSpecificSubscription(request, response){
 
 async function createSubscription(request, response){
     const result = await stripeService.createSubscription(request.body);
-    response.status(200).json({message: 'Subscription record created'})
+    response.status(200).json(result)
 }
 
 async function updateSpecificSubscription(request, response){
@@ -93,7 +93,7 @@ async function getSpecificProduct(request, response){
 
 async function createProduct(request, response){
     const result = await stripeService.createProduct(request.body);
-    response.status(200).json({message: 'Product record created'})
+    response.status(200).json(result)
 }
 
 async function updateSpecificProduct(request, response){
@@ -121,7 +121,7 @@ async function getSpecificPrice(request, response){
 
 async function createPrice(request, response){
     const result = await stripeService.createPrice(request.body);
-    response.status(200).json({message: 'Price record created'})
+    response.status(200).json(result)
 }
 
 async function updateSpecificPrice(request, response){
