@@ -14,20 +14,21 @@ const getCustomersValidation = Joi.object({
         lte: Joi.string().isoDate()
     }),
     limit: Joi.number().integer().max(100).min(1).default(10),
-    startingAfter: Joi.string()
-});
+    starting_after: Joi.string()
+})
+    .rename('startingAfter', 'starting_after');
 async function getCustomers(requestObj){
     const {error, value} = getCustomersValidation.validate(requestObj);
     if(error){
         throw new BadRequestError(error);
     }
 
-    const {email, limit, created, startingAfter} = value;
+    const {email, limit, created, starting_after} = value;
     return await stripe.customers.list({
         email,
         limit,
         created,
-        starting_after: startingAfter
+        starting_after
     })
 }
 
@@ -67,9 +68,9 @@ async function createCustomer(requestObj){
 
 const updateSpecificCustomerValidation = Joi.object({
     customerId: Joi.string(),
-    description: Joi.string().required(),
-    email: Joi.string().email().required(),
-    name: Joi.string().required(),
+    description: Joi.string(),
+    email: Joi.string().email(),
+    name: Joi.string(),
     phone:Joi.number().integer()
 });
 async function updateSpecificCustomer(requestObj){
@@ -112,23 +113,8 @@ async function deleteSpecificCustomer(requestObj){
 
 const createCardValidation = Joi.object({
     customerId: Joi.string(),
-    source:Joi.object({
-        number: Joi.string(),
-        expirationMonth: Joi.string().length(2),
-        expirationYear: Joi.alternatives(
-            Joi.string().length(2),
-            Joi.string().length(4)
-        ),
-        cvc: Joi.string(),
-        name: Joi.string(),
-        addressLineOne: Joi.string(),
-        addressLineTwo: Joi.string(),
-        city: Joi.string(),
-        state: Joi.string(),
-        zip: Joi.string(),
-        country: Joi.string()
-    })
-});
+    source:Joi.string()
+})
 async function createCard(requestObj){
     const {error, value} = createCardValidation.validate(requestObj);
     if(error){
@@ -139,10 +125,7 @@ async function createCard(requestObj){
     return await stripe.customers.createSource(
         customerId,
         {
-            source:{
-                ...source,
-                object: 'card'
-            }
+            source
         }
     )
 }
@@ -169,22 +152,31 @@ const updateSpecificCardValidation = Joi.object({
     customerId: Joi.string(),
     cardId: Joi.string(),
     source:Joi.object({
-        number: Joi.string(),
-        expirationMonth: Joi.string().length(2),
-        expirationYear: Joi.alternatives(
+        exp_month: Joi.string().length(2),
+        exp_year: Joi.alternatives(
             Joi.string().length(2),
             Joi.string().length(4)
         ),
         cvc: Joi.string(),
         name: Joi.string(),
-        addressLineOne: Joi.string(),
-        addressLineTwo: Joi.string(),
-        city: Joi.string(),
-        state: Joi.string(),
-        zip: Joi.string(),
-        country: Joi.string()
+        address_line1: Joi.string(),
+        address_line2: Joi.string(),
+        address_city: Joi.string(),
+        address_state: Joi.string(),
+        address_zip: Joi.string(),
+        address_country: Joi.string()
     })
-});
+        .rename('expirationMonth', 'exp_month')
+        .rename('expirationYear', 'exp_year')
+        .rename('addressLineOne', 'address_line1')
+        .rename('addressLineTwo', 'address_line2')
+        .rename('city', 'address_city')
+        .rename('state', 'address_state')
+        .rename('zip', 'address_zip')
+        .rename('country', 'address_country')
+        
+})
+
 async function updateSpecificCard(requestObj){
     const {error, value} = updateSpecificCardValidation.validate(requestObj);
     if(error){
@@ -195,7 +187,7 @@ async function updateSpecificCard(requestObj){
         cardId,
         source
     } = value;
-
+    
     return stripe.customers.updateSource(
         customerId,
         cardId,
@@ -218,7 +210,7 @@ async function deleteSpecificCard(requestObj){
         cardId
     } = value;
 
-    return await stripe.customers.delSource(
+    return await stripe.customers.deleteSource(
         customerId,
         cardId
     )
@@ -530,7 +522,7 @@ async function deleteSpecificPrice(requestObj){
 
     const {priceId} = value;
 
-    return await stripe.prices.delete(priceId);
+    return await stripe.prices.del(priceId);
 }
 
 module.exports = {
@@ -539,20 +531,24 @@ module.exports = {
     createCustomer,
     updateSpecificCustomer,
     deleteSpecificCustomer,
+
     createCard,
     getSpecificCard,
     updateSpecificCard,
     deleteSpecificCard,
+
     getSubscriptions,
     getSpecificSubscription,
     createSubscription,
     updateSpecificSubscription,
     deleteSpecificSubscription,
+
     getProducts,
     getSpecificProduct,
     createProduct,
     updateSpecificProduct,
     deleteSpecificProduct,
+
     getPrices,
     getSpecificPrice,
     createPrice,

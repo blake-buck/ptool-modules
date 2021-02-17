@@ -31,7 +31,10 @@ async function deleteSpecificCustomer(request, response){
 }
 
 async function createCard(request, response){
-    const result = await stripeService.createCard(request.body);
+    const result = await stripeService.createCard({
+        ...request.body,
+        ...request.params
+    });
     response.status(200).json(result)
 }
 
