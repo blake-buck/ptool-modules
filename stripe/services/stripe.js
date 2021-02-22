@@ -217,7 +217,7 @@ async function deleteSpecificCard(requestObj){
 }
 
 const getSubscriptionsValidation = Joi.object({
-    customer: Joi.string(),
+    customerId: Joi.string(),
     priceId: Joi.string(),
     status:Joi.alternatives().try(
         'active',
@@ -238,13 +238,13 @@ async function getSubscriptions(requestObj){
     }
 
     const {
-        customer,
+        customerId,
         priceId,
         status
     } = value;
 
     return await stripe.subscriptions.list({
-        customer,
+        customer: customerId,
         price:priceId,
         status
     })
@@ -265,14 +265,16 @@ async function getSpecificSubscription(requestObj){
 }
 
 const createSubscriptionValidation = Joi.object({
-    customerId: Joi.string(),
+    customer: Joi.string(),
     items: Joi.array().items(
         Joi.object({
             price: Joi.string(),
             quantity: Joi.number().integer()
         })
+            .rename('priceId', 'price')
     )
-});
+})
+    .rename('customerId', 'customer');
 async function createSubscription(requestObj){
     const {error, value} = createSubscriptionValidation.validate(requestObj);
     if(error){

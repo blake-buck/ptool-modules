@@ -536,7 +536,7 @@
                 "summary":"Get a list of subscription objects from Stripe",
                 "parameters":[
                     {
-                        "name":"customer",
+                        "name":"customerId",
                         "in":"query"
                     },
                     {
